@@ -1,0 +1,36 @@
+# depslib dependency file v1.0
+1703054549 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fichier.h"
+
+1703008874 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
+
+1703097846 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+
+1703097436 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
+
+1703082734 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fonctions.h"
+
+1703016666 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+
+1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
+
+1703097425 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fonctions.h"
+
