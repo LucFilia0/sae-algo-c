@@ -5,6 +5,74 @@ from numpy import *
 import time
 
 
+# Algos de filtres
+
+def filtre_lineaire(tab: [int], val: int) -> ([int]):
+    """
+    :entree: tab [int], val int
+    :pre-cond: len(tab)>0
+    :sortie: sort [int]
+    :post-cond: sort contient tous les indices de 'val' dans tab
+    """
+    global cpt
+
+    sort = zeros(len(tab), int)
+    i = 0
+    j = 0
+    cpt = cpt + 4
+    while i<len(tab) :
+        if tab[i] == val :
+            sort[j] = i
+            j = j+1
+            cpt = cpt + 4 # conditon comptee plus bas
+        i = i+1
+        cpt = cpt + 4
+    if j != len(tab)-1:
+        sort[j] = -1
+        cpt + 5
+    return sort
+
+def filtre_par_dichotomie(tab: [int], val: int) -> ([int]):
+    """
+    :entree: tab [int], val int
+    :pre-cond: len(tab)>0, tab trié
+    :sortie: sort [int]
+    :post-cond: sort contient tous les indices de 'val' dans tab
+    """
+    global cpt
+
+    sort = zeros(len(tab), int)
+    indice = recherche_dichotomie(tab, val)
+    j = 1
+    cpt = cpt+5
+    if(indice==-1):
+        sort[0] = -1
+        cpt=cpt+1
+    else:
+        sort[0] = indice
+        curseur_g = indice
+        curseur_d = indice
+        cpt=cpt+4
+        while(tab[curseur_g-1]==val or tab[curseur_d+1]==val):
+            if tab[curseur_g-1]==val:
+                curseur_g = curseur_g - 1
+                sort[j] = curseur_g
+                j = j+1
+                cpt=cpt+9
+            if tab[curseur_d+1]==val:
+                curseur_d = curseur_d + 1
+                sort[j] = curseur_d
+                j = j+1
+                cpt=cpt+9
+            cpt=cpt+7
+    if j!=len(tab)-1 and sort[0]!=-1:
+        sort[j] = -1
+        cpt=cpt+2
+    cpt=cpt+4
+    return sort
+    
+
+
 # Définition des fonctions
 
 def fusion(t,d,f):
@@ -201,7 +269,7 @@ def recherche_dichotomie(tab,val):
     i = 0
     j = len(tab) - 1
     i_val = -1
-    cpt = cpt + m # 5 opérations élémentaires avant la boucle
+    cpt = cpt + 5 # 5 opérations élémentaires avant la boucle
     while i<=j and i_val<0: # 3 comparaisons
         m = (i+j)//2 # 1 affections, 2 opérations
         cpt = cpt + 8
@@ -426,22 +494,17 @@ def tab_valide(tab):
 
 
 
-cpt = 0
+cpt = 0 # pas touche
 
-taille = 10
-tab=create_tab_heure(taille,20)
-a = randint(0,taille-1)
-b = randint(0,60)
-print(f"heure_min : {tab[a] + b}")
-tab2 = copier(tab)
-print(f"retard : {ajout_retard(tab,a,b)}")
-print(f"a = {a} b = {b}")
-for i in range(len(tab)):
-    print(f"{i}:{tab2[i]}",end=' ')
-print(' ')
-for i in range(len(tab)):
-    print(f"{i}:{tab[i]}",end=' ')
-print(' ')
-print(test_optimisation(tab,0,20))
+tab = [randint(-50, 50) for i in range(100)]
+tab = array(tab, int)
+
+indices = zeros(len(tab), int)
+tri_fusion(tab, 0, len(tab)-1)
+print(tab)
+indices = filtre_par_dichotomie(tab,1)
+
+print(indices)
+print(cpt)
     
             
