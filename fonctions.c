@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
 
 #include "fonctions.h"
 
@@ -37,24 +38,14 @@ void getCharFromTo(const char *chaine, char start, char stop, char *sortie) {
 }
 
 void clearChar(char *chaine) {
-    /*
-    for(int i=0; i<strlen(chaine); i++) {
-        chaine[i] = ' ';
-    }
-    */
     memset(chaine, 0, strlen(chaine));
 }
 
-void adjustChar(const char *chaine, char *sortie) {
-    int s=0;
-    for(int i=0; i<strlen(chaine); i++) {
-        if(chaine[i] != ' ') {
-            sortie[s] = chaine[i];
-            s++;
-        }else {
-            sortie[s] = NULL;
-        }
-    }
+
+/* GRAPHICS */
+
+void showTitle() {
+    printf("\n>> GESTION'AIR\n\n");
 }
 
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
@@ -68,7 +59,7 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
         clearChar(entry);
         clearChar(verified);
 
-        printf("\n%s : ", message);
+        printf("\n%s\n => ", message);
         fgets(entry, 10, stdin);
 
         for(int i=0; i<strlen(entry); i++) {
@@ -78,9 +69,17 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
             }
         }
 
+        system("cls");
+
         *data = atoi(verified);
         if(*data<nbMin || *data>nbMax) {
             printf("\n|-- Veuillez saisir une valeur entre %d et %d --|\n", nbMin, nbMax);
         }
     }while(*data<nbMin || *data>nbMax);
+}
+
+void waitPress() {
+    printf("Appuyez sur une touche...");
+    getchar();
+    system("cls");
 }

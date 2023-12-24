@@ -23,21 +23,59 @@ int main(int argc, char *argv[])
     {
         importDataBase(fichier, listeVols);
 
+        // VARIABLES
         struct Vol *v;
-        int entry, numVol, quit = 0;
+        int entry, recherche, numVol, heure, quit = 0;
+        char compagnie[20], destination[20];
 
+
+        // ARBRE EVENEMENTS
         do {
-            userEntryInt("Voir un vol (1) / Quitter (2)", &entry, 1, 2);
+            showTitle();
+            userEntryInt("1 - Rechercher un vol\n2 - Voir la piste\n3 - Quitter", &entry, 1, 3);
+
+            // RECHERCHE VOL
             if(entry==1) {
-                userEntryInt("Numero du vol", &numVol, 1, NB_VOLS);
-                v = &(listeVols[numVol-1]);
-                afficheVol(v);
-            }else {
+                userEntryInt("Vous souhaitez rechercher par :\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 3);
+
+                // PAR NOM
+                if(recherche==1) {
+                    userEntryInt("Numero du vol", &numVol, 1, NB_VOLS);
+                    v = &listeVols[numVol-1];
+                    afficheVol(v);
+                    waitPress();
+                }
+                // PAR COMPAGNIE
+                else if(recherche==2) {
+                    printf("Nom de la compagnie : ");
+                    fgets(compagnie, 20, stdin);
+                }
+                // PAR DESTINATION
+                else if(recherche==3) {
+                    printf("Destination : ");
+                    fgets(destination, 20, stdin);
+                }
+                // PAR HORAIRE
+                else if(recherche==4) {
+                    userEntryInt("Horaire (HH:MM)", &heure, 0, 2359);
+                }
+                // RETOUR
+                else {
+                    continue; // retour menu
+                }
+            }
+
+            // VOIR PISTE
+            else if(entry==2) {
+
+            }
+
+
+            // QUIT
+            else {
                 quit=1;
             }
         }while(quit==0);
-
-
 
 
         fclose(fichier);

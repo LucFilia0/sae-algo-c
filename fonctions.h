@@ -8,6 +8,8 @@ void getCharFromTo(const char *chaine, char start, char stop, char *sortie);
 
 void clearChar(char *chaine);
 
-void adjustChar(const char *chaine, char *sortie);
+void showTitle();
 
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax);
+
+void waitPress();
