@@ -28,10 +28,12 @@ struct Vol {
 
 /* ##-- DECLARATIONS FONCTIONS --## */
 
-void importeDataBase(FILE *fichier, struct Vol *listeVols);
+void importDataBase(FILE *fichier, struct Vol *listeVols);
 
 void afficheVol(struct Vol *V);
 
 void initVol(struct Vol *vol, char *informations);
 
 void initPassagers(struct Vol *vol, const char *listePassagers);
+
+void clearPassagers(struct Vol *vol);

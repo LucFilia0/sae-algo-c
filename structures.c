@@ -6,9 +6,9 @@
 #include "fonctions.h"
 
 #define NB_VOLS 40 // Attention aussi dans main.c
-#define MAX 700
+#define MAX 1000
 
-void importeDataBase(FILE *fichier, struct Vol *listeVols) {
+void importDataBase(FILE *fichier, struct Vol *listeVols) {
     char ligne[MAX] = "";
     int vol = 0;
     struct Vol *ptVol;
@@ -95,13 +95,15 @@ void initVol(struct Vol *vol, char *infoVol)
 
 void initPassagers(struct Vol *vol, const char *listePassagers)
 {
-    char info[1000] = "";
+    clearPassagers(vol);
+    char info[100] = {};
     int passager = 0;
     int i = 0, ind = 0, numElement = 0;
     while(i<strlen(listePassagers)) {
         if(listePassagers[i]!=';' && i<strlen(listePassagers)-1) {
             if(listePassagers[i]!=',') {
                 info[ind] = listePassagers[i];
+                //printf("\n|%s|", info);
                 ind++;
             }else {
                 switch(numElement)
@@ -121,7 +123,18 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
             numElement=0;
             ind=0;
             clearChar(info);
+            //printf("\n|-- %s --|\n", info);
         }
         i++;
+    }
+}
+
+void clearPassagers(struct Vol *vol) {
+    for(int i=0; i<10; ++i) {
+        clearChar(vol->listePassagers[i].nom);
+        clearChar(vol->listePassagers[i].prenom);
+        clearChar(vol->listePassagers[i].dateNaissance);
+        vol->listePassagers[i].numSiege = 0;
+        vol->listePassagers[i].prixBillet = 0.;
     }
 }

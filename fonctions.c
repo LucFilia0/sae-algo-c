@@ -5,9 +5,7 @@
 #include "fonctions.h"
 
 void copieChar(const char* copie, char *colle) {
-    for(int i=0; i<strlen(copie); i++) {
-        colle[i] = copie[i];
-    }
+    strcpy(colle, copie);
 }
 
 void getCharTo(const char *chaine, char stop, char *sortie) {
@@ -15,12 +13,6 @@ void getCharTo(const char *chaine, char stop, char *sortie) {
     while(i<strlen(chaine) && chaine[i]!=stop) {
         sortie[i] = chaine[i];
         i++;
-    }
-}
-
-void clearChar(char *chaine) {
-    for(int i=0; i<strlen(chaine); i++) {
-        chaine[i] = ' ';
     }
 }
 
@@ -42,4 +34,53 @@ void getCharFromTo(const char *chaine, char start, char stop, char *sortie) {
         }
         i++;
     }
+}
+
+void clearChar(char *chaine) {
+    /*
+    for(int i=0; i<strlen(chaine); i++) {
+        chaine[i] = ' ';
+    }
+    */
+    memset(chaine, 0, strlen(chaine));
+}
+
+void adjustChar(const char *chaine, char *sortie) {
+    int s=0;
+    for(int i=0; i<strlen(chaine); i++) {
+        if(chaine[i] != ' ') {
+            sortie[s] = chaine[i];
+            s++;
+        }else {
+            sortie[s] = NULL;
+        }
+    }
+}
+
+void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
+    *data = NULL;
+    char entry[500] = "";
+    char verified[500] = "";
+
+
+    do {
+        int v = 0;
+        clearChar(entry);
+        clearChar(verified);
+
+        printf("\n%s : ", message);
+        fgets(entry, 10, stdin);
+
+        for(int i=0; i<strlen(entry); i++) {
+            if(entry[i]=='0'||entry[i]=='1'||entry[i]=='2'||entry[i]=='3'||entry[i]=='4'||entry[i]=='5'||entry[i]=='6'||entry[i]=='7'||entry[i]=='8'||entry[i]=='9') {
+                verified[v] = entry[i];
+                v++;
+            }
+        }
+
+        *data = atoi(verified);
+        if(*data<nbMin || *data>nbMax) {
+            printf("\n|-- Veuillez saisir une valeur entre %d et %d --|\n", nbMin, nbMax);
+        }
+    }while(*data<nbMin || *data>nbMax);
 }
