@@ -4,6 +4,7 @@
 
 #include "structures.h"
 #include "fonctions.h"
+#include "fichier.h"
 
 #define NB_VOLS 192 // Attention aussi dans main.c
 #define MAX 1000
@@ -26,6 +27,8 @@ void importDataBase(FILE *fichier, struct Vol *listeVols) {
         ptVol = &(listeVols[vol]);
         initVol(ptVol, infoVol); // init vol avec donnes du vol
         initPassagers(ptVol, listePassagers); // init liste passagers
+
+        printf("|%c|", fgetc(fichier));
 
         vol++; //vol suivant
     }while(vol < NB_VOLS);
@@ -96,7 +99,7 @@ void initVol(struct Vol *vol, char *infoVol)
 void initPassagers(struct Vol *vol, const char *listePassagers)
 {
     clearPassagers(vol);
-    char info[100] = {};
+    char info[100];
     int passager = 0;
     int i = 0, ind = 0, numElement = 0;
     while(i<strlen(listePassagers)) {

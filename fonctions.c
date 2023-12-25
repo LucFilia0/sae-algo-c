@@ -49,7 +49,7 @@ void showTitle() {
 }
 
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
-    *data = NULL;
+    *data = 0;
     char entry[500] = "";
     char verified[500] = "";
 
@@ -79,7 +79,7 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
 }
 
 void waitPress() {
-    printf("Appuyez sur une touche...");
+    printf("Appuyez sur [entree]...");
     getchar();
     system("cls");
 }
