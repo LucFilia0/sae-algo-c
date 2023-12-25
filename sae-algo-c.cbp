@@ -32,6 +32,10 @@
 			<Add option="-pedantic-errors" />
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="IHM.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="IHM.h" />
 		<Unit filename="fichier.c">
 			<Option compilerVar="CC" />
 		</Unit>

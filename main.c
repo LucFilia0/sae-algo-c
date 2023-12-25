@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 
 #include "structures.h"
 #include "fichier.h"
@@ -24,6 +25,12 @@ int main(int argc, char *argv[])
     {
         importDataBase(fichier, listeVols);
 
+        // MET EN PLEIN ECRAN
+        keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
+        keybd_event(VK_RETURN,0x1c,0,0); //Appuie ENTREE
+        keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0); // Relache ENTREE
+        keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0); //Relache ALT
+
         // VARIABLES
         struct Vol *v;
         int entry, recherche, numVol, heure, quit = 0;
@@ -37,12 +44,17 @@ int main(int argc, char *argv[])
             // RECHERCHE VOL
             if(entry==1) {
                 userEntryInt("Vous souhaitez rechercher par :\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 3);
+                printf("\nRecherche : %d\n", recherche);
 
                 // PAR NOM
                 if(recherche==1) {
                     userEntryInt("Numero du vol", &numVol, 1, NB_VOLS);
+                    /*
                     v = &listeVols[numVol-1];
                     afficheVol(v);
+                    */
+                    int num[1] = {numVol};
+                    afficheTableauVols(listeVols, num, 1);
                     waitPress();
                 }
                 // PAR COMPAGNIE
