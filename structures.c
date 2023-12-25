@@ -3,8 +3,9 @@
 #include <string.h>
 
 #include "structures.h"
-#include "fonctions.h"
 #include "fichier.h"
+#include "fonctions.h"
+#include "IHM.h"
 
 #define NB_VOLS 192 // Attention aussi dans main.c
 #define MAX 1000
@@ -35,129 +36,6 @@ void importDataBase(FILE *fichier, struct Vol *listeVols) {
         vol++; //vol suivant
     }while(vol < NB_VOLS && verif != EOF);
 }
-
-void afficheVol(struct Vol *vol) {
-    printf("\n##========== VOL %d ==========##\n\nCompagnie : %s\nDestination : %s\nNumero de comptoir : %d\nHeure debut enregistrement : %d\nHeure fin enregistrement : %d\nSalle d'embarquement : %d\nHeure debut embarquement : %d\nHeure fin embarquement : %d\nHeure decollage : %d\nEtat vol : %s\n\nListe des passagers :\n",
-    vol->numVol,
-    vol->compagnie,
-    vol->destination,
-    vol->numComptoir,
-    vol->h_debEnregistrement,
-    vol->h_finEnregistrement,
-    vol->salleEmbarquement,
-    vol->h_debEmbarquement,
-    vol->h_finEmbarquement,
-    vol->h_decollage,
-    vol->etatVol
-    );
-    long int nbPassagers = sizeof(vol->listePassagers) / sizeof(vol->listePassagers[0]);
-    for(int i=0; i<nbPassagers; i++) {
-        if(vol->listePassagers[i].numSiege != 0) {
-            printf("\n%d : ", i+1);
-            struct Passager *ptPassager = &(vol->listePassagers[i]);
-            printf("\tNom : %s\n\tPrenom : %s\n\tDate de naissance : %s\n\tNumero de siege : %d\n\tPrix du billet : %.2f\n\n",
-                ptPassager->nom,
-                ptPassager->prenom,
-                ptPassager->dateNaissance,
-                ptPassager->numSiege,
-                ptPassager->prixBillet
-            );
-        }
-    }
-}
-
-void afficheLigneVide(int nbColumns, int widthColumns) {
-    printf("\n");
-    for(int i=0; i<nbColumns; ++i) {
-        printf("|");
-        for(int j=0; j<widthColumns; ++j) {
-            printf("_");
-        }
-    }
-    printf("|");
-}
-
-void afficheCentre(const char *element, int widthColumn) {
-    char affiche[widthColumn];
-    int j=0;
-    int nbEspaces = widthColumn-strlen(element);
-    int nbEspacesGauche = nbEspaces/2;
-
-    int i=0;
-    while(i<nbEspacesGauche) {
-        printf(" ");
-        ++i;
-    }
-    printf("%s", element);
-    i=i+strlen(element);
-    while(i<widthColumn) {
-        printf(" ");
-        ++i;
-    }
-}
-
-void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
-    char element[100];
-    char cast;
-    printf("\n|");
-    for(int i=0; i<nbColumns; ++i) {
-        clearChar(element);
-        switch(i) {
-            case 0: sprintf(element, "%d", vol.numVol); break;
-            case 1: copieChar(vol.compagnie, element); break;
-            case 2: copieChar(vol.destination, element); break;
-            case 3: sprintf(element, "%d", vol.numComptoir); break;
-            case 4: sprintf(element, "%d", vol.h_debEnregistrement); break;
-            case 5: sprintf(element, "%d", vol.h_finEnregistrement); break;
-            case 6: sprintf(element, "%d", vol.salleEmbarquement); break;
-            case 7: sprintf(element, "%d", vol.h_debEmbarquement); break;
-            case 8: sprintf(element, "%d", vol.h_finEmbarquement); break;
-            case 9: sprintf(element, "%d", vol.h_decollage); break;
-            case 10: copieChar(vol.etatVol, element); break;
-            default: printf("\nCas non traite par switch\n"); break;
-        }
-        afficheCentre(element, widthColumns);
-        printf("|");
-    }
-}
-
-void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
-    int widthColumns = 17;
-    int nbColumns = 11;
-
-    // LIGNE DU HAUT DU TABLEAU
-    printf(" ");
-    for(int i=0; i<(nbColumns*widthColumns+nbColumns-1); ++i) {
-        printf("_");
-    }
-    printf("\n");
-    // AFFICHER ENTETE TABLO
-    for(int i=0; i<nbColumns; ++i) {
-            printf("|");
-        switch(i) {
-            case 0: afficheCentre("NumVol", widthColumns); break;
-            case 1: afficheCentre("Compagnie", widthColumns); break;
-            case 2: afficheCentre("Destination", widthColumns); break;
-            case 3: afficheCentre("NumComptoir", widthColumns); break;
-            case 4: afficheCentre("H debEnrg", widthColumns); break;
-            case 5: afficheCentre("H finEnrg", widthColumns); break;
-            case 6: afficheCentre("salleEmbarq", widthColumns); break;
-            case 7: afficheCentre("H debEmbarq", widthColumns); break;
-            case 8: afficheCentre("H finEmbarq", widthColumns); break;
-            case 9: afficheCentre("H decollage", widthColumns); break;
-            case 10: afficheCentre("etatVol", widthColumns); break;
-            default: printf("\nCas non traite par switch\n"); break;
-        }
-    }
-    printf("|");
-    afficheLigneVide(nbColumns, widthColumns);
-
-    for(int i=0; i<taille; ++i) {
-        afficheLigneInfo(listeVols[tab[i]], nbColumns, widthColumns);
-        afficheLigneVide(nbColumns, widthColumns);
-    }
-}
-
 
 
 void initVol(struct Vol *vol, char *infoVol)

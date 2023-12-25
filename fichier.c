@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "structures.h"
 #include "fichier.h"
+#include "fonctions.h"
+#include "IHM.h"
 
 
 void scanFichier(FILE* fichier, char stop, char *chaine)

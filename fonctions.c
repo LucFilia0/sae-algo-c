@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 
+#include "structures.h"
+#include "fichier.h"
 #include "fonctions.h"
+#include "IHM.h"
 
 void copieChar(const char* copie, char *colle) {
     strcpy(colle, copie);
