@@ -37,28 +37,11 @@ void getCharFromTo(const char *chaine, char start, char stop, char *sortie) {
 }
 
 void clearChar(char *chaine) {
-    /*
-    for(int i=0; i<strlen(chaine); i++) {
-        chaine[i] = ' ';
-    }
-    */
     memset(chaine, 0, strlen(chaine));
 }
 
-void adjustChar(const char *chaine, char *sortie) {
-    int s=0;
-    for(int i=0; i<strlen(chaine); i++) {
-        if(chaine[i] != ' ') {
-            sortie[s] = chaine[i];
-            s++;
-        }else {
-            sortie[s] = NULL;
-        }
-    }
-}
-
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
-    *data = NULL;
+    *data = 0;
     char entry[500] = "";
     char verified[500] = "";
 
