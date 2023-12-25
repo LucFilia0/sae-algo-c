@@ -13,6 +13,7 @@ void importDataBase(FILE *fichier, struct Vol *listeVols) {
     char ligne[MAX] = "";
     int vol = 0;
     struct Vol *ptVol;
+    char verif = ' ';
 
     scanFichier(fichier, '\n', ligne); //on passe la premiere ligne #flm
 
@@ -28,10 +29,11 @@ void importDataBase(FILE *fichier, struct Vol *listeVols) {
         initVol(ptVol, infoVol); // init vol avec donnes du vol
         initPassagers(ptVol, listePassagers); // init liste passagers
 
-        printf("|%c|", fgetc(fichier));
+        verif = fgetc(fichier); // on vérifie le carac suivant
+        fseek(fichier, -1, SEEK_CUR); // on se replace bien
 
         vol++; //vol suivant
-    }while(vol < NB_VOLS);
+    }while(vol < NB_VOLS && verif != EOF);
 }
 
 void afficheVol(struct Vol *vol) {
