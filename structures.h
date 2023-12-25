@@ -32,6 +32,8 @@ void importDataBase(FILE *fichier, struct Vol *listeVols);
 
 void afficheVol(struct Vol *V);
 
+void afficheTableauVols(struct Vol *listeVols, int *tab, int taille);
+
 void initVol(struct Vol *vol, char *informations);
 
 void initPassagers(struct Vol *vol, const char *listePassagers);

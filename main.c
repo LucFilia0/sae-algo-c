@@ -27,8 +27,7 @@ int main(int argc, char *argv[])
         struct Vol *v;
         int entry, recherche, numVol, heure, quit = 0;
         char compagnie[20], destination[20];
-
-
+/*
         // ARBRE EVENEMENTS
         do {
             showTitle();
@@ -76,7 +75,10 @@ int main(int argc, char *argv[])
                 quit=1;
             }
         }while(quit==0);
+*/
 
+        int indices[10] = {1, 5, 8, 9};
+        afficheTableauVols(listeVols, indices, 4);
 
         fclose(fichier);
     }

@@ -66,6 +66,100 @@ void afficheVol(struct Vol *vol) {
     }
 }
 
+void afficheLigneVide(int nbColumns, int widthColumns) {
+    printf("\n");
+    for(int i=0; i<nbColumns; ++i) {
+        printf("|");
+        for(int j=0; j<widthColumns; ++j) {
+            printf("_");
+        }
+    }
+    printf("|");
+}
+
+void afficheCentre(const char *element, int widthColumn) {
+    char affiche[widthColumn];
+    int j=0;
+    int nbEspaces = widthColumn-strlen(element);
+    int nbEspacesGauche = nbEspaces/2;
+
+    int i=0;
+    while(i<nbEspacesGauche) {
+        printf(" ");
+        ++i;
+    }
+    printf("%s", element);
+    i=i+strlen(element);
+    while(i<widthColumn) {
+        printf(" ");
+        ++i;
+    }
+}
+
+void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
+    char element[100];
+    char cast;
+    printf("\n|");
+    for(int i=0; i<nbColumns; ++i) {
+        clearChar(element);
+        switch(i) {
+            case 0: sprintf(element, "%d", vol.numVol); break;
+            case 1: copieChar(vol.compagnie, element); break;
+            case 2: copieChar(vol.destination, element); break;
+            case 3: sprintf(element, "%d", vol.numComptoir); break;
+            case 4: sprintf(element, "%d", vol.h_debEnregistrement); break;
+            case 5: sprintf(element, "%d", vol.h_finEnregistrement); break;
+            case 6: sprintf(element, "%d", vol.salleEmbarquement); break;
+            case 7: sprintf(element, "%d", vol.h_debEmbarquement); break;
+            case 8: sprintf(element, "%d", vol.h_finEmbarquement); break;
+            case 9: sprintf(element, "%d", vol.h_decollage); break;
+            case 10: copieChar(vol.etatVol, element); break;
+            default: printf("\nCas non traite par switch\n"); break;
+        }
+        afficheCentre(element, widthColumns);
+        printf("|");
+    }
+}
+
+void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
+    int widthColumns = 17;
+    int nbColumns = 11;
+
+    // LIGNE DU HAUT DU TABLEAU
+    printf(" ");
+    for(int i=0; i<(nbColumns*widthColumns+nbColumns-1); ++i) {
+        printf("_");
+    }
+    printf("\n");
+    // AFFICHER ENTETE TABLO
+    for(int i=0; i<nbColumns; ++i) {
+            printf("|");
+        switch(i) {
+            case 0: afficheCentre("NumVol", widthColumns); break;
+            case 1: afficheCentre("Compagnie", widthColumns); break;
+            case 2: afficheCentre("Destination", widthColumns); break;
+            case 3: afficheCentre("NumComptoir", widthColumns); break;
+            case 4: afficheCentre("H debEnrg", widthColumns); break;
+            case 5: afficheCentre("H finEnrg", widthColumns); break;
+            case 6: afficheCentre("salleEmbarq", widthColumns); break;
+            case 7: afficheCentre("H debEmbarq", widthColumns); break;
+            case 8: afficheCentre("H finEmbarq", widthColumns); break;
+            case 9: afficheCentre("H decollage", widthColumns); break;
+            case 10: afficheCentre("etatVol", widthColumns); break;
+            default: printf("\nCas non traite par switch\n"); break;
+        }
+    }
+    printf("|");
+    afficheLigneVide(nbColumns, widthColumns);
+
+    for(int i=0; i<taille; ++i) {
+        afficheLigneInfo(listeVols[tab[i]], nbColumns, widthColumns);
+        afficheLigneVide(nbColumns, widthColumns);
+    }
+}
+
+
+
 void initVol(struct Vol *vol, char *infoVol)
 {
     char info[300] = "";
@@ -89,6 +183,7 @@ void initVol(struct Vol *vol, char *infoVol)
                 case 8: vol->h_finEmbarquement = atoi(info); break;
                 case 9: vol->h_decollage = atoi(info); break;
                 case 10: copieChar(info, vol->etatVol); break;
+                default: printf("\nCas non traite par switch\n"); break;
             }
             numElement++;
             ind = 0;
@@ -117,6 +212,7 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
                     case 1: copieChar(info, vol->listePassagers[passager].prenom); break;
                     case 2: copieChar(info, vol->listePassagers[passager].dateNaissance); break;
                     case 3: vol->listePassagers[passager].numSiege = atoi(info); break;
+                    default: printf("\nCas non traite par switch\n"); break;
                 }
                 numElement++;
                 ind=0;

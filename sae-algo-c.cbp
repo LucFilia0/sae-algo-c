@@ -29,6 +29,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-pedantic-errors" />
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="fichier.c">
