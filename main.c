@@ -6,7 +6,7 @@
 #include "fichier.h"
 #include "fonctions.h"
 
-#define NB_VOLS 40 //attention aussi dans structures.c
+#define NB_VOLS 192 //attention aussi dans structures.c
 
 int main(int argc, char *argv[])
 {

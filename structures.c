@@ -5,7 +5,7 @@
 #include "structures.h"
 #include "fonctions.h"
 
-#define NB_VOLS 40 // Attention aussi dans main.c
+#define NB_VOLS 192 // Attention aussi dans main.c
 #define MAX 1000
 
 void importDataBase(FILE *fichier, struct Vol *listeVols) {
