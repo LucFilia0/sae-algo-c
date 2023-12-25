@@ -6,13 +6,13 @@
 #include "fonctions.h"
 #include "fichier.h"
 
-#define NB_VOLS 40 // Attention aussi dans main.c
+#define NB_VOLS_MAX 192 // Attention aussi dans main.c
 #define MAX 1000
 
-void importDataBase(FILE *fichier, struct Vol *listeVols) {
+void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols) {
     char ligne[MAX] = "";
-    int vol = 0;
     struct Vol *ptVol;
+    char verif = ' ';
 
     scanFichier(fichier, '\n', ligne); //on passe la premiere ligne #flm
 
@@ -24,12 +24,15 @@ void importDataBase(FILE *fichier, struct Vol *listeVols) {
 
         getCharFromTo(ligne, '"', '"', listePassagers); // recupere de " a ", => liste passagers
 
-        ptVol = &(listeVols[vol]);
+        ptVol = &(listeVols[*nb_vols]);
         initVol(ptVol, infoVol); // init vol avec donnes du vol
         initPassagers(ptVol, listePassagers); // init liste passagers
 
-        vol++; //vol suivant
-    }while(vol < NB_VOLS);
+        verif = fgetc(fichier); // on vérifie le carac suivant
+        fseek(fichier, -1, SEEK_CUR); // on se replace bien
+
+        *nb_vols = *nb_vols + 1; //vol suivant (pas de ++)
+    }while(*nb_vols < NB_VOLS_MAX && verif != EOF);
 }
 
 void afficheVol(struct Vol *vol) {

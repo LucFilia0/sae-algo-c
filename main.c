@@ -6,11 +6,11 @@
 #include "fichier.h"
 #include "fonctions.h"
 
-#define NB_VOLS 40 //attention aussi dans structures.c
+#define NB_VOLS_MAX 192 //attention aussi dans structures.c
 
 int main(int argc, char *argv[])
 {
-    struct Vol listeVols[NB_VOLS];
+    struct Vol listeVols[NB_VOLS_MAX];
 
     const char* nomFichier = "data_vols.csv";
     FILE *fichier;
@@ -21,7 +21,10 @@ int main(int argc, char *argv[])
     }
     else
     {
-        importDataBase(fichier, listeVols);
+        int nb_vols = 0;
+        importDataBase(fichier, listeVols, &nb_vols);
+
+        printf("Nombre de vols : %d", nb_vols);
 
         struct Vol *v;
         int entry, numVol, quit = 0;
@@ -29,7 +32,7 @@ int main(int argc, char *argv[])
         do {
             userEntryInt("Voir un vol (1) / Quitter (2)", &entry, 1, 2);
             if(entry==1) {
-                userEntryInt("Numero du vol", &numVol, 1, NB_VOLS);
+                userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
                 v = &(listeVols[numVol-1]);
                 afficheVol(v);
             }else {

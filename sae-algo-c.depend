@@ -7,7 +7,7 @@
 
 1703008874 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
 
-1703495890 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1703497504 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -15,19 +15,19 @@
 	"fichier.h"
 	"fonctions.h"
 
-1703426348 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
+1703497450 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
 
-1703495890 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
+1703497218 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"fonctions.h"
 
-1703495890 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+1703497218 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
 
 1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
 
-1703495933 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
+1703497486 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
