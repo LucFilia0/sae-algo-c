@@ -23,10 +23,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-        int nb_vols = 0;
-        importDataBase(fichier, listeVols, &nb_vols);
-
-        printf("Nombre de vols : %d", nb_vols);
+        int nbVols = 0;
+        importDataBase(fichier, listeVols, &nbVols);
 
         // MET EN PLEIN ECRAN
         keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
@@ -51,7 +49,7 @@ int main(int argc, char *argv[])
 
                 // PAR NOM
                 if(recherche==1) {
-                    userEntryInt("Numero du vol", &numVol, 1, NB_VOLS);
+                    userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
                     /*
                     v = &listeVols[numVol-1];
                     afficheVol(v);
@@ -82,7 +80,13 @@ int main(int argc, char *argv[])
 
             // VOIR PISTE
             else if(entry==2) {
-
+                int tousIndices[nbVols];
+                for(int i=0; i<nbVols; ++i) {
+                    tousIndices[i] = i;
+                }
+                printf("\nPISTE :\n");
+                afficheTableauVols(listeVols, tousIndices, nbVols);
+                waitPress();
             }
 
 

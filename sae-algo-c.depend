@@ -1,9 +1,7 @@
 # depslib dependency file v1.0
-<<<<<<< HEAD
-1703513705 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
-=======
-1703601449 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
->>>>>>> main
+140725219530493 <<<<<<< HEAD
+
+1703605566 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -12,10 +10,34 @@
 	"fonctions.h"
 	"IHM.h"
 
+1703514619 n
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+
 1703008874 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
 
-<<<<<<< HEAD
-1703516577 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1703601449 D
+	"IHM.h"
+
+1703606021 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -25,12 +47,9 @@
 	"fonctions.h"
 	"IHM.h"
 
-1703512900 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
+1703605566 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
 
-1703516253 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
-=======
-1703601449 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
->>>>>>> main
+1703605566 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -39,39 +58,11 @@
 	"fonctions.h"
 	"IHM.h"
 
-<<<<<<< HEAD
-1703498312 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+1703605566 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
 
 1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
 
-1703513693 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
-=======
-1703601449 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
-
-1703601449 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"fonctions.h"
-
-1703601449 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
-
-1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
-
-1703601449 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
->>>>>>> main
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"structures.h"
-	"fichier.h"
-	"fonctions.h"
-<<<<<<< HEAD
-	"IHM.h"
-
-1703513993 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
-
-1703514619 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
+1703606174 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -79,7 +70,18 @@
 	"fichier.h"
 	"fonctions.h"
 	"IHM.h"
-=======
+
+1703601988 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
+
+1703605079 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
 	"fichier.h"
->>>>>>> main
+	"fonctions.h"
+	"IHM.h"
+
+1703514619 .h"
+	"fichier.h"
 

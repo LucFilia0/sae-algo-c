@@ -10,7 +10,7 @@
 #define NB_VOLS_MAX 192 // Attention aussi dans main.c
 #define MAX 1000
 
-void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols) {
+void importDataBase(FILE *fichier, struct Vol *listeVols, int *nbVols) {
     char ligne[MAX] = "";
     struct Vol *ptVol;
     char verif = ' ';
@@ -25,15 +25,15 @@ void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols) {
 
         getCharFromTo(ligne, '"', '"', listePassagers); // recupere de " a ", => liste passagers
 
-        ptVol = &(listeVols[*nb_vols]);
+        ptVol = &(listeVols[*nbVols]);
         initVol(ptVol, infoVol); // init vol avec donnes du vol
         initPassagers(ptVol, listePassagers); // init liste passagers
 
         verif = fgetc(fichier); // on vérifie le carac suivant
         fseek(fichier, -1, SEEK_CUR); // on se replace bien
 
-        *nb_vols = *nb_vols + 1; //vol suivant (pas de ++)
-    }while(*nb_vols < NB_VOLS_MAX && verif != EOF);
+        *nbVols = *nbVols + 1; //vol suivant (pas de ++)
+    }while(*nbVols < NB_VOLS_MAX && verif != EOF);
 }
 
 
