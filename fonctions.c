@@ -56,7 +56,6 @@ void clearChar(char *chaine) {
     memset(chaine, 0, strlen(chaine));
 }
 
-
 /* GRAPHICS */
 
 void showTitle() {

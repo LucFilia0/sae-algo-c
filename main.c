@@ -8,11 +8,11 @@
 #include "fonctions.h"
 #include "IHM.h"
 
-#define NB_VOLS 192 //attention aussi dans structures.c
+#define NB_VOLS_MAX 192 //attention aussi dans structures.c
 
 int main(int argc, char *argv[])
 {
-    struct Vol listeVols[NB_VOLS];
+    struct Vol listeVols[NB_VOLS_MAX];
 
     const char* nomFichier = "data_vols.csv";
     FILE *fichier;
@@ -23,7 +23,10 @@ int main(int argc, char *argv[])
     }
     else
     {
-        importDataBase(fichier, listeVols);
+        int nb_vols = 0;
+        importDataBase(fichier, listeVols, &nb_vols);
+
+        printf("Nombre de vols : %d", nb_vols);
 
         // MET EN PLEIN ECRAN
         keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT

@@ -28,7 +28,7 @@ struct Vol {
 
 /* ##-- DECLARATIONS FONCTIONS --## */
 
-void importDataBase(FILE *fichier, struct Vol *listeVols);
+void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols);
 
 void initVol(struct Vol *vol, char *informations);
 
