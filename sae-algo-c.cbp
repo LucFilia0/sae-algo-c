@@ -29,7 +29,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-pedantic-errors" />
+			<Add option="-std=c99" />
 		</Compiler>
 		<Unit filename="fichier.c">
 			<Option compilerVar="CC" />

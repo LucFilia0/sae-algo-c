@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     else
     {
         int nb_vols = 0;
+
         importDataBase(fichier, listeVols, &nb_vols);
 
         printf("Nombre de vols : %d", nb_vols);

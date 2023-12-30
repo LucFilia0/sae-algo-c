@@ -31,6 +31,9 @@ void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols) {
         verif = fgetc(fichier); // on vérifie le carac suivant
         fseek(fichier, -1, SEEK_CUR); // on se replace bien
 
+        if(verif == EOF)
+            printf("|EOF trouve|\n");
+
         *nb_vols = *nb_vols + 1; //vol suivant (pas de ++)
     }while(*nb_vols < NB_VOLS_MAX && verif != EOF);
 }
