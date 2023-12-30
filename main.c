@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         do {
             userEntryInt("Voir un vol (1) / Quitter (2)", &entry, 1, 2);
             if(entry==1) {
-                userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
+                userEntryInt("Numero du vol", &numVol, 1, nb_vols);
                 v = &(listeVols[numVol-1]);
                 afficheVol(v);
             }else {
