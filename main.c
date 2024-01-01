@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
             int menu = 1;
 
             showTitle();
-            userEntryInt("1 - Rechercher un vol\n2 - Voir la piste\n3 - Quitter", &entry, 1, 3);
+            userEntryInt("1 - Rechercher un vol\n2 - Voir la piste\n3 - Liste de passagers\n4 - Quitter", &entry, 1, 4);
 
             // RECHERCHE VOL
             if(entry==1) {
@@ -125,6 +125,21 @@ int main(int argc, char *argv[])
                 printf("\nPISTE :\n");
                 afficheTableauVols(listeVols, tousIndices, nbVols);
                 waitPress();
+            }
+
+            // LISTE PASSAGERS
+            else if(entry == 3) {
+                do {
+                    int numVol = 0;
+                    userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);
+
+                    printf("\nListe des passagers du vol %d :\n", numVol);
+                    afficheTableauPassagers(listeVols[numVol]);
+
+                    waitPress();
+                    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                }while(menu != 2);
+
             }
 
 

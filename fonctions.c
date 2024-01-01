@@ -108,7 +108,7 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
 }
 
 void waitPress() {
-    printf("\nAppuyez sur [entree]...");
+    printf("\n\nAppuyez sur [entree]...");
     getchar();
     system("cls");
 }
