@@ -145,9 +145,11 @@ void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
     printf("|");
     afficheLigneVide(nbColumns, widthColumns);
     // AFFICHE INFOS
-    for(int i=0; i<taille; ++i) {
+    int i=0;
+    while(i<taille && tab[i] != -1) {
         afficheLigneInfo(listeVols[tab[i]], nbColumns, widthColumns);
         afficheLigneVide(nbColumns, widthColumns);
+        ++i;
     }
 }
 

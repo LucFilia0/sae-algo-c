@@ -36,38 +36,74 @@ int main(int argc, char *argv[])
         // VARIABLES
         struct Vol *v;
         int entry, recherche, numVol, heure, quit = 0;
-        char compagnie[20], destination[20];
+        char compagnie[50], destination[50];
 
         // ARBRE EVENEMENTS
         do {
+            int menu = 1;
+
             showTitle();
             userEntryInt("1 - Rechercher un vol\n2 - Voir la piste\n3 - Quitter", &entry, 1, 3);
 
             // RECHERCHE VOL
             if(entry==1) {
-                userEntryInt("Vous souhaitez rechercher par :\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 3);
-                printf("\nRecherche : %d\n", recherche);
+                int tabIndices[NB_VOLS_MAX];
+
+                userEntryInt("Vous souhaitez rechercher par :\n[entree] pour retour\n\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 4);
 
                 // PAR NOM
                 if(recherche==1) {
-                    userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
-                    /*
-                    v = &listeVols[numVol-1];
-                    afficheVol(v);
-                    */
-                    int num[1] = {numVol};
-                    afficheTableauVols(listeVols, num, 1);
-                    waitPress();
+                    do {
+                        userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
+                        int num[1] = {numVol-1};
+                        afficheTableauVols(listeVols, num, 1);
+
+                        waitPress();
+                        userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                    }while(menu != 2);
+
                 }
                 // PAR COMPAGNIE
                 else if(recherche==2) {
-                    printf("Nom de la compagnie : ");
-                    fgets(compagnie, 20, stdin);
+                    do {
+                        printf("Nom de la compagnie : ");
+                        fgets(compagnie, 50, stdin);
+
+                        setCharClean(compagnie); //enleve le '\n' provoqué par le [entrée]
+                        rechercheCompagnie(compagnie, nbVols, listeVols, tabIndices);
+
+                        if(tabIndices[0] != -1) {
+                            afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX); //fonction prévue pour s'arreter si '-1' rencontré
+                        }else {
+                            printf("\n---- Cette compagnie n'existe pas ou syntaxe inconnue ----\n");
+                        }
+
+                        waitPress();
+                        clearChar(compagnie);
+
+                        userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                    }while(menu!=2);
                 }
                 // PAR DESTINATION
                 else if(recherche==3) {
-                    printf("Destination : ");
-                    fgets(destination, 20, stdin);
+                    do {
+                        printf("Destination : ");
+                        fgets(destination, 50, stdin);
+
+                        setCharClean(destination);
+                        rechercheDestination(destination, nbVols, listeVols, tabIndices);
+
+                        if(tabIndices[0] != -1) { //si au moins un vol est trouvé
+                            afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX);
+                        }else {
+                            printf("\n---- Cette destination n'existe pas ou syntaxe inconnue ----\n");
+                        }
+
+                        waitPress();
+                        clearChar(destination);
+
+                        userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                    }while(menu != 2);
                 }
                 // PAR HORAIRE
                 else if(recherche==4) {
@@ -80,7 +116,7 @@ int main(int argc, char *argv[])
             }
 
             // VOIR PISTE
-            else if(entry==2 && entry>23) {
+            else if(entry==2) {
                 int tousIndices[nbVols];
                 int a=23;
                 for(int i=0; i<nbVols; ++i) {
@@ -89,7 +125,6 @@ int main(int argc, char *argv[])
                 printf("\nPISTE :\n");
                 afficheTableauVols(listeVols, tousIndices, nbVols);
                 waitPress();
-                printf("%d", a);
             }
 
 
@@ -99,12 +134,10 @@ int main(int argc, char *argv[])
             }
         }while(quit==0);
 
-/*
-        int indices[10] = {1, 5, 8, 9, 7, 11, 35, 18};
-        afficheTableauVols(listeVols, indices, 8);
-        printf("\n");
-        afficheTableauPassagers(listeVols[1]);
-*/
+
+
+
+        // END
         fclose(fichier);
     }
     return 0;

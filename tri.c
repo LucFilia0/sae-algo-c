@@ -34,8 +34,16 @@ void tableauVols(int taille, int indices[taille], struct Vol listeVols[taille]) 
 
 void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
     int ind=0;
+    char chaine1[50];
+    char chaine2[50];
+
+    copyCharToLower(nomCompagnie, chaine1);
+
     for(int i=0; i<nbVols; ++i) {
-        if(strcmp(nomCompagnie, listeVols[i].compagnie) == 0) {
+        clearChar(chaine2);
+        copyCharToLower(listeVols[i].compagnie, chaine2);
+
+        if(strcmp(chaine1, chaine2) == 0) {
             indices[ind] = i;
             ++ind;
         }
@@ -45,8 +53,16 @@ void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVo
 
 void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
     int ind=0;
+    char chaine1[50];
+    char chaine2[50];
+
+    copyCharToLower(nomDestination, chaine1);
+
     for(int i=0; i<nbVols; ++i) {
-        if(strcmp(nomDestination, listeVols[i].destination) == 0) {
+        clearChar(chaine2);
+        copyCharToLower(listeVols[i].destination, chaine2);
+
+        if(strcmp(chaine1, chaine2) == 0) {
             indices[ind] = i;
             ++ind;
         }

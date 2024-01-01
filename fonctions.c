@@ -57,6 +57,21 @@ void clearChar(char *chaine) {
     memset(chaine, 0, strlen(chaine));
 }
 
+void setCharClean(char *chaine) {
+    chaine[strlen(chaine)-1] = '\0'; // Enleve le caractère '\n' de chaine quand l'utilisateur tape entrée
+}
+
+void copyCharToLower(const char *copie, char *colle) {
+    for(int i=0; i<strlen(copie); ++i) {
+        if(copie[i]>=65 && copie[i]<=90) {
+            colle[i] = copie[i] + 32;
+        }else {
+            colle[i] = copie[i];
+        }
+    }
+    colle[strlen(copie)] = '\0'; // evite les erreurs
+}
+
 /* GRAPHICS */
 
 void showTitle() {
@@ -87,7 +102,7 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
         system("cls");
         *data = atoi(verified);
         if(*data<nbMin || *data>nbMax) {
-            printf("\n|-- Veuillez saisir une valeur entre %d et %d --|\n", nbMin, nbMax);
+            printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
         }
     }while(*data<nbMin || *data>nbMax);
 }

@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 140725219530493 <<<<<<< HEAD
 
-1704131535 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
+1704136688 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -34,7 +34,7 @@
 1703601449 D
 	"IHM.h"
 
-1704131669 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1704140897 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -45,9 +45,9 @@
 	"IHM.h"
 	"tri.h"
 
-1704131377 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
+1704136688 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
 
-1704131491 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
+1704141040 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -57,11 +57,11 @@
 	"IHM.h"
 	"tri.h"
 
-1704131377 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+1704140178 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
 
 1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
 
-1704131544 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
+1704136688 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -73,7 +73,7 @@
 
 1703950252 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
 
-1703605079 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
+1704138038 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -81,13 +81,14 @@
 	"fichier.h"
 	"fonctions.h"
 	"IHM.h"
+	"tri.h"
 
 1703514619 .h"
 	"fichier.h"
 
-1704131388 c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.h
+1704136688 c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.h
 
-1704131514 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.c
+1704141389 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
