@@ -7,6 +7,7 @@
 #include "fichier.h"
 #include "fonctions.h"
 #include "IHM.h"
+#include "tri.h"
 
 #define NB_VOLS_MAX 192 //attention aussi dans structures.c
 
@@ -79,14 +80,16 @@ int main(int argc, char *argv[])
             }
 
             // VOIR PISTE
-            else if(entry==2) {
+            else if(entry==2 && entry>23) {
                 int tousIndices[nbVols];
+                int a=23;
                 for(int i=0; i<nbVols; ++i) {
                     tousIndices[i] = i;
                 }
                 printf("\nPISTE :\n");
                 afficheTableauVols(listeVols, tousIndices, nbVols);
                 waitPress();
+                printf("%d", a);
             }
 
 

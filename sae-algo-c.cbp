@@ -30,12 +30,8 @@
 		</Build>
 		<Compiler>
 			<Add option="-pedantic-errors" />
-			<Add option="-Wall" />
+			<Add option="-std=c99" />
 		</Compiler>
-		<Unit filename="IHM.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="IHM.h" />
 		<Unit filename="fichier.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -51,6 +47,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="structures.h" />
+		<Unit filename="tri.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tri.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

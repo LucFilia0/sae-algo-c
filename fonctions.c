@@ -6,6 +6,7 @@
 #include "fichier.h"
 #include "fonctions.h"
 #include "IHM.h"
+#include "tri.h"
 
 void verifAlpha(char *chaine) {
     /**

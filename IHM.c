@@ -6,6 +6,7 @@
 #include "fichier.h"
 #include "fonctions.h"
 #include "IHM.h"
+#include "tri.h"
 
 void afficheVol(struct Vol *vol) {
     printf("\n##========== VOL %d ==========##\n\nCompagnie : %s\nDestination : %s\nNumero de comptoir : %d\nHeure debut enregistrement : %d\nHeure fin enregistrement : %d\nSalle d'embarquement : %d\nHeure debut embarquement : %d\nHeure fin embarquement : %d\nHeure decollage : %d\nEtat vol : %s\n\nListe des passagers :\n",

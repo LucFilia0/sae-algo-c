@@ -6,6 +6,7 @@
 #include "fichier.h"
 #include "fonctions.h"
 #include "IHM.h"
+#include "tri.h"
 
 #define NB_VOLS_MAX 192 // Attention aussi dans main.c
 #define MAX 1000
