@@ -2,10 +2,21 @@
 
 /* ##-- STRUCTURES --## */
 
+struct Date {
+    int jour;
+    int mois;
+    int annee;
+};
+
+struct Heure {
+    int heure;
+    int minute;
+};
+
 struct Passager {
     char nom[30];
     char prenom[30];
-    char dateNaissance[10]; /* format JJ/MM/AAAA */
+    struct Date dateNaissance; /* format JJ/MM/AAAA */
     int numSiege;
     double prixBillet;
 };
@@ -15,12 +26,12 @@ struct Vol {
     char compagnie[30];
     char destination[30];
     int numComptoir;
-    int h_debEnregistrement;
-    int h_finEnregistrement;
-    int salleEmbarquement;
-    int h_debEmbarquement;
-    int h_finEmbarquement;
-    int h_decollage;
+    struct Heure h_debEnregistrement;
+    struct Heure h_finEnregistrement;
+    struct Heure salleEmbarquement;
+    struct Heure h_debEmbarquement;
+    struct Heure h_finEmbarquement;
+    struct Heure h_decollage;
     char etatVol[30];
     struct Passager listePassagers[10];
 };

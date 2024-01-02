@@ -72,6 +72,45 @@ void copyCharToLower(const char *copie, char *colle) {
     colle[strlen(copie)] = '\0'; // evite les erreurs
 }
 
+// GESTION DATES
+void catchDate(const char *chaine, char *jour, char *mois, char *annee) {
+    int element = 0, ind = 0;
+    char info[5] = "";
+    clearChar(info);
+
+    for(int i=0; i<11; ++i) { //pas touche au 11 ou wallah je te nik
+        if(chaine[i] == '/' || i == strlen(chaine)) {
+            switch(element) {
+                case 0: copieChar(info, jour); break;
+                case 1: copieChar(info, mois); break;
+                case 2: copieChar(info, annee); break;
+                default: printf("Cas non gere par switch");
+            }
+            element++;
+            ind = 0;
+            clearChar(info);
+        }else {
+            info[ind] = chaine[i];
+            ++ind;
+        }
+    }
+}
+
+// GESTION HEURES
+void setHeure(const char *chaine, struct Heure *heure) {
+    char heureChar[3] = "";
+    char minuteChar[3] = "";
+
+    heureChar[0] = chaine[0];
+    heureChar[1] = chaine[1];
+
+    minuteChar[0] = chaine[2];
+    minuteChar[1] = chaine[3];
+
+    heure->heure = atoi(heureChar);
+    heure->minute = atoi(minuteChar);
+}
+
 /* GRAPHICS */
 
 void showTitle() {

@@ -54,12 +54,12 @@ void initVol(struct Vol *vol, char *infoVol)
                 case 1: copieChar(info, vol->compagnie); break;
                 case 2: copieChar(info, vol->destination); break;
                 case 3: vol->numComptoir = atoi(info); break;
-                case 4: vol->h_debEnregistrement = atoi(info); break;
-                case 5: vol->h_finEnregistrement = atoi(info); break;
-                case 6: vol->salleEmbarquement = atoi(info); break;
-                case 7: vol->h_debEmbarquement = atoi(info); break;
-                case 8: vol->h_finEmbarquement = atoi(info); break;
-                case 9: vol->h_decollage = atoi(info); break;
+                case 4: setHeure(info, &(vol->h_debEnregistrement)); break;
+                case 5: setHeure(info, &(vol->h_finEnregistrement)); break;
+                case 6: setHeure(info, &(vol->salleEmbarquement)); break;
+                case 7: setHeure(info, &(vol->h_debEmbarquement)); break;
+                case 8: setHeure(info, &(vol->h_finEmbarquement)); break;
+                case 9: setHeure(info, &(vol->h_decollage)); break;
                 case 10: copieChar(info, vol->etatVol); break;
                 default: printf("\nCas non traite par switch\n"); break;
             }
@@ -77,6 +77,11 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
     char info[100];
     int passager = 0;
     int i = 0, ind = 0, numElement = 0;
+
+    char jour[3] = "";
+    char mois[3] = "";
+    char annee[5] = "";
+
     while(i<strlen(listePassagers)) {
         if(listePassagers[i]!=';' && i<strlen(listePassagers)-1) {
             if(listePassagers[i]!=',') {
@@ -88,7 +93,13 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
                 {
                     case 0: copieChar(info, vol->listePassagers[passager].nom); break;
                     case 1: copieChar(info, vol->listePassagers[passager].prenom); break;
-                    case 2: copieChar(info, vol->listePassagers[passager].dateNaissance); break;
+                    case 2:
+                        catchDate(info, jour, mois, annee);
+
+                        vol->listePassagers[passager].dateNaissance.jour = atoi(jour);
+                        vol->listePassagers[passager].dateNaissance.mois = atoi(mois);
+                        vol->listePassagers[passager].dateNaissance.annee = atoi(annee);
+                        break;
                     case 3: vol->listePassagers[passager].numSiege = atoi(info); break;
                     default: printf("\nCas non traite par switch\n"); break;
                 }
@@ -112,7 +123,7 @@ void clearPassagers(struct Vol *vol) {
     for(int i=0; i<10; ++i) {
         clearChar(vol->listePassagers[i].nom);
         clearChar(vol->listePassagers[i].prenom);
-        clearChar(vol->listePassagers[i].dateNaissance);
+        //clearChar(vol->listePassagers[i].dateNaissance);
         vol->listePassagers[i].numSiege = 0;
         vol->listePassagers[i].prixBillet = 0.;
     }

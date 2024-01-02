@@ -20,7 +20,7 @@ void afficheTab(int taille, int tab[taille]) {
     }
     printf("%d]\n", tab[i]);
 }
-
+/*
 void tableauVols(int taille, int indices[taille], struct Vol listeVols[taille]) {
     int i=0;
     while(i<taille && indices[i] != -1) {
@@ -29,7 +29,7 @@ void tableauVols(int taille, int indices[taille], struct Vol listeVols[taille]) 
         ++i;
     }
 }
-
+*/
 //=================================================
 
 void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {

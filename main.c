@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
         int entry, recherche, numVol, heure, quit = 0;
         char compagnie[50], destination[50];
 
+
         // ARBRE EVENEMENTS
         do {
             int menu = 1;
