@@ -100,6 +100,8 @@ void catchDate(const char *chaine, char *jour, char *mois, char *annee) {
 void setHeure(const char *chaine, struct Heure *heure) {
     char heureChar[3] = "";
     char minuteChar[3] = "";
+    int heureInt = 0;
+    int minuteInt = 0;
 
     heureChar[0] = chaine[0];
     heureChar[1] = chaine[1];
@@ -107,8 +109,52 @@ void setHeure(const char *chaine, struct Heure *heure) {
     minuteChar[0] = chaine[2];
     minuteChar[1] = chaine[3];
 
-    heure->heure = atoi(heureChar);
-    heure->minute = atoi(minuteChar);
+    heureInt = atoi(heureChar);
+    minuteInt = atoi(minuteChar);
+
+    if((heureInt<24 && heureInt>=0) && (minuteInt<60 && minuteInt>=0)) {
+        heure->heure = atoi(heureChar);
+        heure->minute = atoi(minuteChar);
+    }else {
+        printf("\n---- Heure invalide ----\n");
+    }
+}
+
+void ajouterHeure(struct Heure *heure, int val) {
+    // val en minutes
+    int nbHeure = heure->heure;
+    int nbMinute = heure->minute;
+
+    nbMinute = nbMinute + val;
+
+    if(nbMinute>=0 && nbMinute<60) {
+        heure->minute = nbMinute;
+    }else if(nbMinute>=60) {
+        do {
+            heure->heure = heure->heure + 1;
+            nbMinute = nbMinute - 60;
+            if(heure->heure >= 24)
+                heure->heure = 0;
+        }while(nbMinute>=60);
+        heure->minute = nbMinute;
+    }else {
+        // dans le cas ou val est négatif
+        do {
+            heure->heure = heure->heure - 1;
+            nbMinute = 60 + nbMinute;
+            if(heure->heure < 0)
+                heure->heure = 23;
+        }while(nbMinute<0);
+        heure->minute = nbMinute;
+    }
+}
+
+void afficherHeureDans(struct Heure heure, char *chaine) {
+    if(heure.minute < 10) {
+        sprintf(chaine, "%d:0%d", heure.heure, heure.minute);
+    }else {
+        sprintf(chaine, "%d:%d", heure.heure, heure.minute);
+    }
 }
 
 /* GRAPHICS */

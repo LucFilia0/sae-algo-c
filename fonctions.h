@@ -16,6 +16,10 @@ void catchDate(const char *chaine, char *jour, char *mois, char *annee);
 
 void setHeure(const char *chaine, struct Heure *heure);
 
+void ajouterHeure(struct Heure *heure, int val);
+
+void afficherHeureDans(struct Heure heure, char *chaine);
+
 //==============================================
 
 void showTitle();

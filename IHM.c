@@ -78,12 +78,12 @@ void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
             case 1: copieChar(vol.compagnie, element); break;
             case 2: copieChar(vol.destination, element); break;
             case 3: sprintf(element, "%d", vol.numComptoir); break;
-            case 4: sprintf(element, "%d:%d", vol.h_debEnregistrement.heure, vol.h_debEnregistrement.minute); break;
-            case 5: sprintf(element, "%d:%d", vol.h_finEnregistrement.heure, vol.h_finEnregistrement.minute); break;
+            case 4: afficherHeureDans(vol.h_debEnregistrement, element); break;
+            case 5: afficherHeureDans(vol.h_finEnregistrement, element); break;
             case 6: sprintf(element, "%d", vol.salleEmbarquement); break;
-            case 7: sprintf(element, "%d:%d", vol.h_debEmbarquement.heure, vol.h_debEmbarquement.minute); break;
-            case 8: sprintf(element, "%d:%d", vol.h_finEmbarquement.heure, vol.h_finEmbarquement.minute); break;
-            case 9: sprintf(element, "%d:%d", vol.h_decollage.heure, vol.h_decollage.minute); break;
+            case 7: afficherHeureDans(vol.h_debEmbarquement, element); break;
+            case 8: afficherHeureDans(vol.h_finEmbarquement, element); break;
+            case 9: afficherHeureDans(vol.h_decollage, element); break;
             case 10: copieChar(vol.etatVol, element); break;
             default: printf("\nCas non traite par switch\n"); break;
         }
