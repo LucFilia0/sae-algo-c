@@ -35,8 +35,8 @@ int main(int argc, char *argv[])
 
         // VARIABLES
         struct Vol *v;
-        int entry, recherche, numVol, heure, quit = 0;
-        char compagnie[50], destination[50];
+        int entry, recherche, numVol, quit = 0;
+        char compagnie[50], destination[50], heure[7];
 
 
         // ARBRE EVENEMENTS
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
                         afficheTableauVols(listeVols, num, 1);
 
                         waitPress();
-                        userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                        returnMenu(&menu);
                     }while(menu != 2);
 
                 }
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
                         waitPress();
                         clearChar(compagnie);
 
-                        userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                        returnMenu(&menu);
                     }while(menu!=2);
                 }
                 // PAR DESTINATION
@@ -103,12 +103,41 @@ int main(int argc, char *argv[])
                         waitPress();
                         clearChar(destination);
 
-                        userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
+                        returnMenu(&menu);
                     }while(menu != 2);
                 }
                 // PAR HORAIRE
                 else if(recherche==4) {
-                    userEntryInt("Horaire (HH:MM)", &heure, 0, 2359);
+                    do {
+                        printf("Entrez l'heure de decollage (HH:MM)\n => ");
+                        fgets(heure, 7, stdin);
+
+                        setCharClean(heure);
+
+                        // enlever le ':'
+                        char heureClean[5];
+                        int ind = 0;
+                        for(int i=0; i<strlen(heure); ++i) {
+                            if(heure[i] != ':' || i != 2) {
+                                heureClean[ind] = heure[i];
+                                ++ind;
+                            }
+                        }
+
+                        rechercheHeureDecollage(heureClean, nbVols, listeVols, tabIndices);
+
+                        if(tabIndices[0] != -1) { //si au moins un vol est trouvé
+                            afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX);
+                        }else {
+                            printf("\n---- Aucun vol ne decolle a cette heure-ci ou syntaxe inconnue ----\n");
+                        }
+
+                        waitPress();
+                        clearChar(heure);
+
+                        returnMenu(&menu);
+                    }while(menu != 2);
+
                 }
                 // RETOUR
                 else {

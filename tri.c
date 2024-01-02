@@ -70,6 +70,20 @@ void rechercheDestination(const char *nomDestination, int nbVols, struct Vol lis
     indices[ind] = -1;
 }
 
+void rechercheHeureDecollage(const char *horaire, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+    int ind=0;
+
+    struct Heure horaireRecherchee;
+    setHeure(horaire, &horaireRecherchee);
+
+    for(int i=0; i<nbVols; ++i) {
+        if(listeVols[i].h_decollage.heure == horaireRecherchee.heure && listeVols[i].h_decollage.minute == horaireRecherchee.minute) {
+            indices[ind] = i;
+            ++ind;
+        }
+    }
+    indices[ind] = -1;
+}
 
 
 

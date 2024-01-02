@@ -27,3 +27,5 @@ void showTitle();
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax);
 
 void waitPress();
+
+void returnMenu(int *menu);

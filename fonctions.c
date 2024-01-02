@@ -197,3 +197,7 @@ void waitPress() {
     getchar();
     system("cls");
 }
+
+void returnMenu(int *menu) {
+    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", menu, 1, 2);
+}
