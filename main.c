@@ -9,7 +9,7 @@
 #include "IHM.h"
 #include "tri.h"
 
-#define NB_VOLS_MAX 192 //attention aussi dans structures.c
+#define NB_VOLS_MAX 192 //attention aussi dans structures.c & tri.c
 
 int main(int argc, char *argv[])
 {
@@ -35,8 +35,7 @@ int main(int argc, char *argv[])
 
         // VARIABLES
         struct Vol *v;
-        int entry, recherche, numVol, quit = 0;
-        char compagnie[50], destination[50], heure[7];
+        int entry, recherche, quit = 0;
 
 
         // ARBRE EVENEMENTS
@@ -44,11 +43,14 @@ int main(int argc, char *argv[])
             int menu = 1;
 
             showTitle();
-            userEntryInt("1 - Rechercher un vol\n2 - Voir la piste\n3 - Liste de passagers\n4 - Quitter", &entry, 1, 4);
+            userEntryInt("1 - Recherche simple\n2 - Recherche avancee\n3 - Voir la piste\n4 - Liste des passagers\n5 - Quitter", &entry, 1, 5);
 
-            // RECHERCHE VOL
+            // RECHERCHE SIMPLE
             if(entry==1) {
-                int tabIndices[NB_VOLS_MAX];
+                char compagnie[50], destination[50], heure[7];
+                int numVol = 0;
+
+                int tabIndices[NB_VOLS_MAX] = {0};
 
                 userEntryInt("Vous souhaitez rechercher par :\n[entree] pour retour\n\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 4);
 
@@ -115,16 +117,8 @@ int main(int argc, char *argv[])
                         setCharClean(heure);
 
                         // enlever le ':'
-                        char heureClean[5];
-                        int ind = 0;
-                        for(int i=0; i<strlen(heure); ++i) {
-                            if(heure[i] != ':' || i != 2) {
-                                heureClean[ind] = heure[i];
-                                ++ind;
-                            }
-                        }
 
-                        rechercheHeureDecollage(heureClean, nbVols, listeVols, tabIndices);
+                        rechercheHeureDecollage(heure, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) { //si au moins un vol est trouvé
                             afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX);
@@ -145,8 +139,46 @@ int main(int argc, char *argv[])
                 }
             }
 
+            // RECHERCHE AVANCEE
+            else if(entry == 2) {
+                do {
+                    char compagnie[50] = "", destination[50] = "", heureDecollage[7] = "";
+
+                    int tabIndices[NB_VOLS_MAX] = {0};
+                    int rechercheValidee = 1; // 2 pour 'validée'
+
+                    do {
+                        int rechercheMult = 0;
+
+                        userEntryInt("Quels criteres voulez vous appliquer ?\n1 - Compagnie\n2 - Destination\n3 - Heure de decollage", &rechercheMult, 1, 3);
+
+                        if(rechercheMult == 1) {
+                            userEntryChar("Compagnie", compagnie, 50, 1);
+                            userEntryInt("Voulez vous appliquer un autre critere ?\n1 - Oui\n2 - Non", &rechercheValidee, 1, 2);
+                        }
+                        else if(rechercheMult == 2) {
+                            userEntryChar("Destination", destination, 50, 1);
+                            userEntryInt("Voulez vous appliquer un autre critere ?\n1 - Oui\n2 - Non", &rechercheValidee, 1, 2);
+                        }
+                        else {
+                            userEntryChar("Horaire (HH:MM)", heureDecollage, 50, 1);
+                            userEntryInt("Voulez vous appliquer un autre critere ?\n1 - Oui\n2 - Non", &rechercheValidee, 1, 2);
+                        }
+                    }while(rechercheValidee != 2);
+
+                    rechercheMultiple(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
+                    afficheTableauVols(listeVols, tabIndices, nbVols);
+
+                    waitPress();
+
+                    returnMenu(&menu);
+                }while(menu != 2);
+
+            }
+
+
             // VOIR PISTE
-            else if(entry==2) {
+            else if(entry==3) {
                 int tousIndices[nbVols];
                 int a=23;
                 for(int i=0; i<nbVols; ++i) {
@@ -158,7 +190,7 @@ int main(int argc, char *argv[])
             }
 
             // LISTE PASSAGERS
-            else if(entry == 3) {
+            else if(entry == 4) {
                 do {
                     int numVol = 0;
                     userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);

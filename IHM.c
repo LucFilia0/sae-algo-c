@@ -75,8 +75,8 @@ void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
         clearChar(element);
         switch(i) {
             case 0: sprintf(element, "%d", vol.numVol); break;
-            case 1: copieChar(vol.compagnie, element); break;
-            case 2: copieChar(vol.destination, element); break;
+            case 1: copieChar(vol.compagnie, element, 1); break;
+            case 2: copieChar(vol.destination, element, 1); break;
             case 3: sprintf(element, "%d", vol.numComptoir); break;
             case 4: afficherHeureDans(vol.h_debEnregistrement, element); break;
             case 5: afficherHeureDans(vol.h_finEnregistrement, element); break;
@@ -84,7 +84,7 @@ void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
             case 7: afficherHeureDans(vol.h_debEmbarquement, element); break;
             case 8: afficherHeureDans(vol.h_finEmbarquement, element); break;
             case 9: afficherHeureDans(vol.h_decollage, element); break;
-            case 10: copieChar(vol.etatVol, element); break;
+            case 10: copieChar(vol.etatVol, element, 0); break;
             default: printf("\nCas non traite par switch\n"); break;
         }
         afficheCentre(element, widthColumns);
@@ -98,8 +98,8 @@ void afficheLignePassager(struct Passager passager, int nbColumns, int widthColu
     for(int i=0; i<nbColumns; ++i) {
         clearChar(element);
         switch(i) {
-            case 0: copieChar(passager.nom, element); break;
-            case 1: copieChar(passager.prenom, element); break;
+            case 0: copieChar(passager.nom, element, 1); break;
+            case 1: copieChar(passager.prenom, element, 1); break;
             case 2:
                 // pas très opti mais bon... flm
                 if(passager.dateNaissance.jour < 10 && passager.dateNaissance.mois >= 10)

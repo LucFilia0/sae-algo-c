@@ -1,6 +1,6 @@
 #pragma once
 
-void copieChar(const char* copie, char *colle);
+void copieChar(const char* copie, char *colle, int alpha);
 
 void getCharTo(const char *chaine, char stop, char *sortie);
 
@@ -25,6 +25,8 @@ void afficherHeureDans(struct Heure heure, char *chaine);
 void showTitle();
 
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax);
+
+void userEntryChar(const char *message, char *data, int length, int clearChaine);
 
 void waitPress();
 

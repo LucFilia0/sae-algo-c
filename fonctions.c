@@ -20,9 +20,10 @@ void verifAlpha(char *chaine) {
     }
 }
 
-void copieChar(const char* copie, char *colle) {
+void copieChar(const char* copie, char *colle, int alpha) {
     strcpy(colle, copie);
-    verifAlpha(colle);
+    if(alpha != 0)
+        verifAlpha(colle);
 }
 
 void getCharTo(const char *chaine, char stop, char *sortie) {
@@ -81,9 +82,9 @@ void catchDate(const char *chaine, char *jour, char *mois, char *annee) {
     for(int i=0; i<11; ++i) { //pas touche au 11 ou wallah je te nik
         if(chaine[i] == '/' || i == strlen(chaine)) {
             switch(element) {
-                case 0: copieChar(info, jour); break;
-                case 1: copieChar(info, mois); break;
-                case 2: copieChar(info, annee); break;
+                case 0: copieChar(info, jour, 0); break;
+                case 1: copieChar(info, mois, 0); break;
+                case 2: copieChar(info, annee, 0); break;
                 default: printf("Cas non gere par switch");
             }
             element++;
@@ -190,6 +191,15 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
             printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
         }
     }while(*data<nbMin || *data>nbMax);
+}
+
+void userEntryChar(const char *message, char *data, int length, int clearChaine) {
+    if(clearChaine != 0)
+        clearChar(data);
+    printf("%s : ", message);
+    fgets(data, length, stdin);
+    setCharClean(data);
+    system("cls");
 }
 
 void waitPress() {

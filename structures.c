@@ -51,8 +51,8 @@ void initVol(struct Vol *vol, char *infoVol)
             switch(numElement)
             {
                 case 0: vol->numVol = atoi(info); break;
-                case 1: copieChar(info, vol->compagnie); break;
-                case 2: copieChar(info, vol->destination); break;
+                case 1: copieChar(info, vol->compagnie, 1); break;
+                case 2: copieChar(info, vol->destination, 1); break;
                 case 3: vol->numComptoir = atoi(info); break;
                 case 4: setHeure(info, &(vol->h_debEnregistrement)); break;
                 case 5: setHeure(info, &(vol->h_finEnregistrement)); break;
@@ -60,7 +60,7 @@ void initVol(struct Vol *vol, char *infoVol)
                 case 7: setHeure(info, &(vol->h_debEmbarquement)); break;
                 case 8: setHeure(info, &(vol->h_finEmbarquement)); break;
                 case 9: setHeure(info, &(vol->h_decollage)); break;
-                case 10: copieChar(info, vol->etatVol); break;
+                case 10: copieChar(info, vol->etatVol, 0); break;
                 default: printf("\nCas non traite par switch\n"); break;
             }
             numElement++;
@@ -91,8 +91,8 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
             }else {
                 switch(numElement)
                 {
-                    case 0: copieChar(info, vol->listePassagers[passager].nom); break;
-                    case 1: copieChar(info, vol->listePassagers[passager].prenom); break;
+                    case 0: copieChar(info, vol->listePassagers[passager].nom, 1); break;
+                    case 1: copieChar(info, vol->listePassagers[passager].prenom, 1); break;
                     case 2:
                         catchDate(info, jour, mois, annee);
 

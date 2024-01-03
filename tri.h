@@ -8,4 +8,6 @@ void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVo
 
 void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
 
-void rechercheHeureDecollage(const char *horaire, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
+void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
+
+void rechercheMultiple(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
