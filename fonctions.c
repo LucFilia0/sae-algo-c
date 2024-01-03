@@ -73,6 +73,72 @@ void copyCharToLower(const char *copie, char *colle) {
     colle[strlen(copie)] = '\0'; // evite les erreurs
 }
 
+int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
+    int alpha = 0;
+    int taille = 0;
+
+    if(strlen(chaine1)>strlen(chaine2))
+        taille = strlen(chaine1);
+    else
+        taille = strlen(chaine2);
+
+    char *c1;
+    char *c2;
+
+    copyCharToLower(chaine1, c1);
+    copyCharToLower(chaine2, c2);
+
+    for(int i=0; i<taille; ++i) {
+        if(c1[i] == '\0') {
+            alpha = 2;
+            break;
+        }
+        else if(c2[i] == '\0') {
+            alpha = 1;
+            break;
+        }
+        else if(c1[i]>c2[i]) {
+            alpha = 1;
+            break;
+        }
+        else if(c1[i]<c2[i]) {
+            alpha = 2;
+            break;
+        }
+    }
+
+    return alpha;
+}
+
+// TABLEAUX
+
+void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2) {
+    int temp = tab[ind1];
+    tab[ind1] = tab[ind2];
+    tab[ind2] = temp;
+}
+
+int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb) {
+    int max = deb;
+    int i = deb+1;
+    int ordreAlpha = 0;
+
+    while(i<nbPassagers && indices[i] != -1) {
+        if(listePassagers[indices[i]].prixBillet >= listePassagers[indices[max]].prixBillet) {
+            // Si prix egal, ordre alphabétique en fonction du nom
+            if(listePassagers[indices[i]].prixBillet == listePassagers[indices[max]].prixBillet) {
+                ordreAlpha = compareOrdreAlpha(listePassagers[indices[i]].nom, listePassagers[indices[max]].nom);
+                if(ordreAlpha == 1)
+                    max = i;
+            }else {
+                max = i;
+            }
+        }
+        ++i;
+    }
+    return max;
+}
+
 // GESTION DATES
 void catchDate(const char *chaine, char *jour, char *mois, char *annee) {
     int element = 0, ind = 0;

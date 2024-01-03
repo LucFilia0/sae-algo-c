@@ -20,6 +20,9 @@ void ajouterHeure(struct Heure *heure, int val);
 
 void afficherHeureDans(struct Heure heure, char *chaine);
 
+void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2);
+
+int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb);
 //==============================================
 
 void showTitle();

@@ -164,7 +164,7 @@ void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
     }
 }
 
-void afficheTableauPassagers(struct Vol vol) {
+void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPassagers]) {
     /**
     Affiche tous les passagers d'un vol passé en paramètre
     */
@@ -195,7 +195,7 @@ void afficheTableauPassagers(struct Vol vol) {
     // AFFICHE INFOS
     for(int i=0; i<10; ++i) {
         if(vol.listePassagers[i].numSiege != 0) {
-            afficheLignePassager(vol.listePassagers[i], nbColumns, widthColumns);
+            afficheLignePassager(vol.listePassagers[indices[i]], nbColumns, widthColumns);
             afficheLigneVide(nbColumns, widthColumns);
         }
     }

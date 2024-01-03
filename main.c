@@ -163,11 +163,6 @@ int main(int argc, char *argv[])
                         else if(rechercheMult == 3) {
                             userEntryChar("Horaire (HH:MM)", heureDecollage, 50, 1);
                         }
-                        /*
-                        else if(rechercheMult == 4) {
-                            menu = 2;
-                            break;
-                        }*/
                         else {
                             if(strcmp(compagnie, "") != 0 || strcmp(destination, "") != 0 || strcmp(heureDecollage, "") != 0) {
                                 rechercheValidee = 1;
@@ -207,10 +202,13 @@ int main(int argc, char *argv[])
             else if(entry == 4) {
                 do {
                     int numVol = 0;
+                    int indices[10] = {0};
+
                     userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);
 
-                    printf("\nListe des passagers du vol %d :\n", numVol);
-                    afficheTableauPassagers(listeVols[numVol]);
+                    printf("\nListe des passagers du vol %d :\n", listeVols[numVol-1].numVol);
+                    trierPassagers(10, listeVols[numVol-1].listePassagers, indices);
+                    afficheTableauPassagers(listeVols[numVol-1], 10, indices);
 
                     waitPress();
                     userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
@@ -225,6 +223,12 @@ int main(int argc, char *argv[])
             }
         }while(quit==0);
 
+/*
+        int indices[NB_VOLS_MAX];
+        trierPassagers(10, listeVols[0].listePassagers, indices);
+
+        afficheTableauPassagers(listeVols[0], 10, indices);
+*/
 
 
 

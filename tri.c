@@ -49,7 +49,8 @@ void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVo
             ++ind;
         }
     }
-    indices[ind] = -1;
+    if(ind<nbVols)
+        indices[ind] = -1;
 }
 
 void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
@@ -68,7 +69,8 @@ void rechercheDestination(const char *nomDestination, int nbVols, struct Vol lis
             ++ind;
         }
     }
-    indices[ind] = -1;
+    if(ind<nbVols)
+        indices[ind] = -1;
 }
 
 void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
@@ -93,7 +95,8 @@ void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol 
             ++ind;
         }
     }
-    indices[ind] = -1;
+    if(ind<nbVols)
+        indices[ind] = -1;
 }
 
 int rechercheIntDansTab(int val, int taille, int tab[taille]) {
@@ -155,7 +158,71 @@ void rechercheMultiple(const char *compagnie, const char *destination, const cha
         }
         ++i;
     }
-    indices[ind] = -1;
+    if(ind<nbVols)
+        indices[ind] = -1;
+}
+
+
+// TRI PASSAGERS
+
+void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[taille2], int taille3, int tab3[taille3]) {
+    int ind3 = 0;
+    int ind1 = 0;
+    int ind2 = 0;
+    while(ind1<taille1 && tab1[ind1] != -1) {
+        tab3[ind3] = tab1[ind1];
+        ++ind1;
+        ++ind3;
+    }
+    while(ind2<taille2 && tab2[ind2] != -1) {
+        tab3[ind3] = tab2[ind2];
+        ++ind2;
+        ++ind3;
+    }
+    if(ind3<taille3)
+        tab3[ind3] = -1;
+}
+
+
+void trierPrixBilletsPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]) {
+    int i=0;
+    int max = 0;
+    while(i<nbPassagers && indices[i] != -1) {
+        max = recherchePrixMaxFrom(nbPassagers, listePassagers, indices, i);
+        echangeIndicesTab(nbPassagers, indices, i, max);
+        ++i;
+    }
+}
+
+void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]) {
+    struct Date ajd = {11, 1, 2024}; // 11 janvier 2024
+    int agePassager = 0;
+
+    int listePassagersMoinsDouze[10] = {0}, indMD = 0;
+    int listePassagersPlusDouze[10] = {0}, indPD = 0;
+    for(int passager=0; passager<nbPassagers; ++passager) {
+        agePassager = ajd.annee - listePassagers[passager].dateNaissance.annee;
+        if(listePassagers[passager].numSiege != 0) {
+            if(agePassager<=12) {
+                listePassagersMoinsDouze[indMD] = passager;
+                ++indMD;
+            }else {
+                listePassagersPlusDouze[indPD] = passager;
+                ++indPD;
+            }
+        }
+    }
+    if(indMD<10) {
+        listePassagersMoinsDouze[indMD] = -1;
+    }
+    if(indPD<10) {
+        listePassagersPlusDouze[indPD] = -1;
+    }
+
+    trierPrixBilletsPassagers(10, listePassagers, listePassagersMoinsDouze);
+    trierPrixBilletsPassagers(10, listePassagers, listePassagersPlusDouze);
+
+    concatenerTableaux(10, listePassagersMoinsDouze, 10, listePassagersPlusDouze, nbPassagers, indices);
 }
 
 
