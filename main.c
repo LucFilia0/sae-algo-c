@@ -145,33 +145,47 @@ int main(int argc, char *argv[])
                     char compagnie[50] = "", destination[50] = "", heureDecollage[7] = "";
 
                     int tabIndices[NB_VOLS_MAX] = {0};
-                    int rechercheValidee = 1; // 2 pour 'validée'
+                    int rechercheValidee = 0, retour = 0; // 1 pour 'validée'
 
                     do {
                         int rechercheMult = 0;
 
-                        userEntryInt("Quels criteres voulez vous appliquer ?\n1 - Compagnie\n2 - Destination\n3 - Heure de decollage", &rechercheMult, 1, 3);
+                        printf("=======================================\nCompagnie : %s\nDestination : %s\nHeure de decollage : %s\n=======================================\n", compagnie, destination, heureDecollage);
+
+                        userEntryInt("Quels criteres voulez vous appliquer ?\n1 - Compagnie\n2 - Destination\n3 - Heure de decollage\n\n[entree] pour valider/retour", &rechercheMult, 0, 3);
 
                         if(rechercheMult == 1) {
                             userEntryChar("Compagnie", compagnie, 50, 1);
-                            userEntryInt("Voulez vous appliquer un autre critere ?\n1 - Oui\n2 - Non", &rechercheValidee, 1, 2);
                         }
                         else if(rechercheMult == 2) {
                             userEntryChar("Destination", destination, 50, 1);
-                            userEntryInt("Voulez vous appliquer un autre critere ?\n1 - Oui\n2 - Non", &rechercheValidee, 1, 2);
                         }
-                        else {
+                        else if(rechercheMult == 3) {
                             userEntryChar("Horaire (HH:MM)", heureDecollage, 50, 1);
-                            userEntryInt("Voulez vous appliquer un autre critere ?\n1 - Oui\n2 - Non", &rechercheValidee, 1, 2);
                         }
-                    }while(rechercheValidee != 2);
+                        /*
+                        else if(rechercheMult == 4) {
+                            menu = 2;
+                            break;
+                        }*/
+                        else {
+                            if(strcmp(compagnie, "") != 0 || strcmp(destination, "") != 0 || strcmp(heureDecollage, "") != 0) {
+                                rechercheValidee = 1;
+                            }else {
+                                retour = 1;
+                            }
+                        }
+                    }while(rechercheValidee != 1 && retour != 1);
 
-                    rechercheMultiple(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
-                    afficheTableauVols(listeVols, tabIndices, nbVols);
+                    if(rechercheValidee == 1) {
+                        rechercheMultiple(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
+                        afficheTableauVols(listeVols, tabIndices, nbVols);
 
-                    waitPress();
-
-                    returnMenu(&menu);
+                        waitPress();
+                        returnMenu(&menu);
+                    }else {
+                        menu = 2;
+                    }
                 }while(menu != 2);
 
             }
