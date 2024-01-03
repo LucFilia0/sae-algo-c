@@ -75,16 +75,16 @@ void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
         clearChar(element);
         switch(i) {
             case 0: sprintf(element, "%d", vol.numVol); break;
-            case 1: copieChar(vol.compagnie, element); break;
-            case 2: copieChar(vol.destination, element); break;
+            case 1: copieChar(vol.compagnie, element, 1); break;
+            case 2: copieChar(vol.destination, element, 1); break;
             case 3: sprintf(element, "%d", vol.numComptoir); break;
-            case 4: sprintf(element, "%d", vol.h_debEnregistrement); break;
-            case 5: sprintf(element, "%d", vol.h_finEnregistrement); break;
+            case 4: afficherHeureDans(vol.h_debEnregistrement, element); break;
+            case 5: afficherHeureDans(vol.h_finEnregistrement, element); break;
             case 6: sprintf(element, "%d", vol.salleEmbarquement); break;
-            case 7: sprintf(element, "%d", vol.h_debEmbarquement); break;
-            case 8: sprintf(element, "%d", vol.h_finEmbarquement); break;
-            case 9: sprintf(element, "%d", vol.h_decollage); break;
-            case 10: copieChar(vol.etatVol, element); break;
+            case 7: afficherHeureDans(vol.h_debEmbarquement, element); break;
+            case 8: afficherHeureDans(vol.h_finEmbarquement, element); break;
+            case 9: afficherHeureDans(vol.h_decollage, element); break;
+            case 10: copieChar(vol.etatVol, element, 0); break;
             default: printf("\nCas non traite par switch\n"); break;
         }
         afficheCentre(element, widthColumns);
@@ -98,9 +98,20 @@ void afficheLignePassager(struct Passager passager, int nbColumns, int widthColu
     for(int i=0; i<nbColumns; ++i) {
         clearChar(element);
         switch(i) {
-            case 0: copieChar(passager.nom, element); break;
-            case 1: copieChar(passager.prenom, element); break;
-            case 2: copieChar(passager.dateNaissance, element); break;
+            case 0: copieChar(passager.nom, element, 1); break;
+            case 1: copieChar(passager.prenom, element, 1); break;
+            case 2:
+                // pas très opti mais bon... flm
+                if(passager.dateNaissance.jour < 10 && passager.dateNaissance.mois >= 10)
+                    sprintf(element, "0%d/%d/%d", passager.dateNaissance.jour, passager.dateNaissance.mois, passager.dateNaissance.annee);
+                else if(passager.dateNaissance.mois < 10 && passager.dateNaissance.jour >= 10)
+                    sprintf(element, "%d/0%d/%d", passager.dateNaissance.jour, passager.dateNaissance.mois, passager.dateNaissance.annee);
+                else if(passager.dateNaissance.jour < 10 && passager.dateNaissance.mois < 10)
+                    sprintf(element, "0%d/0%d/%d", passager.dateNaissance.jour, passager.dateNaissance.mois, passager.dateNaissance.annee);
+                else
+                    sprintf(element, "%d/%d/%d", passager.dateNaissance.jour, passager.dateNaissance.mois, passager.dateNaissance.annee);
+
+                break;
             case 3: sprintf(element, "%d", passager.numSiege); break;
             case 4: sprintf(element, "%f", passager.prixBillet); break;
             default: printf("\nCas non traite par switch\n"); break;
@@ -153,7 +164,7 @@ void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
     }
 }
 
-void afficheTableauPassagers(struct Vol vol) {
+void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPassagers]) {
     /**
     Affiche tous les passagers d'un vol passé en paramètre
     */
@@ -184,7 +195,7 @@ void afficheTableauPassagers(struct Vol vol) {
     // AFFICHE INFOS
     for(int i=0; i<10; ++i) {
         if(vol.listePassagers[i].numSiege != 0) {
-            afficheLignePassager(vol.listePassagers[i], nbColumns, widthColumns);
+            afficheLignePassager(vol.listePassagers[indices[i]], nbColumns, widthColumns);
             afficheLigneVide(nbColumns, widthColumns);
         }
     }
