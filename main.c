@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
         int nbVols = 0;
         importDataBase(fichier, listeVols, &nbVols);
 
-        // MET EN PLEIN ECRAN
+        // TECHNIQUE DE BRIGAND POUR METTRE EN PLEIN ECRAN
         keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
         keybd_event(VK_RETURN,0x1c,0,0); //Appuie ENTREE
         keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0); // Relache ENTREE
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         int entry, recherche, quit = 0;
 
 
-        // ARBRE EVENEMENTS
+        // ##==== ARBRE EVENEMENTS ====##
         do {
             int menu = 1;
 
@@ -47,18 +47,19 @@ int main(int argc, char *argv[])
 
             // RECHERCHE SIMPLE
             if(entry==1) {
-                char compagnie[50], destination[50], heure[7];
+                // variables stockant les entrées de l'utilisateur
+                char compagnie[50], destination[50], heureDecollage[7];
                 int numVol = 0;
 
                 int tabIndices[NB_VOLS_MAX] = {0};
 
                 userEntryInt("Vous souhaitez rechercher par :\n[entree] pour retour\n\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 4);
 
-                // PAR NOM
+                // recherche simple => PAR NUMERO
                 if(recherche==1) {
                     do {
                         userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
-                        int num[1] = {numVol-1};
+                        int num[1] = {numVol-1}; //la fonction n'accepte que des tableaux
                         afficheTableauVols(listeVols, num, 1);
 
                         waitPress();
@@ -66,13 +67,10 @@ int main(int argc, char *argv[])
                     }while(menu != 2);
 
                 }
-                // PAR COMPAGNIE
+                // recherche simple => PAR COMPAGNIE
                 else if(recherche==2) {
                     do {
-                        printf("Nom de la compagnie : ");
-                        fgets(compagnie, 50, stdin);
-
-                        setCharClean(compagnie); //enleve le '\n' provoqué par le [entrée]
+                        userEntryChar("Nom de la compagnie", compagnie, 50, 1);
                         rechercheCompagnie(compagnie, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) {
@@ -82,18 +80,13 @@ int main(int argc, char *argv[])
                         }
 
                         waitPress();
-                        clearChar(compagnie);
-
                         returnMenu(&menu);
                     }while(menu!=2);
                 }
-                // PAR DESTINATION
+                // recherche simple => PAR DESTINATION
                 else if(recherche==3) {
                     do {
-                        printf("Destination : ");
-                        fgets(destination, 50, stdin);
-
-                        setCharClean(destination);
+                        userEntryChar("Destination", destination, 50, 1);
                         rechercheDestination(destination, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) { //si au moins un vol est trouvé
@@ -108,17 +101,11 @@ int main(int argc, char *argv[])
                         returnMenu(&menu);
                     }while(menu != 2);
                 }
-                // PAR HORAIRE
+                // recherche simple => PAR HEURE DE DECOLLAGE
                 else if(recherche==4) {
                     do {
-                        printf("Entrez l'heure de decollage (HH:MM)\n => ");
-                        fgets(heure, 7, stdin);
-
-                        setCharClean(heure);
-
-                        // enlever le ':'
-
-                        rechercheHeureDecollage(heure, nbVols, listeVols, tabIndices);
+                        userEntryChar("Entrez l'heure de decollage (HH:MM)", heureDecollage, 7, 1);
+                        rechercheHeureDecollage(heureDecollage, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) { //si au moins un vol est trouvé
                             afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX);
@@ -127,19 +114,17 @@ int main(int argc, char *argv[])
                         }
 
                         waitPress();
-                        clearChar(heure);
-
                         returnMenu(&menu);
                     }while(menu != 2);
 
                 }
                 // RETOUR
                 else {
-                    continue; // retour menu
+                    continue; // retour menu si rien n'est entré
                 }
             }
 
-            // RECHERCHE AVANCEE
+            /** ---- RECHERCHE AVANCEE ----- **/
             else if(entry == 2) {
                 do {
                     char compagnie[50] = "", destination[50] = "", heureDecollage[7] = "";
@@ -150,9 +135,14 @@ int main(int argc, char *argv[])
                     do {
                         int rechercheMult = 0;
 
-                        printf("=======================================\nCompagnie : %s\nDestination : %s\nHeure de decollage : %s\n=======================================\n", compagnie, destination, heureDecollage);
+                        printf("RECHERCHE AVANCEE :"
+                               "\n======================================="
+                               "\n1 - Compagnie : %s"
+                               "\n2 - Destination : %s"
+                               "\n3 - Heure de decollage : %s"
+                               "\n=======================================\n", compagnie, destination, heureDecollage);
 
-                        userEntryInt("Quels criteres voulez vous appliquer ?\n1 - Compagnie\n2 - Destination\n3 - Heure de decollage\n\n[entree] pour valider/retour", &rechercheMult, 0, 3);
+                        userEntryInt("Choisissez les criteres a appliquer\n\n[entree] pour valider/retour", &rechercheMult, 0, 3);
 
                         if(rechercheMult == 1) {
                             userEntryChar("Compagnie", compagnie, 50, 1);
@@ -161,20 +151,33 @@ int main(int argc, char *argv[])
                             userEntryChar("Destination", destination, 50, 1);
                         }
                         else if(rechercheMult == 3) {
-                            userEntryChar("Horaire (HH:MM)", heureDecollage, 50, 1);
+                            userEntryChar("Heure de decollage (HH:MM)", heureDecollage, 50, 1);
                         }
                         else {
                             if(strcmp(compagnie, "") != 0 || strcmp(destination, "") != 0 || strcmp(heureDecollage, "") != 0) {
                                 rechercheValidee = 1;
                             }else {
-                                retour = 1;
+                                retour = 1; //réaffiche l'écran de recherche avancée
                             }
                         }
                     }while(rechercheValidee != 1 && retour != 1);
 
                     if(rechercheValidee == 1) {
+                        //On garde l'affichage sympa
+                        printf("RECHERCHE AVANCEE :"
+                               "\n======================================="
+                               "\n1 - Compagnie : %s"
+                               "\n2 - Destination : %s"
+                               "\n3 - Heure de decollage : %s"
+                               "\n=======================================\n", compagnie, destination, heureDecollage);
+
                         rechercheMultiple(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
-                        afficheTableauVols(listeVols, tabIndices, nbVols);
+                        if(tabIndices[0] != -1) { //Si au moins un vol est trouvé
+                            afficheTableauVols(listeVols, tabIndices, nbVols);
+                        }else {
+                            printf("\n---- Aucun vol ne correspond a votre recherche ----\n");
+                        }
+
 
                         waitPress();
                         returnMenu(&menu);
@@ -186,7 +189,11 @@ int main(int argc, char *argv[])
             }
 
 
-            // VOIR PISTE
+            /** ---- VOIR PISTE ---- **/
+            /*
+                Les passagers sont rangés selon leur age -> les 12 et - devant, puis les "adultes".
+                Les deux tranches d'âge sont ensuite triées, de façon indépendante, selon le prix de leur billet (ordre décroissant).
+            */
             else if(entry==3) {
                 int tousIndices[nbVols];
                 int a=23;
@@ -198,7 +205,7 @@ int main(int argc, char *argv[])
                 waitPress();
             }
 
-            // LISTE PASSAGERS
+            /** ---- LISTE PASSAGERS ---- **/
             else if(entry == 4) {
                 do {
                     int numVol = 0;
@@ -217,23 +224,16 @@ int main(int argc, char *argv[])
             }
 
 
-            // QUIT
+            /** ---- QUIT ---- **/
             else {
                 quit=1;
             }
         }while(quit==0);
 
-/*
-        int indices[NB_VOLS_MAX];
-        trierPassagers(10, listeVols[0].listePassagers, indices);
-
-        afficheTableauPassagers(listeVols[0], 10, indices);
-*/
 
 
-
-        // END
+        /** THE END **/
         fclose(fichier);
     }
-    return 0;
+    return EXIT_SUCCESS;
 }

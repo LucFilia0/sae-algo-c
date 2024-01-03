@@ -1,6 +1,6 @@
 #pragma once
 
-/* ##-- STRUCTURES --## */
+/** ##-- STRUCTURES --## */
 
 struct Date {
     int jour;
@@ -36,8 +36,15 @@ struct Vol {
     struct Passager listePassagers[10];
 };
 
+/** ##---- DECLARATIONS FONCTIONS HEURES ----## */
 
-/* ##-- DECLARATIONS FONCTIONS --## */
+void setHeure(const char *chaine, struct Heure *heure);
+
+void ajouterHeure(struct Heure *heure, int val);
+
+void afficherHeureDans(struct Heure heure, char *chaine);
+
+/** ##---- DECLARATIONS FONCTIONS STRUCTURES.C ----## */
 
 void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols);
 

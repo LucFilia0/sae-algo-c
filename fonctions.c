@@ -8,9 +8,15 @@
 #include "IHM.h"
 #include "tri.h"
 
+/** ##-- DEFINITIONS FONCTIONS SUR LES CHAINES DE CARACTERES --## */
+
 void verifAlpha(char *chaine) {
-    /**
-    Verifie si caracteres alphanumériques respectés
+    /*
+        :entree;
+            'chaine' -> la chaine a vérifier
+        :fonction:
+            vérifie si 'chaine' respecte les caractères alphanumériques.
+            Sinon, elle remplace par un espace
     */
     for(int i=0; i<strlen(chaine); ++i) {
         if ( ((chaine[i] >= 48) && (chaine[i] <= 58)) || ((chaine[i] >= 65) && (chaine[i] <= 90)) || ((chaine[i] >= 97) && (chaine[i] <= 122)) ) {}
@@ -21,12 +27,29 @@ void verifAlpha(char *chaine) {
 }
 
 void copieChar(const char* copie, char *colle, int alpha) {
+    /*
+        :entree:
+            'copie' -> la chaine à copier
+            'colle' -> la chaine dans laquelle on colle
+            'aplha' -> si 0, la vérification alphanumérique n'est pas effectuée.
+                        Pour toute autre valeur que 0, les caractères seront remplacés par des espaces
+        :fonction:
+            copie une chaine de caractères dans une autre, en vérifiant les caractères alphanuméiques, ou pas.
+    */
     strcpy(colle, copie);
     if(alpha != 0)
         verifAlpha(colle);
 }
 
 void getCharTo(const char *chaine, char stop, char *sortie) {
+    /*
+        :entree:
+            'chaine' -> chaine que l'on scan
+            'stop' -> le caractère qui arrête le scan
+            'sortie' -> la chaine dans laquelle est copiée le scan
+        :fonction:
+            scan 'chaine', jusqu'à renconter 'stop'. Copie le scan dans 'sortie'
+    */
     int i = 0;
     while(i<strlen(chaine) && chaine[i]!=stop) {
         sortie[i] = chaine[i];
@@ -35,6 +58,15 @@ void getCharTo(const char *chaine, char stop, char *sortie) {
 }
 
 void getCharFromTo(const char *chaine, char start, char stop, char *sortie) {
+    /*
+        :entree:
+            'chaine' -> chaine a scanner
+            'start' -> caractère qui commence le scan
+            'stop' -> caractère qui arrête le scan
+            'sortie' -> chaine qui accueille le scan
+        :fonction:
+            scan 'chaine', en commencant à 'start', et en s'arrêtant à 'stop', copie dans 'sortie'
+    */
     int i=0, statut = 0, iSortie = 0;
     while(i<strlen(chaine)) {
         if(chaine[i]==start && statut==0) {
@@ -55,14 +87,30 @@ void getCharFromTo(const char *chaine, char start, char stop, char *sortie) {
 }
 
 void clearChar(char *chaine) {
+    /*
+        :fonction:
+            supprime tous les éléments d'une chaine ou d'un tableau
+    */
     memset(chaine, 0, strlen(chaine));
 }
 
 void setCharClean(char *chaine) {
-    chaine[strlen(chaine)-1] = '\0'; // Enleve le caractère '\n' de chaine quand l'utilisateur tape entrée
+    /*
+        :fonction:
+            Suite à un 'fgets', enleve le caractère '\n' de chaine quand l'utilisateur tape entrée,
+            sinon bousille toutes les comparations de chaine
+    */
+    chaine[strlen(chaine)-1] = '\0';
 }
 
 void copyCharToLower(const char *copie, char *colle) {
+    /*
+        :entree:
+            'copie' -> chaine à copier
+            'colle' -> chaine accueillant la version minuscule de 'copie'
+        :fonction:
+            'colle' est la version de 'copie' en lettres minuscules. Les autres caractères ne sont pas affectés
+    */
     for(int i=0; i<strlen(copie); ++i) {
         if(copie[i]>=65 && copie[i]<=90) {
             colle[i] = copie[i] + 32;
@@ -74,6 +122,14 @@ void copyCharToLower(const char *copie, char *colle) {
 }
 
 int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
+    /*
+        :fontion:
+            renvoie 1 si 'chaine1' est avant 'chaine2' dans l'ordre alphabétique
+            renvoie 2 si 'chaine2' est avant
+            renvoie 0 si elles sont égales
+
+            La casse est gérée
+    */
     int alpha = 0;
     int taille = 0;
 
@@ -110,15 +166,28 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
     return alpha;
 }
 
-// TABLEAUX
+/** ##---- DEFINITIONS DES FONCTIONS SUR LES TABLEAUX ----## */
 
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2) {
+    /*
+        :fonction:
+            échange les valeurs des indices 'ind1' et 'ind2' dans 'tab'
+    */
     int temp = tab[ind1];
     tab[ind1] = tab[ind2];
     tab[ind2] = temp;
 }
 
 int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb) {
+    /*
+        :entree:
+            'nbPassagers' -> le nombre de passagers max dans la liste
+            'listePassagers' -> la liste de passagers
+            'indices' -> tableau contenant l'ordre d'affichage des passagers
+            'deb' -> indices à partir duquel on commence la recherche
+        :fonction:
+            recherche le prix du billet le plus cher dans une liste de passagers, à partir d'un indice
+    */
     int max = deb;
     int i = deb+1;
     int ordreAlpha = 0;
@@ -137,143 +206,4 @@ int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassa
         ++i;
     }
     return max;
-}
-
-// GESTION DATES
-void catchDate(const char *chaine, char *jour, char *mois, char *annee) {
-    int element = 0, ind = 0;
-    char info[5] = "";
-    clearChar(info);
-
-    for(int i=0; i<11; ++i) { //pas touche au 11 ou wallah je te nik
-        if(chaine[i] == '/' || i == strlen(chaine)) {
-            switch(element) {
-                case 0: copieChar(info, jour, 0); break;
-                case 1: copieChar(info, mois, 0); break;
-                case 2: copieChar(info, annee, 0); break;
-                default: printf("Cas non gere par switch");
-            }
-            element++;
-            ind = 0;
-            clearChar(info);
-        }else {
-            info[ind] = chaine[i];
-            ++ind;
-        }
-    }
-}
-
-// GESTION HEURES
-void setHeure(const char *chaine, struct Heure *heure) {
-    char heureChar[3] = "";
-    char minuteChar[3] = "";
-    int heureInt = 0;
-    int minuteInt = 0;
-
-    heureChar[0] = chaine[0];
-    heureChar[1] = chaine[1];
-
-    minuteChar[0] = chaine[2];
-    minuteChar[1] = chaine[3];
-
-    heureInt = atoi(heureChar);
-    minuteInt = atoi(minuteChar);
-
-    if((heureInt<24 && heureInt>=0) && (minuteInt<60 && minuteInt>=0)) {
-        heure->heure = atoi(heureChar);
-        heure->minute = atoi(minuteChar);
-    }else {
-        printf("\n---- Heure invalide ----\n");
-    }
-}
-
-void ajouterHeure(struct Heure *heure, int val) {
-    // val en minutes
-    int nbHeure = heure->heure;
-    int nbMinute = heure->minute;
-
-    nbMinute = nbMinute + val;
-
-    if(nbMinute>=0 && nbMinute<60) {
-        heure->minute = nbMinute;
-    }else if(nbMinute>=60) {
-        do {
-            heure->heure = heure->heure + 1;
-            nbMinute = nbMinute - 60;
-            if(heure->heure >= 24)
-                heure->heure = 0;
-        }while(nbMinute>=60);
-        heure->minute = nbMinute;
-    }else {
-        // dans le cas ou val est négatif
-        do {
-            heure->heure = heure->heure - 1;
-            nbMinute = 60 + nbMinute;
-            if(heure->heure < 0)
-                heure->heure = 23;
-        }while(nbMinute<0);
-        heure->minute = nbMinute;
-    }
-}
-
-void afficherHeureDans(struct Heure heure, char *chaine) {
-    if(heure.minute < 10) {
-        sprintf(chaine, "%d:0%d", heure.heure, heure.minute);
-    }else {
-        sprintf(chaine, "%d:%d", heure.heure, heure.minute);
-    }
-}
-
-/* GRAPHICS */
-
-void showTitle() {
-    printf("\n>> GESTION'AIR\n\n");
-}
-
-void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
-    *data = 0;
-    char entry[100] = "";
-    char verified[100] = "";
-
-
-    do {
-        int v = 0;
-        clearChar(entry);
-        clearChar(verified);
-
-        printf("\n%s\n => ", message);
-        fgets(entry, 100, stdin);// pas touche au 100
-
-        for(int i=0; i<strlen(entry); i++) {
-            if(entry[i]=='0'||entry[i]=='1'||entry[i]=='2'||entry[i]=='3'||entry[i]=='4'||entry[i]=='5'||entry[i]=='6'||entry[i]=='7'||entry[i]=='8'||entry[i]=='9') {
-                verified[v] = entry[i];
-                v++;
-            }
-        }
-
-        system("cls");
-        *data = atoi(verified);
-        if(*data<nbMin || *data>nbMax) {
-            printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
-        }
-    }while(*data<nbMin || *data>nbMax);
-}
-
-void userEntryChar(const char *message, char *data, int length, int clearChaine) {
-    if(clearChaine != 0)
-        clearChar(data);
-    printf("%s : ", message);
-    fgets(data, length, stdin);
-    setCharClean(data);
-    system("cls");
-}
-
-void waitPress() {
-    printf("\n\nAppuyez sur [entree]...");
-    getchar();
-    system("cls");
-}
-
-void returnMenu(int *menu) {
-    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", menu, 1, 2);
 }

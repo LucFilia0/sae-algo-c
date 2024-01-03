@@ -8,34 +8,100 @@
 #include "IHM.h"
 #include "tri.h"
 
-void afficheVol(struct Vol *vol) {
-    printf("\n##========== VOL %d ==========##\n\nCompagnie : %s\nDestination : %s\nNumero de comptoir : %d\nHeure debut enregistrement : %d\nHeure fin enregistrement : %d\nSalle d'embarquement : %d\nHeure debut embarquement : %d\nHeure fin embarquement : %d\nHeure decollage : %d\nEtat vol : %s\n\nListe des passagers :\n",
-    vol->numVol,
-    vol->compagnie,
-    vol->destination,
-    vol->numComptoir,
-    vol->h_debEnregistrement,
-    vol->h_finEnregistrement,
-    vol->salleEmbarquement,
-    vol->h_debEmbarquement,
-    vol->h_finEmbarquement,
-    vol->h_decollage,
-    vol->etatVol
-    );
-    long int nbPassagers = sizeof(vol->listePassagers) / sizeof(vol->listePassagers[0]);
-    for(int i=0; i<nbPassagers; i++) {
-        if(vol->listePassagers[i].numSiege != 0) {
-            printf("\n%d : ", i+1);
-            struct Passager *ptPassager = &(vol->listePassagers[i]);
-            printf("\tNom : %s\n\tPrenom : %s\n\tDate de naissance : %s\n\tNumero de siege : %d\n\tPrix du billet : %.2f\n\n",
-                ptPassager->nom,
-                ptPassager->prenom,
-                ptPassager->dateNaissance,
-                ptPassager->numSiege,
-                ptPassager->prixBillet
-            );
+/** ##---- DECLARATION DES FONCTIONS D'INTERACTION AVEC L'UTILISATEUR ----## */
+
+void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
+    /*
+        :entree:
+            'message' -> message affiché à l'utilisateur. L'affichage de la flèche est pris en compte par la fonction
+            'data' -> la variable qui va stocker l'entrée de l'utilisateur
+            'nbMin' -> nombre minimal accepté
+            'nbMax' -> nombre maximal accepté
+        :types:
+            'data' est un pointeur
+        :fonction:
+            Permet une saisie sécurisée de l'utilisateur.
+            Va scanner la réponse de l'utilisateur et en extirper les chiffres
+            Ensuite, cast cette chaine de chiffre en nombre, dans 'data'
+            Vérifie que nbMin <= 'data' <= nbMax (boucle tant que pas correct, message d'erreur géré par la fonction)
+    */
+    *data = 0;
+    char entry[100] = ""; //entrée de l'utilisateur
+    char verified[100] = ""; //chaine contenant les chiffres, pour ensuite etre caster en int
+
+
+    do {
+        int v = 0;
+        clearChar(entry);
+        clearChar(verified);
+
+        printf("\n%s\n => ", message);
+        fgets(entry, 100, stdin);// pas touche au 100
+
+        for(int i=0; i<strlen(entry); i++) {
+            if(entry[i]=='0'||entry[i]=='1'||entry[i]=='2'||entry[i]=='3'||entry[i]=='4'||entry[i]=='5'||entry[i]=='6'||entry[i]=='7'||entry[i]=='8'||entry[i]=='9') {
+                verified[v] = entry[i];
+                v++;
+            }
         }
-    }
+
+        system("cls");
+        *data = atoi(verified);
+        if(*data<nbMin || *data>nbMax) {
+            printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
+        }
+    }while(*data<nbMin || *data>nbMax);
+}
+
+void userEntryChar(const char *message, char *data, int length, int clearChaine) {
+    /*
+        :entree:
+            'message' -> message affiché à l'utilisateur (les ':' sont gérés pas la fonction
+            'data' -> la chaine contenant l'entrée de l'utilisateur
+            'length' -> le nombre de caractères acceptés par le 'fgets'
+            'clearChaine' -> pour vider la mémoire avant d'écrire dedans (conseillé)
+                            0 pour ne pas vider, sinon vide
+        :fonction:
+            Permet à l'utilisateur d'entrer du texte, stocké dans 'data'
+    */
+    if(clearChaine != 0)
+        clearChar(data);
+    printf("%s : ", message);
+    fgets(data, length, stdin);
+    setCharClean(data);
+    system("cls");
+}
+
+void waitPress() {
+    /*
+        :fonction:
+            Attend que l'utilisateur appuie sur [entrée] pour effacer l'écran
+    */
+    printf("\n\nAppuyez sur [entree]...");
+    getchar();
+    system("cls");
+}
+
+void returnMenu(int *menu) {
+    /*
+        :entree:
+            'menu' -> variable 'menu', dans le main, qui doit être modifié
+        :types:
+            'menu' est un pointeur
+        :fonction:
+            modifie menu, automatise l'affichage du message
+    */
+    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", menu, 1, 2);
+}
+
+/** ##---- DECLARATIONS DES FONCTIONS D'AFFICHAGE ----## */
+
+void showTitle() {
+    /*
+        :fonction:
+            Affiche le titre le l'application (ceci est provisoire)
+    */
+    printf("\n>> GESTION'AIR\n\n");
 }
 
 void afficheLigneVide(int nbColumns, int widthColumns) {
@@ -68,7 +134,7 @@ void afficheCentre(const char *element, int widthColumn) {
     }
 }
 
-void afficheLigneInfo(struct Vol vol, int nbColumns, int widthColumns) {
+void afficheLigneVol(struct Vol vol, int nbColumns, int widthColumns) {
     char element[100];
     printf("\n|");
     for(int i=0; i<nbColumns; ++i) {
@@ -158,7 +224,7 @@ void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
     // AFFICHE INFOS
     int i=0;
     while(i<taille && tab[i] != -1) {
-        afficheLigneInfo(listeVols[tab[i]], nbColumns, widthColumns);
+        afficheLigneVol(listeVols[tab[i]], nbColumns, widthColumns);
         afficheLigneVide(nbColumns, widthColumns);
         ++i;
     }

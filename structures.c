@@ -11,7 +11,138 @@
 #define NB_VOLS_MAX 192 // Attention aussi dans main.c
 #define MAX 1000
 
+/** ##---- DECLARATIONS DES FONCTIONS SUR LES DATES ----## */
+
+void setDate(struct Date *date,const char *chaine) {
+    /*
+        :entree:
+            'date' -> la date à initialiser
+            'chaine' -> la chaine de caractères de forme 'JJ/MM/AAAA'
+        :fonction:
+            Découpe 'chaine' et stock les valeurs de la dates en int dans la structure
+    */
+    int element = 0, ind = 0;
+    char info[7] = "";
+    clearChar(info);
+
+    for(int i=0; i<11; ++i) { //pas touche au 11 ou wallah je te nik
+        if(chaine[i] == '/' || i == strlen(chaine)) {
+            switch(element) {
+                case 0: date->jour = atoi(info); break;
+                case 1: date->mois = atoi(info); break;
+                case 2: date->annee = atoi(info); break;
+                default: printf("Cas non gere par switch");
+            }
+            element++;
+            ind = 0;
+            clearChar(info);
+        }else {
+            info[ind] = chaine[i];
+            ++ind;
+        }
+    }
+}
+
+/** ##---- DECLARATION DES FONCTIONS SUR LES HEURES ----## */
+
+void setHeure(const char *chaine, struct Heure *heure) {
+    /*
+        :entree:
+            'chaine' -> la chaine de caractères de la forme 'HH:MM'
+            'heure' -> l'heure à initialiser
+        :types:
+            'heure' est un pointeur
+        :fonction:
+            découpe 'chaine', et stock les valeurs en int dans la structure int
+    */
+    char heureChar[3] = "";
+    char minuteChar[3] = "";
+    int heureInt = 0;
+    int minuteInt = 0;
+
+    heureChar[0] = chaine[0];
+    heureChar[1] = chaine[1];
+
+    minuteChar[0] = chaine[2];
+    minuteChar[1] = chaine[3];
+
+    heureInt = atoi(heureChar);
+    minuteInt = atoi(minuteChar);
+
+    if((heureInt<24 && heureInt>=0) && (minuteInt<60 && minuteInt>=0)) {
+        heure->heure = atoi(heureChar);
+        heure->minute = atoi(minuteChar);
+    }else {
+        printf("\n---- Heure invalide ----\n");
+    }
+}
+
+void ajouterHeure(struct Heure *heure, int val) {
+    /*
+        :entree:
+            'heure' -> l'heure à modifier
+            'val' -> la valeur, en minutes, à ajouter (peut être négatif)
+        :types:
+            'heure' est un pointeur
+        :fonction:
+            ajoute la valeur 'val' à 'heure', en vérifiant toutes les contraintes liées aux bases 60 et 24
+    */
+    int nbHeure = heure->heure;
+    int nbMinute = heure->minute;
+
+    nbMinute = nbMinute + val;
+
+    if(nbMinute>=0 && nbMinute<60) {
+        heure->minute = nbMinute;
+    }else if(nbMinute>=60) {
+        do {
+            heure->heure = heure->heure + 1;
+            nbMinute = nbMinute - 60;
+            if(heure->heure >= 24)
+                heure->heure = 0;
+        }while(nbMinute>=60);
+        heure->minute = nbMinute;
+    }else {
+        // dans le cas ou val est négatif
+        do {
+            heure->heure = heure->heure - 1;
+            nbMinute = 60 + nbMinute;
+            if(heure->heure < 0)
+                heure->heure = 23;
+        }while(nbMinute<0);
+        heure->minute = nbMinute;
+    }
+}
+
+void afficherHeureDans(struct Heure heure, char *chaine) {
+    /*
+        :entree:
+            'heure' -> l'heure à afficher
+            'chaine' -> la chaine de caractères qui contient la valeur texte de 'heure'
+        :fonction:
+            affiche un '0' devant les minutes, si elles sont inférieures à 10,
+            prcq c'est joli :)
+    */
+    if(heure.minute < 10) {
+        sprintf(chaine, "%d:0%d", heure.heure, heure.minute);
+    }else {
+        sprintf(chaine, "%d:%d", heure.heure, heure.minute);
+    }
+}
+
+/** ##---- DECLARATION DES FONCTIONS IMPORTANT LES DONNEES ----## */
+
 void importDataBase(FILE *fichier, struct Vol *listeVols, int *nbVols) {
+    /*
+        :paramètres:
+            'fichier' -> le fichier à lire
+            'listeVols' -> le tableau stockant tous les vols que l'on va importer
+            'nbVols' -> la compteur qui dénombre les vols existant (différent de nombre de vols max)
+        :pre-cond:
+            'nbVols' est un pointeur
+        :fonction:
+            importe tous les vols aux bons emplacements
+    */
     char ligne[MAX] = "";
     struct Vol *ptVol;
     char verif = ' ';
@@ -40,6 +171,15 @@ void importDataBase(FILE *fichier, struct Vol *listeVols, int *nbVols) {
 
 void initVol(struct Vol *vol, char *infoVol)
 {
+    /*
+        :entree:
+            'vol' -> le vol à implémenter
+            'infoVol' -> la chaine de caractère contenant toutes les infos sur le vol
+        :types:
+            'vol' est un pointeur, car on veut modifier le vol, pas juste le lire, donc on écrit sur son emplacement mémoire
+        :fonction:
+            initialise les données du vol
+    */
     char info[300] = "";
     int i = 0, ind = 0, numElement = 0;
     while(i<strlen(infoVol)) {
@@ -73,6 +213,15 @@ void initVol(struct Vol *vol, char *infoVol)
 
 void initPassagers(struct Vol *vol, const char *listePassagers)
 {
+    /*
+        :entree:
+            'vol' -> le vol dont on va modifier la liste de passagers
+            'listePassagers' -> la chaine de caractères contenant toutes les infos des passagers
+        :types:
+            'vol' -> pointeur, car on veut modifier
+        :fonction:
+            initialise la liste de passagers du vol
+    */
     clearPassagers(vol);
     char info[100];
     int passager = 0;
@@ -93,13 +242,7 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
                 {
                     case 0: copieChar(info, vol->listePassagers[passager].nom, 1); break;
                     case 1: copieChar(info, vol->listePassagers[passager].prenom, 1); break;
-                    case 2:
-                        catchDate(info, jour, mois, annee);
-
-                        vol->listePassagers[passager].dateNaissance.jour = atoi(jour);
-                        vol->listePassagers[passager].dateNaissance.mois = atoi(mois);
-                        vol->listePassagers[passager].dateNaissance.annee = atoi(annee);
-                        break;
+                    case 2: setDate(&(vol->listePassagers[passager].dateNaissance), info); break;
                     case 3: vol->listePassagers[passager].numSiege = atoi(info); break;
                     default: printf("\nCas non traite par switch\n"); break;
                 }
@@ -120,6 +263,13 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
 }
 
 void clearPassagers(struct Vol *vol) {
+    /*
+        :entree:
+            'vol' -> le vol dont on va nettoyer la liste de passagers
+        :fonction:
+            met tous les paramètres de tous les passagers de 'vol' à leur valeur nulle,
+            afin de ne pas avoir de valeur bizarres qui apparaissent lors de l'affichage
+    */
     for(int i=0; i<10; ++i) {
         clearChar(vol->listePassagers[i].nom);
         clearChar(vol->listePassagers[i].prenom);
