@@ -16,6 +16,8 @@ void copyCharToLower(const char *copie, char *colle);
 
 /** ##---- DECLARATIONS FONCTIONS TABLEAUX ----## */
 
+void afficheTab(int taille, int tab[taille]);
+
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2);
 
 int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb);

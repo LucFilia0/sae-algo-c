@@ -168,6 +168,20 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
 
 /** ##---- DEFINITIONS FONCTIONS TABLEAUX ----## */
 
+void afficheTab(int taille, int tab[taille]) {
+    /*
+        :fonction:
+            affiche le tableau passé en paramètre (pour les tests)
+    */
+    int i=0;
+    printf("[");
+    while(i<taille-1) {
+        printf("%d ", tab[i]);
+        ++i;
+    }
+    printf("%d]\n", tab[i]);
+}
+
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2) {
     /*
         :fonction:

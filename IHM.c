@@ -187,7 +187,7 @@ void afficheLignePassager(struct Passager passager, int nbColumns, int widthColu
     }
 }
 
-void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
+void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]) {
     /*
         :entree:
 
@@ -196,7 +196,7 @@ void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
     int widthColumns = 17;
     int nbColumns = 11;
 
-    // LIGNE DU HAUT DU TABLEAU
+    // LIGNE DU HAUT DU TABLO
     printf(" ");
     for(int i=0; i<(nbColumns*widthColumns+nbColumns-1); ++i) {
         printf("_");
@@ -224,8 +224,8 @@ void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
     afficheLigneVide(nbColumns, widthColumns);
     // AFFICHE INFOS
     int i=0;
-    while(i<taille && tab[i] != -1) {
-        afficheLigneVol(listeVols[tab[i]], nbColumns, widthColumns);
+    while(i<nbVols && indices[i] != -1) {
+        afficheLigneVol(listeVols[indices[i]], nbColumns, widthColumns);
         afficheLigneVide(nbColumns, widthColumns);
         ++i;
     }

@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
                     do {
                         userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
                         int num[1] = {numVol-1}; //la fonction n'accepte que des tableaux
-                        afficheTableauVols(listeVols, num, 1);
+                        afficheTableauVols(listeVols, 1, num);
 
                         waitPress();
                         returnMenu(&menu);
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
                         rechercheCompagnie(compagnie, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) {
-                            afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX); //fonction prévue pour s'arreter si '-1' rencontré
+                            afficheTableauVols(listeVols, nbVols, tabIndices); //fonction prévue pour s'arreter si '-1' rencontré
                         }else {
                             printf("\n---- Cette compagnie n'existe pas ou syntaxe inconnue ----\n");
                         }
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
                         rechercheDestination(destination, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) { //si au moins un vol est trouvé
-                            afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX);
+                            afficheTableauVols(listeVols, nbVols, tabIndices);
                         }else {
                             printf("\n---- Cette destination n'existe pas ou syntaxe inconnue ----\n");
                         }
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
                         rechercheHeureDecollage(heureDecollage, nbVols, listeVols, tabIndices);
 
                         if(tabIndices[0] != -1) { //si au moins un vol est trouvé
-                            afficheTableauVols(listeVols, tabIndices, NB_VOLS_MAX);
+                            afficheTableauVols(listeVols, nbVols, tabIndices);
                         }else {
                             printf("\n---- Aucun vol ne decolle a cette heure-ci ou syntaxe inconnue ----\n");
                         }
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 
                         rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
                         if(tabIndices[0] != -1) { //Si au moins un vol est trouvé
-                            afficheTableauVols(listeVols, tabIndices, nbVols);
+                            afficheTableauVols(listeVols, nbVols, tabIndices);
                         }else {
                             printf("\n---- Aucun vol ne correspond a votre recherche ----\n");
                         }
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
                     tousIndices[i] = i;
                 }
                 printf("\nPISTE :\n");
-                afficheTableauVols(listeVols, tousIndices, nbVols);
+                afficheTableauVols(listeVols, nbVols, tousIndices);
                 waitPress();
             }
 

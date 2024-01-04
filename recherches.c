@@ -14,6 +14,16 @@
 /** ##---- DEFINITIONS FONCTIONS RECHERCHE ----## */
 
 int rechercheIntDansTab(int val, int taille, int tab[taille]) {
+    /*
+        :entree;
+            'val' -> la valeur à rechercher
+            'taille' -> taille du tableau
+            'tab' -> le tableau en question
+        :fonction:
+            renvoie 1 si 'val' est trouvé dans 'tab', sinon 0.
+            recherche linéaire, s'arrête quand '-1' rencontré.
+            utilisé dans 'rechercheAvancee'
+    */
     int exist = 0, i = 0;
     if(tab[0] != -1) {
         while(i<taille && tab[i] != -1) {
@@ -29,6 +39,16 @@ int rechercheIntDansTab(int val, int taille, int tab[taille]) {
 }
 
 void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+    /*
+        :entree:
+            'nomCompagnie' -> la compagnie à rechercher
+            'nbVols' -> le nombre de vols
+            'listeVols' -> liste contenant tous les vols
+            'indices' -> tableau contenant les vols correspondant à 'nomCompagnie'
+        :fonction:
+            recherche tous les vols ayant pour compagnie 'nomCompagnie'.
+            les indices des vols sont stockés dans indices.
+    */
     int ind=0;
     char chaine1[50];
     char chaine2[50];
@@ -49,6 +69,16 @@ void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVo
 }
 
 void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+    /*
+        :entree:
+            'nomDestination' -> la destination recherchee
+            'nbVols' -> le nombre de vols
+            'listeVols' -> liste contenant tous les vols
+            'indices' -> tableau stockant tous les indices des vols correspondant à la recherche
+        :fonction:
+            recherche dans tous les vols de 'listeVols' ceux dont la destination correspond à 'nomDestination'.
+            stock les indices des vols dans 'indices'
+    */
     int ind=0;
     char chaine1[50];
     char chaine2[50];
@@ -69,6 +99,16 @@ void rechercheDestination(const char *nomDestination, int nbVols, struct Vol lis
 }
 
 void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+    /*
+        :entree:
+            'heureDecollage' -> l'heure recherchee
+            'nbVols' -> le nombre de vols
+            'listeVols' -> liste contenant tous les vols
+            'indices' -> tableau stockant tous les indices des vols correspondant à la recherche
+        :fonction:
+            recherche dans tous les vols de 'listeVols' ceux dont l'heure correspond à 'heureDecollage'.
+            stock les indices des vols dans 'indices'
+    */
     int ind=0;
 
     // elever le ':'
@@ -97,6 +137,18 @@ void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol 
 /** ##---- RECHERCHE AVANCEE ----## */
 
 void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+    /*
+        :entree:
+            'compagnie' -> le nom de la compagnie
+            'destination' -> la destination
+            'heureDecollage' -> l'heure de decollage
+            'nbVols' -> le nombre de vols
+            'listeVols' -> la liste contenant tous les vols
+            'indices' -> le tableau contenant tous les indices des vols correspondants aux critères
+        :fonction:
+            recherche les vols correspondant aux critères qui ne sont pas laissés vides par l'utilisateur.
+            stock les indices des vols trouvés dans 'indices'
+    */
     int indicesCompagnie[NB_VOLS_MAX] = {0};
     int indicesDestination[NB_VOLS_MAX] = {0};
     int indicesHeureDecollage[NB_VOLS_MAX] = {0};
@@ -107,6 +159,7 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
 
     int indicesReference[NB_VOLS_MAX] = {0};
 
+    // recherche le tableau à prendre pour référence
     if(indicesCompagnie[0] != -1) {
         copieTabDansTab(NB_VOLS_MAX, indicesCompagnie, indicesReference);
     }

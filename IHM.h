@@ -12,6 +12,6 @@ void returnMenu(int *menu);
 
 void afficheVol(struct Vol *vol);
 
-void afficheTableauVols(struct Vol *listeVols, int *tab, int taille);
+void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]);
 
 void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPassagers]);

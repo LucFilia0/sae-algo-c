@@ -11,33 +11,13 @@
 
 #define NB_VOLS_MAX 192 // attention aussi dans main.c
 
-//=================================================
-
-void afficheTab(int taille, int tab[taille]) {
-    int i=0;
-    printf("[");
-    while(i<taille-1) {
-        printf("%d ", tab[i]);
-        ++i;
-    }
-    printf("%d]\n", tab[i]);
-}
-/*
-void tableauVols(int taille, int indices[taille], struct Vol listeVols[taille]) {
-    int i=0;
-    while(i<taille && indices[i] != -1) {
-        struct Vol *v = &(listeVols[indices[i]]);
-        afficheVol(v);
-        ++i;
-    }
-}
-*/
-//=================================================
-
-
-// TRI PASSAGERS
+/** ##---- DEFINITIONS FONCTIONS TRI */
 
 void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[taille2], int taille3, int tab3[taille3]) {
+    /*
+        :fonction:
+            Concatenne tab2 à la suite de tab1, sans stocker les '-1', copie le tout dans tab3, avec un '-1' au bout
+    */
     int ind3 = 0;
     int ind1 = 0;
     int ind2 = 0;
@@ -57,6 +37,11 @@ void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[ta
 
 
 void trierPrixBilletsPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]) {
+    /*
+        :fonction:
+            tri par sélection, tri les passagers selon leur prix de billet. Ordre décroissant.
+            L'ordre est stocké dans 'indices'
+    */
     int i=0;
     int max = 0;
     while(i<nbPassagers && indices[i] != -1) {
@@ -67,6 +52,16 @@ void trierPrixBilletsPassagers(int nbPassagers, struct Passager listePassagers[n
 }
 
 void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]) {
+    /*
+        :entree:
+            'nbPassagers' -> le nombre de passagers / la taille de la liste
+            'listePassagers' -> la liste de tous les passagers, contenant toutes les infos
+            'indices' -> le tableau contenant l'ordre dans lequel afficher les passagers
+        :fonction:
+            Ordonne l'affichage des passagers selon les contraintes suivantes :
+                - Les passagers de 12 ans et moins devant
+                - Les passagers sont affichés selon leur prix de billet, par ordre décroissant
+    */
     struct Date ajd = {11, 1, 2024}; // 11 janvier 2024
     int agePassager = 0;
 
