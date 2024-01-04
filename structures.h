@@ -42,6 +42,8 @@ void setHeure(const char *chaine, struct Heure *heure);
 
 void ajouterHeure(struct Heure *heure, int val);
 
+int compareHeures(struct Heure h1, struct Heure h2);
+
 void afficherHeureDans(struct Heure heure, char *chaine);
 
 /** ##---- DECLARATIONS FONCTIONS IMPORTATION DONNEES ----## */

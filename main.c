@@ -146,6 +146,7 @@ int main(int argc, char *argv[])
                     tousIndices[i] = i;
                 }
                 printf("\nPISTE :\n");
+                trierPiste(nbVols, listeVols, tousIndices);
                 afficheTableauVols(listeVols, nbVols, tousIndices);
                 waitPress();
             }

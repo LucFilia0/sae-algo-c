@@ -92,6 +92,15 @@ void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers]
     concatenerTableaux(10, listePassagersMoinsDouze, 10, listePassagersPlusDouze, nbPassagers, indices);
 }
 
+void trierPiste(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+    int i=0;
+    int min = 0;
+    while(i<nbVols) {
+        min = rechercheHeureDecollageMinFrom(nbVols, listeVols, indices, i);
+        echangeIndicesTab(nbVols, indices, i, min);
+        ++i;
+    }
+}
 
 
 

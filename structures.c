@@ -114,6 +114,28 @@ void ajouterHeure(struct Heure *heure, int val) {
     }
 }
 
+int compareHeures(struct Heure h1, struct Heure h2) {
+    int exit = 0;
+    if(h1.heure == h2.heure) {
+        if(h1.minute == h2.minute) {
+            exit = 0;
+        }
+        else if(h1.minute > h2.minute) {
+            exit = 1;
+        }
+        else {
+            exit = 2;
+        }
+    }else {
+        if(h1.heure > h2.heure) {
+            exit = 1;
+        }else {
+            exit = 2;
+        }
+    }
+    return exit;
+}
+
 void afficherHeureDans(struct Heure heure, char *chaine) {
     /*
         :entree:

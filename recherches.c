@@ -38,6 +38,49 @@ int rechercheIntDansTab(int val, int taille, int tab[taille]) {
     return exist;
 }
 
+int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb) {
+    /*
+        :entree:
+            'nbPassagers' -> le nombre de passagers max dans la liste
+            'listePassagers' -> la liste de passagers
+            'indices' -> tableau contenant l'ordre d'affichage des passagers
+            'deb' -> indices à partir duquel on commence la recherche
+        :fonction:
+            recherche le prix du billet le plus cher dans une liste de passagers, à partir d'un indice
+    */
+    int max = deb;
+    int i = deb+1;
+    int ordreAlpha = 0;
+
+    while(i<nbPassagers && indices[i] != -1) {
+        if(listePassagers[indices[i]].prixBillet >= listePassagers[indices[max]].prixBillet) {
+            // Si prix egal, ordre alphabétique en fonction du nom
+            if(listePassagers[indices[i]].prixBillet == listePassagers[indices[max]].prixBillet) {
+                ordreAlpha = compareOrdreAlpha(listePassagers[indices[i]].nom, listePassagers[indices[max]].nom);
+                if(ordreAlpha == 1)
+                    max = i;
+            }else {
+                max = i;
+            }
+        }
+        ++i;
+    }
+    return max;
+}
+
+int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], int deb) {
+    int min = deb;
+    int i = deb+1;
+
+    while(i<nbVols) {
+        if(compareHeures(listeVols[indices[i]].h_decollage, listeVols[indices[min]].h_decollage) == 2) {
+            min = i;
+        }
+        ++i;
+    }
+    return min;
+}
+
 void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
     /*
         :entree:

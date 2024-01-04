@@ -14,12 +14,12 @@ void setCharClean(char *chaine);
 
 void copyCharToLower(const char *copie, char *colle);
 
+int compareOrdreAlpha(const char *chaine1, const char *chaine2);
+
 /** ##---- DECLARATIONS FONCTIONS TABLEAUX ----## */
 
 void afficheTab(int taille, int tab[taille]);
 
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2);
-
-int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb);
 
 int copieTabDansTab(int taille, int copie[taille], int colle[taille]);
