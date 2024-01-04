@@ -44,12 +44,10 @@ void ajouterHeure(struct Heure *heure, int val);
 
 void afficherHeureDans(struct Heure heure, char *chaine);
 
-/** ##---- DECLARATIONS FONCTIONS STRUCTURES.C ----## */
+/** ##---- DECLARATIONS FONCTIONS IMPORTATION DONNEES ----## */
 
 void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols);
 
 void initVol(struct Vol *vol, char *informations);
 
 void initPassagers(struct Vol *vol, const char *listePassagers);
-
-void clearPassagers(struct Vol *vol);

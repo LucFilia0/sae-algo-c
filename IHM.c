@@ -188,8 +188,9 @@ void afficheLignePassager(struct Passager passager, int nbColumns, int widthColu
 }
 
 void afficheTableauVols(struct Vol *listeVols, int *tab, int taille) {
-    /**
-    Prend en argument un tableau(tab), qui contient les numeros des vols a afficher
+    /*
+        :entree:
+
     */
 
     int widthColumns = 17;

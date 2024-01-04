@@ -4,7 +4,7 @@
 
 #include "fichier.h"
 
-/** ##---- DECLARATION DES FONCTIONS SUR LES FICHIERS ----## */
+/** ##---- DEFINITIONS FONCTIONS FICHIERS ----## */
 
 void scanFichier(FILE* fichier, char stop, char *chaine)
 {

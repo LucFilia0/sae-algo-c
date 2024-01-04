@@ -8,7 +8,7 @@
 #include "IHM.h"
 #include "tri.h"
 
-/** ##-- DEFINITIONS FONCTIONS SUR LES CHAINES DE CARACTERES --## */
+/** ##-- DEFINITIONS FONCTIONS CHAINES DE CARACTERES --## */
 
 void verifAlpha(char *chaine) {
     /*
@@ -166,7 +166,7 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
     return alpha;
 }
 
-/** ##---- DEFINITIONS DES FONCTIONS SUR LES TABLEAUX ----## */
+/** ##---- DEFINITIONS FONCTIONS TABLEAUX ----## */
 
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2) {
     /*
@@ -206,4 +206,20 @@ int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassa
         ++i;
     }
     return max;
+}
+
+int copieTabDansTab(int taille, int copie[taille], int colle[taille]) {
+    /*
+        :entree:
+            'taille' -> la taille du tableau
+            'copie' -> le tableau à copier
+            'colle' -> le tableau à coller
+        :fonction:
+            Copie les éléments de 'copie' dans 'colle', jusq'à la fin, ou jusq'à rencontrer '-1'
+    */
+    int i = -1;
+    do {
+        ++i;
+        colle[i] = copie[i];
+    }while(copie[i] != -1 && i<taille);
 }

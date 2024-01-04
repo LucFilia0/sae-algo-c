@@ -8,6 +8,7 @@
 #include "fonctions.h"
 #include "IHM.h"
 #include "tri.h"
+#include "recherches.h"
 
 #define NB_VOLS_MAX 192 //attention aussi dans structures.c & tri.c
 
@@ -171,7 +172,7 @@ int main(int argc, char *argv[])
                                "\n3 - Heure de decollage : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
-                        rechercheMultiple(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
+                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
                         if(tabIndices[0] != -1) { //Si au moins un vol est trouvé
                             afficheTableauVols(listeVols, tabIndices, nbVols);
                         }else {

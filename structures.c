@@ -11,7 +11,7 @@
 #define NB_VOLS_MAX 192 // Attention aussi dans main.c
 #define MAX 1000
 
-/** ##---- DECLARATIONS DES FONCTIONS SUR LES DATES ----## */
+/** ##---- DEFINITIONS FONCTIONS DATES ----## */
 
 void setDate(struct Date *date,const char *chaine) {
     /*
@@ -43,7 +43,7 @@ void setDate(struct Date *date,const char *chaine) {
     }
 }
 
-/** ##---- DECLARATION DES FONCTIONS SUR LES HEURES ----## */
+/** ##---- DEFINITION FONCTIONS HEURES ----## */
 
 void setHeure(const char *chaine, struct Heure *heure) {
     /*
@@ -130,7 +130,7 @@ void afficherHeureDans(struct Heure heure, char *chaine) {
     }
 }
 
-/** ##---- DECLARATION DES FONCTIONS IMPORTANT LES DONNEES ----## */
+/** ##---- DEFINITION FONCTIONS IMPORTATION DONNEES ----## */
 
 void importDataBase(FILE *fichier, struct Vol *listeVols, int *nbVols) {
     /*
@@ -211,6 +211,25 @@ void initVol(struct Vol *vol, char *infoVol)
     }
 }
 
+void clearPassagers(struct Vol *vol) {
+    /*
+        :entree:
+            'vol' -> le vol dont on va nettoyer la liste de passagers
+        :fonction:
+            met tous les paramètres de tous les passagers de 'vol' à leur valeur nulle,
+            afin de ne pas avoir de valeur bizarres qui apparaissent lors de l'affichage
+    */
+    for(int i=0; i<10; ++i) {
+        clearChar(vol->listePassagers[i].nom);
+        clearChar(vol->listePassagers[i].prenom);
+        vol->listePassagers[i].dateNaissance.jour = 0;
+        vol->listePassagers[i].dateNaissance.mois = 0;
+        vol->listePassagers[i].dateNaissance.annee = 0;
+        vol->listePassagers[i].numSiege = 0;
+        vol->listePassagers[i].prixBillet = 0.;
+    }
+}
+
 void initPassagers(struct Vol *vol, const char *listePassagers)
 {
     /*
@@ -235,8 +254,7 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
         if(listePassagers[i]!=';' && i<strlen(listePassagers)-1) {
             if(listePassagers[i]!=',') {
                 info[ind] = listePassagers[i];
-                //printf("\n|%s|", info);
-                ind++;
+                ++ind;
             }else {
                 switch(numElement)
                 {
@@ -259,24 +277,5 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
             //printf("\n|-- %s --|\n", info);
         }
         i++;
-    }
-}
-
-void clearPassagers(struct Vol *vol) {
-    /*
-        :entree:
-            'vol' -> le vol dont on va nettoyer la liste de passagers
-        :fonction:
-            met tous les paramètres de tous les passagers de 'vol' à leur valeur nulle,
-            afin de ne pas avoir de valeur bizarres qui apparaissent lors de l'affichage
-    */
-    for(int i=0; i<10; ++i) {
-        clearChar(vol->listePassagers[i].nom);
-        clearChar(vol->listePassagers[i].prenom);
-        vol->listePassagers[i].dateNaissance.jour = 0;
-        vol->listePassagers[i].dateNaissance.mois = 0;
-        vol->listePassagers[i].dateNaissance.annee = 0;
-        vol->listePassagers[i].numSiege = 0;
-        vol->listePassagers[i].prixBillet = 0.;
     }
 }
