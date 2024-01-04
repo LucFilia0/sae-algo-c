@@ -1,0 +1,16 @@
+>>> PROJET GESTION'AIR
+
+
+Description des différents fichiers '.c' :
+
+    - 'structures.c' -> Les fonctions liées aux structures crées dans le cadre de ce projet (Vol, Passager, Date & Heure).
+
+    - 'fichier.c' -> Les fonctions interagissant avec le fichier '.csv'
+
+    - 'fonctions.c' -> toutes les fonctions de base, sur les chaines de caractères, les tableaux, etc...
+
+    - 'IHM.c' ->  Les fonctions qui permettent d'intéragir avec l'utilisateur.
+
+    - 'tri.c' -> Les fonctions de tri.
+
+    - 'recherche.c' -> Les fonctions de recherche.

@@ -32,6 +32,10 @@
 			<Add option="-pedantic-errors" />
 			<Add option="-std=c99" />
 		</Compiler>
+		<Unit filename="IHM.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="IHM.h" />
 		<Unit filename="fichier.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -40,13 +44,22 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="fonctions.h" />
+		<Unit filename="index.txt" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="recherches.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="recherches.h" />
 		<Unit filename="structures.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="structures.h" />
+		<Unit filename="tri.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tri.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
