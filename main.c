@@ -44,85 +44,29 @@ int main(int argc, char *argv[])
             int menu = 1;
 
             showTitle();
-            userEntryInt("1 - Recherche simple\n2 - Recherche avancee\n3 - Voir la piste\n4 - Liste des passagers\n5 - Quitter", &entry, 1, 5);
+            userEntryInt("1 - Voir un vol\n2 - Recherche avancee\n3 - Voir la piste\n4 - Quitter", &entry, 1, 4);
 
-            // RECHERCHE SIMPLE
-            if(entry==1) {
-                // variables stockant les entrées de l'utilisateur
-                char compagnie[50], destination[50], heureDecollage[7];
-                int numVol = 0;
+            /** ---- VOIR UN VOL ----## */
+            if(entry == 1) {
+                do {
+                    int numVol = 0;
+                    int indices[10] = {0};
 
-                int tabIndices[NB_VOLS_MAX] = {0};
+                    userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);
 
-                userEntryInt("Vous souhaitez rechercher par :\n[entree] pour retour\n\n1 - Numero\n2 - Compagnie\n3 - Destination\n4 - Horaire", &recherche, 0, 4);
+                    int vol[1] = {numVol-1};
 
-                // recherche simple => PAR NUMERO
-                if(recherche==1) {
-                    do {
-                        userEntryInt("Numero du vol", &numVol, 1, NB_VOLS_MAX);
-                        int num[1] = {numVol-1}; //la fonction n'accepte que des tableaux
-                        afficheTableauVols(listeVols, 1, num);
+                    printf("Vol %d :\n", numVol);
+                    afficheTableauVols(listeVols, 1, vol);
 
-                        waitPress();
-                        returnMenu(&menu);
-                    }while(menu != 2);
+                    printf("\n\nListe des passagers :\n");
+                    trierPassagers(10, listeVols[numVol-1].listePassagers, indices);
+                    afficheTableauPassagers(listeVols[numVol-1], 10, indices);
 
-                }
-                // recherche simple => PAR COMPAGNIE
-                else if(recherche==2) {
-                    do {
-                        userEntryChar("Nom de la compagnie", compagnie, 50, 1);
-                        rechercheCompagnie(compagnie, nbVols, listeVols, tabIndices);
+                    waitPress();
+                    returnMenu(&menu);
+                }while(menu != 2);
 
-                        if(tabIndices[0] != -1) {
-                            afficheTableauVols(listeVols, nbVols, tabIndices); //fonction prévue pour s'arreter si '-1' rencontré
-                        }else {
-                            printf("\n---- Cette compagnie n'existe pas ou syntaxe inconnue ----\n");
-                        }
-
-                        waitPress();
-                        returnMenu(&menu);
-                    }while(menu!=2);
-                }
-                // recherche simple => PAR DESTINATION
-                else if(recherche==3) {
-                    do {
-                        userEntryChar("Destination", destination, 50, 1);
-                        rechercheDestination(destination, nbVols, listeVols, tabIndices);
-
-                        if(tabIndices[0] != -1) { //si au moins un vol est trouvé
-                            afficheTableauVols(listeVols, nbVols, tabIndices);
-                        }else {
-                            printf("\n---- Cette destination n'existe pas ou syntaxe inconnue ----\n");
-                        }
-
-                        waitPress();
-                        clearChar(destination);
-
-                        returnMenu(&menu);
-                    }while(menu != 2);
-                }
-                // recherche simple => PAR HEURE DE DECOLLAGE
-                else if(recherche==4) {
-                    do {
-                        userEntryChar("Entrez l'heure de decollage (HH:MM)", heureDecollage, 7, 1);
-                        rechercheHeureDecollage(heureDecollage, nbVols, listeVols, tabIndices);
-
-                        if(tabIndices[0] != -1) { //si au moins un vol est trouvé
-                            afficheTableauVols(listeVols, nbVols, tabIndices);
-                        }else {
-                            printf("\n---- Aucun vol ne decolle a cette heure-ci ou syntaxe inconnue ----\n");
-                        }
-
-                        waitPress();
-                        returnMenu(&menu);
-                    }while(menu != 2);
-
-                }
-                // RETOUR
-                else {
-                    continue; // retour menu si rien n'est entré
-                }
             }
 
             /** ---- RECHERCHE AVANCEE ----- **/
@@ -204,24 +148,6 @@ int main(int argc, char *argv[])
                 printf("\nPISTE :\n");
                 afficheTableauVols(listeVols, nbVols, tousIndices);
                 waitPress();
-            }
-
-            /** ---- LISTE PASSAGERS ---- **/
-            else if(entry == 4) {
-                do {
-                    int numVol = 0;
-                    int indices[10] = {0};
-
-                    userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);
-
-                    printf("\nListe des passagers du vol %d :\n", listeVols[numVol-1].numVol);
-                    trierPassagers(10, listeVols[numVol-1].listePassagers, indices);
-                    afficheTableauPassagers(listeVols[numVol-1], 10, indices);
-
-                    waitPress();
-                    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", &menu, 1, 2);
-                }while(menu != 2);
-
             }
 
 

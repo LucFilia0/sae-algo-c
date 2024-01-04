@@ -6,37 +6,6 @@
 #include "fichier.h"
 #include "fonctions.h"
 #include "IHM.h"
-<<<<<<< HEAD
-
-void afficheVol(struct Vol *vol) {
-    printf("\n##========== VOL %d ==========##\n\nCompagnie : %s\nDestination : %s\nNumero de comptoir : %d\nHeure debut enregistrement : %d\nHeure fin enregistrement : %d\nSalle d'embarquement : %d\nHeure debut embarquement : %d\nHeure fin embarquement : %d\nHeure decollage : %d\nEtat vol : %s\n\nListe des passagers :\n",
-    vol->numVol,
-    vol->compagnie,
-    vol->destination,
-    vol->numComptoir,
-    vol->h_debEnregistrement,
-    vol->h_finEnregistrement,
-    vol->salleEmbarquement,
-    vol->h_debEmbarquement,
-    vol->h_finEmbarquement,
-    vol->h_decollage,
-    vol->etatVol
-    );
-    long int nbPassagers = sizeof(vol->listePassagers) / sizeof(vol->listePassagers[0]);
-    for(int i=0; i<nbPassagers; i++) {
-        if(vol->listePassagers[i].numSiege != 0) {
-            printf("\n%d : ", i+1);
-            struct Passager *ptPassager = &(vol->listePassagers[i]);
-            printf("\tNom : %s\n\tPrenom : %s\n\tDate de naissance : %s\n\tNumero de siege : %d\n\tPrix du billet : %.2f\n\n",
-                ptPassager->nom,
-                ptPassager->prenom,
-                ptPassager->dateNaissance,
-                ptPassager->numSiege,
-                ptPassager->prixBillet
-            );
-        }
-    }
-=======
 #include "tri.h"
 
 /** ##---- DECLARATION DES FONCTIONS D'INTERACTION AVEC L'UTILISATEUR ----## */
