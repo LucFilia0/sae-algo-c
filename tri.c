@@ -102,9 +102,37 @@ void trierPiste(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
     }
 }
 
+//=================================================
 
+void trierCompagnie(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols)
+{
+    int indMin ;
+    for (int i = 0 ; i < nbVols ; i++) {
+        indMin = rechercheCompagnieMinFrom(n, tabIndices, listeVols, nbVols, i) ;
+        if (indMin != i) {
+            echangeIndicesTab(n, tabIndices, indMin, i);
+        }
+    }
+}
 
+void trierDestination(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols)
+{
+    int indMin ;
+    for (int i = 0 ; i < nbVols ; i++) {
+        indMin = rechercheDestinationMinFrom(n, tabIndices, listeVols, nbVols, i) ;
+        if (indMin != i) {
+            echangeIndicesTab(n, tabIndices, indMin, i);
+        }
+    }
+}
 
-
-
-
+void trierHeureDecollage(int n, int tabIndices[n], struct Vol listeVols[n], int nbVols)
+{
+    int indMin ;
+    for (int i = 0 ; i < nbVols ; i++) {
+        indMin = rechercheHeureDecollageMinFrom(nbVols, listeVols, tabIndices, i) ;
+        if (indMin != i) {
+            echangeIndicesTab(n, tabIndices, indMin, i);
+        }
+    }
+}

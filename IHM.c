@@ -190,7 +190,6 @@ void afficheLignePassager(struct Passager passager, int nbColumns, int widthColu
 void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]) {
     /*
         :entree:
-
     */
 
     int widthColumns = 17;
@@ -224,6 +223,7 @@ void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]) 
     afficheLigneVide(nbColumns, widthColumns);
     // AFFICHE INFOS
     int i=0;
+
     while(i<nbVols && indices[i] != -1) {
         afficheLigneVol(listeVols[indices[i]], nbColumns, widthColumns);
         afficheLigneVide(nbColumns, widthColumns);

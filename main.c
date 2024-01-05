@@ -36,15 +36,27 @@ int main(int argc, char *argv[])
 
         // VARIABLES
         struct Vol *v;
-        int entry, recherche, quit = 0;
+        int entry, recherche, numVol, heure, quit = 0;
+        char compagnie[50], destination[50];
+        int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX], tabIndicesNomsCompagnie[NB_VOLS_MAX];
+
+        // TRI INDIRECTS (du coup y a que le tri par heure qui sert pour le moment)
+        indexFill(NB_VOLS_MAX, tabIndicesDestination, nbVols) ;
+        indexFill(NB_VOLS_MAX, tabIndicesH_Decollage, nbVols) ;
+        indexFill(NB_VOLS_MAX, tabIndicesNomsCompagnie, nbVols) ;
+
+        trierCompagnie(NB_VOLS_MAX, tabIndicesNomsCompagnie, listeVols, nbVols) ;
+        trierDestination(NB_VOLS_MAX, tabIndicesDestination, listeVols, nbVols) ;
+        trierHeureDecollage(NB_VOLS_MAX, tabIndicesH_Decollage, listeVols, nbVols) ;
 
 
-        // ##==== ARBRE EVENEMENTS ====##
+        // ARBRE EVENEMENTS
         do {
             int menu = 1;
 
             showTitle();
-            userEntryInt("1 - Voir un vol\n2 - Recherche avancee\n3 - Voir la piste\n4 - Quitter", &entry, 1, 4);
+
+            userEntryInt("1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter", &entry, 1, 4);
 
             /** ---- VOIR UN VOL ----## */
             if(entry == 1) {
@@ -134,23 +146,60 @@ int main(int argc, char *argv[])
             }
 
 
-            /** ---- VOIR PISTE ---- **/
+            /** ---- GESTION PISTE ---- **/
             /*
                 Les passagers sont rangés selon leur age -> les 12 et - devant, puis les "adultes".
                 Les deux tranches d'âge sont ensuite triées, de façon indépendante, selon le prix de leur billet (ordre décroissant).
             */
             else if(entry==3) {
-                int tousIndices[nbVols];
-                int a=23;
-                for(int i=0; i<nbVols; ++i) {
-                    tousIndices[i] = i;
-                }
-                printf("\nPISTE :\n");
-                trierPiste(nbVols, listeVols, tousIndices);
-                afficheTableauVols(listeVols, nbVols, tousIndices);
-                waitPress();
-            }
+                int choix = 0;
+                userEntryInt("1 - Voir la piste\n2 - Retarder un vol", &choix, 1, 2);
 
+                // --> VOIR LA PISTE
+                if(choix == 1) {
+                    int tousIndices[nbVols];
+                    int a=23;
+                    for(int i=0; i<nbVols; ++i) {
+                        tousIndices[i] = i;
+                    }
+                    printf("\nPISTE :\n");
+
+                    trierPiste(nbVols, listeVols, tousIndices);
+                    afficheTableauVols(listeVols, nbVols, tousIndices);
+                    waitPress();
+                }
+
+                // --> AJOUTER RETARD
+                else if(choix == 2) {
+                    do {
+                        if (nbVols <= 0) {
+                            printf("La liste des vols est vide") ;
+                        }
+                        else {
+                            int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
+                            userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 1, nbVols);
+                            indiceVolRetarde = rechercheIndiceAvecNumVol(NB_VOLS_MAX, nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
+
+                            userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
+                            retardFinal = ajoutRetard(NB_VOLS_MAX, nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
+
+                            if (retardFinal == -1) {
+                                printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
+                            }
+
+                            else if(retardFinal == -2) {
+                                printf("Le vol est annule, il ne peut pas etre retarde\n");
+                            }
+
+                            else {
+                                printf("Le vol a ete retarde de %d minutes\n",retardFinal);
+                            }
+                        }
+                        waitPress() ;
+                        menu = 2 ;
+                    }while(menu != 2);
+                }
+            }
 
             /** ---- QUIT ---- **/
             else {

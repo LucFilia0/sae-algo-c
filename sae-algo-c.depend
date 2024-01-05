@@ -1,11 +1,88 @@
 # depslib dependency file v1.0
 140725219530493 <<<<<<< HEAD
 
-1704384331 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
+1704459902 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"fichier.h"
+
+1704456326 bfc6043b00b1f3865860c5a8c085fdb9f4e73
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fichier.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fonctions.h"
+	"fichier.h"
+	"IHM.h"
+	"tri.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704282048 D
+	"IHM.h"
+	"IHM.h"
+	"tri.h"
+	"IHM.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fonctions.h"
+	"fichier.h"
+	"IHM.h"
+	"tri.h"
+	"recherches.h"
+	"recherches.h"
 
 1704382566 895a5e095c5b6fd143a6d3d818bb1bcf28dbf
 	<stdio.h>
@@ -38,12 +115,9 @@
 	"tri.h"
 	"recherches.h"
 
-1704381988 D
-	"IHM.h"
+1704459914 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
 
-1704384331 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
-
-1704390000 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1704461885 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -54,6 +128,8 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+
+1704390000 s.h"
 
 1703514619 n
 	<stdio.h>
@@ -71,9 +147,9 @@
 	"fonctions.h"
 	"IHM.h"
 
-1704389433 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
+1704459780 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
 
-1704389806 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
+1704461452 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -83,11 +159,11 @@
 	"IHM.h"
 	"tri.h"
 
-1704389874 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+1704461161 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
 
 1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
 
-1704389420 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
+1704461482 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -98,43 +174,10 @@
 	"tri.h"
 
 1704313444 senger
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<windows.h>
-	"structures.h"
-	"fichier.h"
-	"fonctions.h"
-	"IHM.h"
-	"tri.h"
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"structures.h"
-	"fichier.h"
-	"fonctions.h"
-	"IHM.h"
-	"tri.h"
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"structures.h"
-	"fichier.h"
-	"fonctions.h"
-	"IHM.h"
-	"tri.h"
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"structures.h"
-	"fonctions.h"
-	"fichier.h"
-	"IHM.h"
-	"tri.h"
 
-1704384696 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
+1704461385 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
 
-1704384777 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
+1704461369 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -147,9 +190,9 @@
 1703514619 .h"
 	"fichier.h"
 
-1704390034 c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.h
+1704461193 c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.h
 
-1704389918 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.c
+1704461947 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -160,7 +203,7 @@
 	"tri.h"
 	"recherches.h"
 
-1704389946 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
+1704461573 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -171,5 +214,151 @@
 	"tri.h"
 	"recherches.h"
 
-1704390213 c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.h
+1704201665 source:c:\users\foudou\documents\sae-algo-c-passenger\fichier.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fichier.h"
+
+1704201665 c:\users\foudou\documents\sae-algo-c-passenger\fichier.h
+
+1704282048 source:c:\users\foudou\documents\sae-algo-c-passenger\fonctions.c
+
+1704461442 c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.h
+
+1704201665 c:\users\foudou\documents\sae-algo-c-passenger\structures.h
+
+1704281787 c:\users\foudou\documents\sae-algo-c-passenger\fonctions.h
+
+1704203479 c:\users\foudou\documents\sae-algo-c-passenger\ihm.h
+
+1704278298 c:\users\foudou\documents\sae-algo-c-passenger\tri.h
+
+1704201665 source:c:\users\foudou\documents\sae-algo-c-passenger\ihm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704282077 source:c:\users\foudou\documents\sae-algo-c-passenger\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704201665 source:c:\users\foudou\documents\sae-algo-c-passenger\structures.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704208869 source:c:\users\foudou\documents\sae-algo-c-passenger\tri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fonctions.h"
+	"fichier.h"
+	"IHM.h"
+	"tri.h"
+
+1704203461 source:c:\users\foudou\documents\sae-algo-c-passenger\retard.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"tri.h"
+	"retard.h"
+
+1704203483 c:\users\foudou\documents\sae-algo-c-passenger\retard.h
+
+1704375856 source:c:\program files\codeblocks\sae-algo-c-retard\fichier.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fichier.h"
+
+1704375856 c:\program files\codeblocks\sae-algo-c-retard\fichier.h
+
+1704375856 source:c:\program files\codeblocks\sae-algo-c-retard\ihm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704375856 c:\program files\codeblocks\sae-algo-c-retard\structures.h
+
+1704452761 c:\program files\codeblocks\sae-algo-c-retard\fonctions.h
+
+1704375856 c:\program files\codeblocks\sae-algo-c-retard\ihm.h
+
+1704453199 c:\program files\codeblocks\sae-algo-c-retard\tri.h
+
+1704375856 source:c:\program files\codeblocks\sae-algo-c-retard\retard.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"tri.h"
+	"retard.h"
+
+1704375856 c:\program files\codeblocks\sae-algo-c-retard\retard.h
+
+1704375856 source:c:\program files\codeblocks\sae-algo-c-retard\structures.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704456456 source:c:\program files\codeblocks\sae-algo-c-retard\tri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fonctions.h"
+	"fichier.h"
+	"IHM.h"
+	"tri.h"
+
+1704456807 source:c:\program files\codeblocks\sae-algo-c-retard\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704456326 source:c:\program files\codeblocks\sae-algo-c-retard\fonctions.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
 

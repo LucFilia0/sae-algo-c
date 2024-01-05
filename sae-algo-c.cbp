@@ -2,7 +2,11 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
+<<<<<<< HEAD
 		<Option title="sae-algo-c" />
+=======
+		<Option title="sae-algo-c-retard" />
+>>>>>>> 9a2bfc6043b00b1f3865860c5a8c085fdb9f4e73
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -44,6 +48,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="fonctions.h" />
+<<<<<<< HEAD
 		<Unit filename="index.txt" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
@@ -52,6 +57,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="recherches.h" />
+=======
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="retard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="retard.h" />
+>>>>>>> 9a2bfc6043b00b1f3865860c5a8c085fdb9f4e73
 		<Unit filename="structures.c">
 			<Option compilerVar="CC" />
 		</Unit>

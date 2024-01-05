@@ -13,6 +13,18 @@
 
 /** ##---- DEFINITIONS FONCTIONS RECHERCHE ----## */
 
+int rechercheIndiceAvecNumVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int numVol)
+{
+    int i = 0 ;
+    while (i < nbVols) {
+        if (listeVols[tabIndices[i]].numVol == numVol) {
+           return i ;
+        }
+        i++ ;
+    }
+    return -1 ;
+}
+
 int rechercheIntDansTab(int val, int taille, int tab[taille]) {
     /*
         :entree;
@@ -66,6 +78,44 @@ int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassa
         ++i;
     }
     return max;
+}
+
+int rechercheCompagnieMinFrom(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols, int iDeb)
+{
+    int comp, indMin = iDeb ;
+    char lowerStrMin[30], lowerStr[30] ;
+    copyCharToLower(listeVols[tabIndices[indMin]].compagnie, lowerStrMin);
+
+    for (int i = iDeb + 1 ; i < nbVols ; i++) {
+        copyCharToLower(listeVols[tabIndices[i]].compagnie, lowerStr);
+        comp = strcmp(lowerStrMin, lowerStr);
+
+        if (comp > 0) {
+            indMin = i ;
+            copyCharToLower(listeVols[tabIndices[i]].compagnie, lowerStrMin);
+        }
+    }
+
+    return indMin ;
+}
+
+int rechercheDestinationMinFrom(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols, int iDeb)
+{
+    int comp, indMin = iDeb ;
+    char lowerStrMin[30], lowerStr[30] ;
+    copyCharToLower(listeVols[tabIndices[indMin]].destination, lowerStrMin);
+
+    for (int i = iDeb + 1 ; i < nbVols ; i++) {
+        copyCharToLower(listeVols[tabIndices[i]].destination, lowerStr);
+        comp = strcmp(lowerStrMin, lowerStr);
+
+        if (comp > 0) {
+            indMin = i ;
+            copyCharToLower(listeVols[tabIndices[i]].destination, lowerStrMin);
+        }
+    }
+
+    return indMin ;
 }
 
 int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], int deb) {

@@ -2,7 +2,13 @@
 
 /** ##---- DECLARATIONS FONCTIONS RECHERCHE ----## */
 
+int rechercheIndiceAvecNumVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int numVol);
+
 int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb);
+
+int rechercheCompagnieMinFrom(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols, int iDeb);
+
+int rechercheDestinationMinFrom(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols, int iDeb);
 
 int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], int deb);
 

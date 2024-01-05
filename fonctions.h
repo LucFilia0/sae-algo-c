@@ -18,8 +18,16 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2);
 
 /** ##---- DECLARATIONS FONCTIONS TABLEAUX ----## */
 
+void indexFill(int n, int tabIndices[n], int nbVols);
+
 void afficheTab(int taille, int tab[taille]);
 
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2);
 
-int copieTabDansTab(int taille, int copie[taille], int colle[taille]);
+void copieTabDansTab(int taille, int copie[taille], int colle[taille]);
+
+int ecartHeures(struct Heure heure1, struct Heure heure2) ;
+
+int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int indiceVolRetarde, int tpsRetard) ;
+
+void retarderVol(int n, int tabIndices[n], struct Vol listeVols[n],int retardAccumule, int indiceVolRetarde, struct Heure heureActuelle) ;
