@@ -1,5 +1,9 @@
 #pragma once
 
+/** ##---- RECHERCHE DICHOTOMIE ----## */
+
+void rechercheCompagnieD(const char *compagnie, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]);
+
 /** ##---- DECLARATIONS FONCTIONS RECHERCHE ----## */
 
 int rechercheIndiceAvecNumVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int numVol);
@@ -20,4 +24,4 @@ void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol 
 
 /** ##---- RECHERCHE AVANCEE ----## */
 
-void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
+void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indicesTriCompagnie[nbVols], int indicesTriDestination[nbVols], int indices[nbVols]);

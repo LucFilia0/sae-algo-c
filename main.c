@@ -49,6 +49,19 @@ int main(int argc, char *argv[])
         trierDestination(NB_VOLS_MAX, tabIndicesDestination, listeVols, nbVols) ;
         trierHeureDecollage(NB_VOLS_MAX, tabIndicesH_Decollage, listeVols, nbVols) ;
 
+        /*
+        printf("\nTri par compagnie : ");
+        afficheTab(nbVols, tabIndicesNomsCompagnie);
+        afficheTableauVols(listeVols, nbVols, tabIndicesNomsCompagnie);
+        printf("\nTri par destination : ");
+        afficheTab(nbVols, tabIndicesDestination);
+        //afficheTableauVols(listeVols, nbVols, tabIndicesDestination);
+        printf("\nTri par h_decollage : ");
+        afficheTab(nbVols, tabIndicesH_Decollage);
+        //afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
+        */
+
+
 
         // ARBRE EVENEMENTS
         do {
@@ -58,7 +71,7 @@ int main(int argc, char *argv[])
 
             userEntryInt("1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter", &entry, 1, 4);
 
-            /** ---- VOIR UN VOL ----## */
+            /** ---- VOIR UN VOL ----## **/
             if(entry == 1) {
                 do {
                     int numVol = 0;
@@ -128,7 +141,7 @@ int main(int argc, char *argv[])
                                "\n3 - Heure de decollage : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
-                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndices);
+                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndicesNomsCompagnie, tabIndicesDestination, tabIndices);
                         if(tabIndices[0] != -1) { //Si au moins un vol est trouvé
                             afficheTableauVols(listeVols, nbVols, tabIndices);
                         }else {

@@ -11,6 +11,100 @@
 
 #define NB_VOLS_MAX 192
 
+/** ##---- RECHERCHE DICHOTOMIE ----## */
+
+int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *chaine) {
+    int deb = 0, fin = nbVols-1, mid = 0;
+    int exit = -1;
+
+    do {
+        mid=(deb+fin)/2;
+        if(compareOrdreAlpha(listeVols[indices[mid]].compagnie, chaine)==0) {
+            exit = mid;
+        }
+        else if(compareOrdreAlpha(listeVols[indices[mid]].compagnie, chaine)==1) {
+            deb = mid+1;
+        }else {
+            fin = mid-1;
+        }
+    }while(exit == -1 && deb<fin);
+    return exit;
+}
+
+void rechercheCompagnieD(const char *compagnie, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
+    int trouve = 0, ind = 0;
+    int prec = 0, suiv = 0;
+
+    trouve = rechercheDichotomieCompagnie(nbVols, listeVols, indicesTri, compagnie);
+
+    if(trouve != -1) {
+        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        prec = trouve-1;
+        suiv = trouve+1;
+        ++ind;
+        while(strcmp(listeVols[indicesTri[prec]].compagnie, compagnie)==0 || strcmp(listeVols[indicesTri[suiv]].compagnie, compagnie)==0) {
+            if(strcmp(listeVols[indicesTri[prec]].compagnie, compagnie)==0) {
+                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                --prec;
+                ++ind;
+            }
+            if(strcmp(listeVols[indicesTri[suiv]].compagnie, compagnie)==0) {
+                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                ++suiv;
+                ++ind;
+            }
+        }
+    }
+    if(ind<nbVols)
+        indices[ind] = -1;
+}
+
+int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *chaine) {
+    int deb = 0, fin = nbVols-1, mid = 0;
+    int exit = -1;
+
+    do {
+        mid=(deb+fin)/2;
+        if(compareOrdreAlpha(listeVols[indices[mid]].destination, chaine)==0) {
+            exit = mid;
+        }
+        else if(compareOrdreAlpha(listeVols[indices[mid]].destination, chaine)==1) {
+            deb = mid+1;
+        }else {
+            fin = mid-1;
+        }
+    }while(exit == -1 && deb<fin);
+    return exit;
+}
+
+void rechercheDestinationD(const char *destination, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
+    int trouve = 0, ind = 0;
+    int prec = 0, suiv = 0;
+
+    trouve = rechercheDichotomieDestination(nbVols, listeVols, indicesTri, destination);
+
+    if(trouve != -1) {
+        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        prec = trouve-1;
+        suiv = trouve+1;
+        ++ind;
+        while(strcmp(listeVols[indicesTri[prec]].destination, destination)==0 || strcmp(listeVols[indicesTri[suiv]].destination, destination)==0) {
+            if(strcmp(listeVols[indicesTri[prec]].destination, destination)==0) {
+                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                --prec;
+                ++ind;
+            }
+            if(strcmp(listeVols[indicesTri[suiv]].destination, destination)==0) {
+                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                ++suiv;
+                ++ind;
+            }
+        }
+    }
+    if(ind<nbVols)
+        indices[ind] = -1;
+}
+
 /** ##---- DEFINITIONS FONCTIONS RECHERCHE ----## */
 
 int rechercheIndiceAvecNumVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int numVol)
@@ -229,7 +323,7 @@ void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol 
 
 /** ##---- RECHERCHE AVANCEE ----## */
 
-void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indicesTriCompagnie[nbVols], int indicesTriDestination[nbVols], int indices[nbVols]) {
     /*
         :entree:
             'compagnie' -> le nom de la compagnie
@@ -246,9 +340,16 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
     int indicesDestination[NB_VOLS_MAX] = {0};
     int indicesHeureDecollage[NB_VOLS_MAX] = {0};
 
+    /*
     rechercheCompagnie(compagnie, nbVols, listeVols, indicesCompagnie);
     rechercheDestination(destination, nbVols, listeVols, indicesDestination);
     rechercheHeureDecollage(heureDecollage, nbVols, listeVols, indicesHeureDecollage);
+    */
+
+    rechercheCompagnieD(compagnie, nbVols, listeVols, indicesTriCompagnie, indicesCompagnie);
+    rechercheDestinationD(destination, nbVols, listeVols, indicesTriDestination, indicesDestination);
+    rechercheHeureDecollage(heureDecollage, nbVols, listeVols, indicesHeureDecollage);
+
 
     int indicesReference[NB_VOLS_MAX] = {0};
 

@@ -111,14 +111,16 @@ void copyCharToLower(const char *copie, char *colle) {
         :fonction:
             'colle' est la version de 'copie' en lettres minuscules. Les autres caractères ne sont pas affectés
     */
-    for(int i=0; i<strlen(copie); ++i) {
-        if(copie[i]>=65 && copie[i]<=90) {
+    int i=0;
+    while(i<strlen(copie)) {
+        if(copie[i]>='A' && copie[i]<='Z') {
             colle[i] = copie[i] + 32;
         }else {
             colle[i] = copie[i];
         }
+        ++i;
     }
-    colle[strlen(copie)] = '\0'; // evite les erreurs
+    colle[i] = '\0'; // evite les erreurs
 }
 
 int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
@@ -133,34 +135,42 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
     int alpha = 0;
     int taille = 0;
 
-    if(strlen(chaine1)>strlen(chaine2))
+    if(strlen(chaine1)>strlen(chaine2)) {
         taille = strlen(chaine1);
-    else
+    }
+    else {
         taille = strlen(chaine2);
+    }
 
-    char *c1;
-    char *c2;
+    char *c1 = "";
+    char *c2 = "";
 
+    /*
     copyCharToLower(chaine1, c1);
     copyCharToLower(chaine2, c2);
+    */
 
-    for(int i=0; i<taille; ++i) {
-        if(c1[i] == '\0') {
-            alpha = 2;
-            break;
+    int i=0;
+    while(i<taille) {
+        if(chaine1[i] != chaine2[i]) {
+            if(chaine1[i] == '\0') {
+                alpha = 1;
+                break;
+            }
+            else if(chaine2[i] == '\0') {
+                alpha = 2;
+                break;
+            }
+            else if(chaine1[i]>chaine2[i]) {
+                alpha = 2;
+                break;
+            }
+            else if(chaine1[i]<chaine2[i]) {
+                alpha = 1;
+                break;
+            }
         }
-        else if(c2[i] == '\0') {
-            alpha = 1;
-            break;
-        }
-        else if(c1[i]>c2[i]) {
-            alpha = 1;
-            break;
-        }
-        else if(c1[i]<c2[i]) {
-            alpha = 2;
-            break;
-        }
+        ++i;
     }
 
     return alpha;
