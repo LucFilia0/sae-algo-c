@@ -26,6 +26,10 @@ void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2);
 
 void copieTabDansTab(int taille, int copie[taille], int colle[taille]);
 
+void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[taille2], int taille3, int tab3[taille3]);
+
+/** ##---- RETARD LIEGEON ----## */
+
 int ecartHeures(struct Heure heure1, struct Heure heure2) ;
 
 int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int indiceVolRetarde, int tpsRetard) ;

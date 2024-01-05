@@ -130,7 +130,7 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
             renvoie 2 si 'chaine2' est avant
             renvoie 0 si elles sont égales
 
-            La casse est gérée
+            La casse est gérée => nn
     */
     int alpha = 0;
     int taille = 0;
@@ -144,11 +144,6 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
 
     char *c1 = "";
     char *c2 = "";
-
-    /*
-    copyCharToLower(chaine1, c1);
-    copyCharToLower(chaine2, c2);
-    */
 
     int i=0;
     while(i<taille) {
@@ -226,6 +221,28 @@ void copieTabDansTab(int taille, int copie[taille], int colle[taille]) {
         ++i;
         colle[i] = copie[i];
     }while(copie[i] != -1 && i<taille);
+}
+
+void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[taille2], int taille3, int tab3[taille3]) {
+    /*
+        :fonction:
+            Concatenne tab2 à la suite de tab1, sans stocker les '-1', copie le tout dans tab3, avec un '-1' au bout
+    */
+    int ind3 = 0;
+    int ind1 = 0;
+    int ind2 = 0;
+    while(ind1<taille1 && tab1[ind1] != -1) {
+        tab3[ind3] = tab1[ind1];
+        ++ind1;
+        ++ind3;
+    }
+    while(ind2<taille2 && tab2[ind2] != -1) {
+        tab3[ind3] = tab2[ind2];
+        ++ind2;
+        ++ind3;
+    }
+    if(ind3<taille3)
+        tab3[ind3] = -1;
 }
 
 int ecartHeures(struct Heure heure1, struct Heure heure2)

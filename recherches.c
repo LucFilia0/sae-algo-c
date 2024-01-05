@@ -13,16 +13,18 @@
 
 /** ##---- RECHERCHE DICHOTOMIE ----## */
 
-int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *chaine) {
+int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *entryLowered) {
     int deb = 0, fin = nbVols-1, mid = 0;
     int exit = -1;
+    char compagnieLowered[50];
 
     do {
         mid=(deb+fin)/2;
-        if(compareOrdreAlpha(listeVols[indices[mid]].compagnie, chaine)==0) {
+        copyCharToLower(listeVols[indices[mid]].compagnie, compagnieLowered);
+        if(compareOrdreAlpha(compagnieLowered, entryLowered)==0) {
             exit = mid;
         }
-        else if(compareOrdreAlpha(listeVols[indices[mid]].compagnie, chaine)==1) {
+        else if(compareOrdreAlpha(compagnieLowered, entryLowered)==1) {
             deb = mid+1;
         }else {
             fin = mid-1;
@@ -31,27 +33,36 @@ int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[nbVols], int i
     return exit;
 }
 
-void rechercheCompagnieD(const char *compagnie, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
+void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
     int trouve = 0, ind = 0;
     int prec = 0, suiv = 0;
+    char entryLowered[50] = "";
 
-    trouve = rechercheDichotomieCompagnie(nbVols, listeVols, indicesTri, compagnie);
+    copyCharToLower(entry, entryLowered);
+
+    trouve = rechercheDichotomieCompagnie(nbVols, listeVols, indicesTri, entryLowered);
 
     if(trouve != -1) {
         indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
         prec = trouve-1;
         suiv = trouve+1;
         ++ind;
-        while(strcmp(listeVols[indicesTri[prec]].compagnie, compagnie)==0 || strcmp(listeVols[indicesTri[suiv]].compagnie, compagnie)==0) {
-            if(strcmp(listeVols[indicesTri[prec]].compagnie, compagnie)==0) {
+
+        char compagniePrec[50] = "", compagnieSuiv[50] = "";
+        copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
+        copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
+        while(strcmp(entryLowered, compagniePrec)==0 || strcmp(entryLowered, compagnieSuiv)==0) {
+            if(strcmp(compagniePrec, entryLowered)==0) {
                 indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
                 --prec;
                 ++ind;
+                copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
             }
-            if(strcmp(listeVols[indicesTri[suiv]].compagnie, compagnie)==0) {
+            if(strcmp(compagnieSuiv, entryLowered)==0) {
                 indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
                 ++suiv;
                 ++ind;
+                copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
             }
         }
     }
@@ -59,16 +70,18 @@ void rechercheCompagnieD(const char *compagnie, int nbVols, struct Vol listeVols
         indices[ind] = -1;
 }
 
-int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *chaine) {
+int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *entryLowered) {
     int deb = 0, fin = nbVols-1, mid = 0;
     int exit = -1;
+    char destinationLowered[50];
 
     do {
         mid=(deb+fin)/2;
-        if(compareOrdreAlpha(listeVols[indices[mid]].destination, chaine)==0) {
+        copyCharToLower(listeVols[indices[mid]].destination, destinationLowered);
+        if(compareOrdreAlpha(destinationLowered, entryLowered)==0) {
             exit = mid;
         }
-        else if(compareOrdreAlpha(listeVols[indices[mid]].destination, chaine)==1) {
+        else if(compareOrdreAlpha(destinationLowered, entryLowered)==1) {
             deb = mid+1;
         }else {
             fin = mid-1;
@@ -77,27 +90,36 @@ int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[nbVols], int
     return exit;
 }
 
-void rechercheDestinationD(const char *destination, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
+void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
     int trouve = 0, ind = 0;
     int prec = 0, suiv = 0;
+    char entryLowered[50] = "";
 
-    trouve = rechercheDichotomieDestination(nbVols, listeVols, indicesTri, destination);
+    copyCharToLower(entry, entryLowered);
+
+    trouve = rechercheDichotomieDestination(nbVols, listeVols, indicesTri, entryLowered);
 
     if(trouve != -1) {
         indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
         prec = trouve-1;
         suiv = trouve+1;
         ++ind;
-        while(strcmp(listeVols[indicesTri[prec]].destination, destination)==0 || strcmp(listeVols[indicesTri[suiv]].destination, destination)==0) {
-            if(strcmp(listeVols[indicesTri[prec]].destination, destination)==0) {
+
+        char destinationPrec[50] = "", destinationSuiv[50] = "";
+        copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
+        copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
+        while(strcmp(entryLowered, destinationPrec)==0 || strcmp(entryLowered, destinationSuiv)==0) {
+            if(strcmp(destinationPrec, entryLowered)==0) {
                 indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
                 --prec;
                 ++ind;
+                copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
             }
-            if(strcmp(listeVols[indicesTri[suiv]].destination, destination)==0) {
+            if(strcmp(destinationSuiv, entryLowered)==0) {
                 indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
                 ++suiv;
                 ++ind;
+                copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
             }
         }
     }

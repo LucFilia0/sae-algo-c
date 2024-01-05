@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
             if(entry == 1) {
                 do {
                     int numVol = 0;
-                    int indices[10] = {0};
+                    int indices[100] = {0};
 
                     userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);
 
@@ -85,8 +85,8 @@ int main(int argc, char *argv[])
                     afficheTableauVols(listeVols, 1, vol);
 
                     printf("\n\nListe des passagers :\n");
-                    trierPassagers(10, listeVols[numVol-1].listePassagers, indices);
-                    afficheTableauPassagers(listeVols[numVol-1], 10, indices);
+                    trierPassagers(100, listeVols[numVol-1].listePassagers, indices);
+                    afficheTableauPassagers(listeVols[numVol-1], 100, indices);
 
                     waitPress();
                     returnMenu(&menu);

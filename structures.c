@@ -202,7 +202,7 @@ void initVol(struct Vol *vol, char *infoVol)
         :fonction:
             initialise les données du vol
     */
-    char info[300] = "";
+    char info[50] = "";
     int i = 0, ind = 0, numElement = 0;
     while(i<strlen(infoVol)) {
         if(infoVol[i]!=',') {
@@ -241,7 +241,7 @@ void clearPassagers(struct Vol *vol) {
             met tous les paramètres de tous les passagers de 'vol' à leur valeur nulle,
             afin de ne pas avoir de valeur bizarres qui apparaissent lors de l'affichage
     */
-    for(int i=0; i<10; ++i) {
+    for(int i=0; i<100; ++i) {
         clearChar(vol->listePassagers[i].nom);
         clearChar(vol->listePassagers[i].prenom);
         vol->listePassagers[i].dateNaissance.jour = 0;
@@ -296,8 +296,7 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
             numElement=0;
             ind=0;
             clearChar(info);
-            //printf("\n|-- %s --|\n", info);
         }
-        i++;
+        ++i;
     }
 }

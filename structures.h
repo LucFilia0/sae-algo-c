@@ -33,7 +33,7 @@ struct Vol {
     struct Heure h_finEmbarquement;
     struct Heure h_decollage;
     char etatVol[30];
-    struct Passager listePassagers[10];
+    struct Passager listePassagers[100];
 };
 
 /** ##---- DECLARATIONS FONCTIONS HEURES ----## */
