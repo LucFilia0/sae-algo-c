@@ -175,6 +175,14 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
 
 void indexFill(int n, int tabIndices[n], int nbVols)
 {
+    /*
+    :entree:
+        'n' -> Taille maximum du tableau
+        'tabIndices' -> tableau à remplir
+        'nbVols' -> nombre de Vols dans listeVols
+    :fonction:
+        Remplie le tableau d'indices (done 0, 1, 2...) jusqu'à en avoir mis nbVols, puis finis de remplir le tableau avec des -1.
+    */
     for (int i = 0 ; i < nbVols ; i++) {
         tabIndices[i] = i ;
     }
@@ -247,6 +255,13 @@ void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[ta
 
 int ecartHeures(struct Heure heure1, struct Heure heure2)
 {
+    /*
+        :entree:
+            'heure1' -> 1ere heure à comparer
+            'heure2' -> 2eme heure à comparer
+        :fonction:
+            Renvoie l'ecart en minutes entre les 2, l'écart sera négatif si la 1ere heure est avant la 2eme.
+    */
     int ecart = 0, heureEcart = 0, minuteEcart = 0 ;
     heureEcart = heure1.heure - heure2.heure ;
     minuteEcart = heure1.minute - heure2.minute ;
@@ -257,7 +272,7 @@ int ecartHeures(struct Heure heure1, struct Heure heure2)
     return heureEcart*60 + minuteEcart ;
 }
 
-void DecalerDeJusqua(int n, int nbVols, int tabIndices[n], int indiceVolRetarde, int nouvelIndice)
+void decalerDeJusqua(int nbVols, int tabIndices[], int indiceVolRetarde, int nouvelIndice)
 {
     int temp = tabIndices[indiceVolRetarde] ;
     for (int i = indiceVolRetarde ; i < nouvelIndice ; i++) {
@@ -266,16 +281,17 @@ void DecalerDeJusqua(int n, int nbVols, int tabIndices[n], int indiceVolRetarde,
     tabIndices[nouvelIndice] = temp ;
 }
 
-void retarderVol(int n, int tabIndices[n], struct Vol listeVols[n],int retardAccumule, int indiceVolRetarde, struct Heure heureActuelle)
+void retarderVol(int tabIndices[], struct Vol listeVols[],int retardAccumule, int indiceVolRetarde, struct Heure heureActuelle)
 {
     char chaine[30] ;
-    sprintf(chaine,"Retarde %d min",retardAccumule) ;
+    sprintf(chaine,"Retarde (%d min)",retardAccumule) ;
     strcpy(listeVols[tabIndices[indiceVolRetarde]].etatVol,chaine) ;
     listeVols[tabIndices[indiceVolRetarde]].h_decollage.heure = heureActuelle.heure ;
     listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute = heureActuelle.minute ;
 }
 
-int etatVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int indiceVolRetarde) {
+int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde)
+{
     char chaine[30] ;
     strcpy(chaine,listeVols[tabIndices[indiceVolRetarde]].etatVol) ;
     if (chaine[0] == 'A') {
@@ -301,9 +317,9 @@ int etatVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int i
     }
 }
 
-int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int indiceVolRetarde, int tpsRetard) {
+int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde, int tpsRetard) {
 
-    int retardInitial = etatVol(n, nbVols, tabIndices, listeVols, indiceVolRetarde) ;
+    int retardInitial = etatVol(nbVols, tabIndices, listeVols, indiceVolRetarde) ;
     if (retardInitial==-1) {
         printf("Le vol ne peut pas etre retarde car il est annule") ;
         return -2 ;
@@ -321,6 +337,10 @@ int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], i
 
     ajouterHeure(&heureMin,retardAccumule) ;
     ajouterHeure(&heureMax,60) ;
+    if ((heureMax.heure >= 22 && heureMax.minute > 0) || heureMax.heure >= 23) {
+        heureMax.heure = 22 ;
+        heureMax.minute = 0 ;
+    }
 
     if (nbVols > 1) {
 
@@ -349,12 +369,6 @@ int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], i
         // Vérifie si on peut insérer le vol à l'heure sélectionnée, sinon on ajout 1 minute à l'heure
         while (place == 0 && retardAccumule <=60) {
             ecart = ecartHeures(heureMax,heureActuelle) ;
-            if (heureActuelle.heure >= 22) {
-                if (heureActuelle.minute > 0) {
-                    break ;
-                }
-            }
-
             if (ecart < 0) {
                 break ;
             }
@@ -401,7 +415,7 @@ int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], i
 
 
     else {
-        retarderVol(n, tabIndices, listeVols, tpsRetard, indiceVolRetarde, heureActuelle) ;
+        retarderVol(tabIndices, listeVols, tpsRetard, indiceVolRetarde, heureActuelle) ;
         return tpsRetard ;
     }
 
@@ -413,8 +427,8 @@ int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], i
 
     // Retarde le vol, modifie le tableau d'incides et la liste des vols
     else {
-        retarderVol(n, tabIndices, listeVols, retardAccumule, indiceVolRetarde, heureActuelle) ;
-        DecalerDeJusqua(n, nbVols, tabIndices, indiceVolRetarde, indiceVol) ;
+        retarderVol(tabIndices, listeVols, retardAccumule, indiceVolRetarde, heureActuelle) ;
+        decalerDeJusqua(nbVols, tabIndices, indiceVolRetarde, indiceVol) ;
     }
 
     return retardAccumule ;

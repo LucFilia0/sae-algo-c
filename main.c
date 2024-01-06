@@ -38,16 +38,16 @@ int main(int argc, char *argv[])
         struct Vol *v;
         int entry, recherche, numVol, heure, quit = 0;
         char compagnie[50], destination[50];
-        int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX], tabIndicesNomsCompagnie[NB_VOLS_MAX];
+        int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX], tabIndicesNomsCompagnie[NB_VOLS_MAX], temp[NB_VOLS_MAX];
 
-        // TRI INDIRECTS (du coup y a que le tri par heure qui sert pour le moment)
-        indexFill(NB_VOLS_MAX, tabIndicesDestination, nbVols) ;
+        // TRI INDIRECTS
         indexFill(NB_VOLS_MAX, tabIndicesH_Decollage, nbVols) ;
+        indexFill(NB_VOLS_MAX, tabIndicesDestination, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesNomsCompagnie, nbVols) ;
 
-        trierCompagnie(NB_VOLS_MAX, tabIndicesNomsCompagnie, listeVols, nbVols) ;
-        trierDestination(NB_VOLS_MAX, tabIndicesDestination, listeVols, nbVols) ;
-        trierHeureDecollage(NB_VOLS_MAX, tabIndicesH_Decollage, listeVols, nbVols) ;
+        triFusion(nbVols, tabIndicesH_Decollage, temp, listeVols, 1) ;
+        triFusion(nbVols, tabIndicesDestination, temp, listeVols, 2) ;
+        triFusion(nbVols, tabIndicesNomsCompagnie, temp, listeVols, 3) ;
 
         /*
         printf("\nTri par compagnie : ");
@@ -184,33 +184,40 @@ int main(int argc, char *argv[])
 
                 // --> AJOUTER RETARD
                 else if(choix == 2) {
-                    do {
-                        if (nbVols <= 0) {
-                            printf("La liste des vols est vide") ;
+                    if (nbVols <= 0) {
+                        printf("La liste des vols est vide") ;
+                    }
+                    else {
+                        int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
+                        struct Heure ancienneHeure ;
+
+                        userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 1, nbVols);
+                        indiceVolRetarde = rechercheIndiceAvecNumVol(nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
+                        ancienneHeure.heure = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.heure ;
+                        ancienneHeure.minute = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.minute ;
+
+                        userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
+                        retardFinal = ajoutRetard(nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
+
+                        if (retardFinal == -1) {
+                            printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
                         }
+
+                        else if(retardFinal == -2) {
+                            printf("Le vol est annule, il ne peut pas etre retarde\n");
+                        }
+
                         else {
-                            int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
-                            userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 1, nbVols);
-                            indiceVolRetarde = rechercheIndiceAvecNumVol(NB_VOLS_MAX, nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
+                            struct Heure nouvelleHeure ;
+                            nouvelleHeure.heure = ancienneHeure.heure ;
+                            nouvelleHeure.minute = ancienneHeure.minute ;
 
-                            userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
-                            retardFinal = ajoutRetard(NB_VOLS_MAX, nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
-
-                            if (retardFinal == -1) {
-                                printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
-                            }
-
-                            else if(retardFinal == -2) {
-                                printf("Le vol est annule, il ne peut pas etre retarde\n");
-                            }
-
-                            else {
-                                printf("Le vol a ete retarde de %d minutes\n",retardFinal);
-                            }
+                            printf("Le vol a ete retarde de %d minutes\n",retardFinal);
+                            ajouterHeure(&nouvelleHeure, retardFinal) ;
+                            printf("%d:%d -> %d:%d\n",ancienneHeure.heure, ancienneHeure.minute, nouvelleHeure.heure, nouvelleHeure.minute) ;
                         }
-                        waitPress() ;
-                        menu = 2 ;
-                    }while(menu != 2);
+                    }
+                    waitPress() ;
                 }
             }
 

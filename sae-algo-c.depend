@@ -362,3 +362,85 @@
 	"IHM.h"
 	"tri.h"
 
+1704546892 source:c:\users\foudou\documents\dichotomie\fichier.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"fichier.h"
+
+1704546892 c:\users\foudou\documents\dichotomie\fichier.h
+
+1704546892 source:c:\users\foudou\documents\dichotomie\ihm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704549511 c:\users\foudou\documents\dichotomie\structures.h
+
+1704551125 c:\users\foudou\documents\dichotomie\fonctions.h
+
+1704546892 c:\users\foudou\documents\dichotomie\ihm.h
+
+1704551571 c:\users\foudou\documents\dichotomie\tri.h
+
+1704552266 source:c:\users\foudou\documents\dichotomie\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	"recherches.h"
+
+1704551744 c:\users\foudou\documents\dichotomie\recherches.h
+
+1704551693 source:c:\users\foudou\documents\dichotomie\recherches.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	"recherches.h"
+
+1704546892 source:c:\users\foudou\documents\dichotomie\structures.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
+1704552148 source:c:\users\foudou\documents\dichotomie\tri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fonctions.h"
+	"fichier.h"
+	"IHM.h"
+	"tri.h"
+	"recherches.h"
+
+1704551078 source:c:\users\foudou\documents\dichotomie\fonctions.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+
