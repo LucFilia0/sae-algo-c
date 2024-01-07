@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
                                "\n3 - Heure de decollage : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
-                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndicesNomsCompagnie, tabIndicesDestination, tabIndices);
+                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndicesNomsCompagnie, tabIndicesDestination, tabIndicesH_Decollage, tabIndices);
                         if(tabIndices[0] != -1) { //Si au moins un vol est trouvé
                             afficheTableauVols(listeVols, nbVols, tabIndices);
                         }else {
@@ -170,15 +170,9 @@ int main(int argc, char *argv[])
 
                 // --> VOIR LA PISTE
                 if(choix == 1) {
-                    int tousIndices[nbVols];
-                    int a=23;
-                    for(int i=0; i<nbVols; ++i) {
-                        tousIndices[i] = i;
-                    }
                     printf("\nPISTE :\n");
 
-                    trierPiste(nbVols, listeVols, tousIndices);
-                    afficheTableauVols(listeVols, nbVols, tousIndices);
+                    afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
                     waitPress();
                 }
 

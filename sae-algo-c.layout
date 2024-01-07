@@ -2,63 +2,39 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-<<<<<<< HEAD
+	<File name="recherches.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1145" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="IHM.c" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="8616" topLine="220" />
-=======
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1689" topLine="180" />
 		</Cursor>
 	</File>
-	<File name="IHM.c" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tri.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="256" topLine="203" />
+			<Cursor1 position="295" topLine="149" />
 		</Cursor>
 	</File>
-	<File name="fonctions.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="fonctions.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="957" topLine="2" />
+			<Cursor1 position="4346" topLine="341" />
 		</Cursor>
 	</File>
-	<File name="recherches.c" open="1" top="1" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tri.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="10542" topLine="270" />
-		</Cursor>
-	</File>
-	<File name="fichier.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="16" topLine="0" />
->>>>>>> f617bb49ffacb495782d6d5a133f21b096be7814
-		</Cursor>
-	</File>
-	<File name="structures.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-<<<<<<< HEAD
 			<Cursor1 position="56" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="structures.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="719" topLine="20" />
+			<Cursor1 position="719" topLine="23" />
 		</Cursor>
 	</File>
-	<File name="fichier.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="fonctions.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="685" topLine="0" />
-=======
-			<Cursor1 position="247" topLine="232" />
->>>>>>> f617bb49ffacb495782d6d5a133f21b096be7814
-		</Cursor>
-	</File>
-	<File name="fonctions.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-<<<<<<< HEAD
-			<Cursor1 position="4346" topLine="134" />
-=======
-			<Cursor1 position="9580" topLine="398" />
->>>>>>> f617bb49ffacb495782d6d5a133f21b096be7814
+			<Cursor1 position="957" topLine="9" />
 		</Cursor>
 	</File>
 	<File name="IHM.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -66,46 +42,19 @@
 			<Cursor1 position="14" topLine="0" />
 		</Cursor>
 	</File>
-<<<<<<< HEAD
-	<File name="recherches.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1449" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3171" topLine="62" />
-		</Cursor>
-	</File>
 	<File name="structures.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6284" topLine="198" />
-=======
+			<Cursor1 position="6284" topLine="96" />
+		</Cursor>
+	</File>
+	<File name="recherches.c" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2081" topLine="271" />
+		</Cursor>
+	</File>
 	<File name="fichier.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="685" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="tri.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="253" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="structures.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="720" topLine="5" />
-		</Cursor>
-	</File>
-	<File name="recherches.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1096" topLine="0" />
->>>>>>> f617bb49ffacb495782d6d5a133f21b096be7814
-		</Cursor>
-	</File>
-	<File name="tri.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-<<<<<<< HEAD
-			<Cursor1 position="295" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="fichier.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -113,17 +62,9 @@
 			<Cursor1 position="16" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="fonctions.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="957" topLine="3" />
-		</Cursor>
-	</File>
-	<File name="recherches.c" open="1" top="1" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2081" topLine="82" />
-=======
-			<Cursor1 position="2650" topLine="48" />
->>>>>>> f617bb49ffacb495782d6d5a133f21b096be7814
+			<Cursor1 position="1703" topLine="39" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
