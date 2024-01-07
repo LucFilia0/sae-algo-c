@@ -387,8 +387,6 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
     rechercheDestinationD(destination, nbVols, listeVols, indicesTriDestination, indicesDestination);
     rechercheH_DecollageD(heureDecollage, nbVols, listeVols, indicesTriH_Decollage, indicesHeureDecollage);
 
-    afficheTab(nbVols, indicesHeureDecollage);
-
     int indicesReference[NB_VOLS_MAX] = {0};
 
     // recherche le tableau à prendre pour référence
