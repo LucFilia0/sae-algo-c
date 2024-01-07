@@ -32,6 +32,10 @@ void concatenerTableaux(int taille1, int tab1[taille1], int taille2, int tab2[ta
 
 int ecartHeures(struct Heure heure1, struct Heure heure2) ;
 
-int ajoutRetard(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int indiceVolRetarde, int tpsRetard) ;
+void decalerDeJusqua(int nbVols, int tabIndices[], int indiceVolRetarde, int nouvelIndice) ;
 
-void retarderVol(int n, int tabIndices[n], struct Vol listeVols[n],int retardAccumule, int indiceVolRetarde, struct Heure heureActuelle) ;
+void retarderVol(int tabIndices[], struct Vol listeVols[],int retardAccumule, int indiceVolRetarde, struct Heure heureActuelle) ;
+
+int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde) ;
+
+int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde, int tpsRetard) ;

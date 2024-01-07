@@ -13,7 +13,7 @@
 
 /** ##---- RECHERCHE DICHOTOMIE ----## */
 
-int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *entryLowered) {
+int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[], int indices[], const char *entryLowered) {
     int deb = 0, fin = nbVols-1, mid = 0;
     int exit = -1;
     char compagnieLowered[50];
@@ -33,7 +33,7 @@ int rechercheDichotomieCompagnie(int nbVols, struct Vol listeVols[nbVols], int i
     return exit;
 }
 
-void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
+void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[], int indicesTri[], int indices[]) {
     int trouve = 0, ind = 0;
     int prec = 0, suiv = 0;
     char entryLowered[50] = "";
@@ -70,7 +70,7 @@ void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[nbV
         indices[ind] = -1;
 }
 
-int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], const char *entryLowered) {
+int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[], int indices[], const char *entryLowered) {
     int deb = 0, fin = nbVols-1, mid = 0;
     int exit = -1;
     char destinationLowered[50];
@@ -90,7 +90,7 @@ int rechercheDichotomieDestination(int nbVols, struct Vol listeVols[nbVols], int
     return exit;
 }
 
-void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols]) {
+void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[], int indicesTri[], int indices[]) {
     int trouve = 0, ind = 0;
     int prec = 0, suiv = 0;
     char entryLowered[50] = "";
@@ -129,7 +129,7 @@ void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[n
 
 /** ##---- DEFINITIONS FONCTIONS RECHERCHE ----## */
 
-int rechercheIndiceAvecNumVol(int n, int nbVols, int tabIndices[n], struct Vol listeVols[n], int numVol)
+int rechercheIndiceAvecNumVol(int nbVols, int tabIndices[], struct Vol listeVols[], int numVol)
 {
     int i = 0 ;
     while (i < nbVols) {
@@ -196,45 +196,7 @@ int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassa
     return max;
 }
 
-int rechercheCompagnieMinFrom(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols, int iDeb)
-{
-    int comp, indMin = iDeb ;
-    char lowerStrMin[30], lowerStr[30] ;
-    copyCharToLower(listeVols[tabIndices[indMin]].compagnie, lowerStrMin);
-
-    for (int i = iDeb + 1 ; i < nbVols ; i++) {
-        copyCharToLower(listeVols[tabIndices[i]].compagnie, lowerStr);
-        comp = strcmp(lowerStrMin, lowerStr);
-
-        if (comp > 0) {
-            indMin = i ;
-            copyCharToLower(listeVols[tabIndices[i]].compagnie, lowerStrMin);
-        }
-    }
-
-    return indMin ;
-}
-
-int rechercheDestinationMinFrom(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols, int iDeb)
-{
-    int comp, indMin = iDeb ;
-    char lowerStrMin[30], lowerStr[30] ;
-    copyCharToLower(listeVols[tabIndices[indMin]].destination, lowerStrMin);
-
-    for (int i = iDeb + 1 ; i < nbVols ; i++) {
-        copyCharToLower(listeVols[tabIndices[i]].destination, lowerStr);
-        comp = strcmp(lowerStrMin, lowerStr);
-
-        if (comp > 0) {
-            indMin = i ;
-            copyCharToLower(listeVols[tabIndices[i]].destination, lowerStrMin);
-        }
-    }
-
-    return indMin ;
-}
-
-int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], int deb) {
+int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[], int indices[], int deb) {
     int min = deb;
     int i = deb+1;
 
@@ -247,7 +209,7 @@ int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[nbVols], int
     return min;
 }
 
-void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVols[], int indices[]) {
     /*
         :entree:
             'nomCompagnie' -> la compagnie à rechercher
@@ -277,7 +239,7 @@ void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVo
         indices[ind] = -1;
 }
 
-void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[], int indices[]) {
     /*
         :entree:
             'nomDestination' -> la destination recherchee
@@ -307,7 +269,7 @@ void rechercheDestination(const char *nomDestination, int nbVols, struct Vol lis
         indices[ind] = -1;
 }
 
-void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol listeVols[], int indices[]) {
     /*
         :entree:
             'heureDecollage' -> l'heure recherchee
@@ -345,7 +307,7 @@ void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol 
 
 /** ##---- RECHERCHE AVANCEE ----## */
 
-void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[nbVols], int indicesTriCompagnie[nbVols], int indicesTriDestination[nbVols], int indices[nbVols]) {
+void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[], int indicesTriCompagnie[], int indicesTriDestination[], int indices[]) {
     /*
         :entree:
             'compagnie' -> le nom de la compagnie

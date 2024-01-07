@@ -69,7 +69,7 @@ void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers]
     concatenerTableaux(100, listePassagersMoinsDouze, 100, listePassagersPlusDouze, nbPassagers, indices);
 }
 
-void trierPiste(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
+void trierPiste(int nbVols, struct Vol listeVols[], int indices[]) {
     int i=0;
     int min = 0;
     while(i<nbVols) {
@@ -79,37 +79,102 @@ void trierPiste(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]) {
     }
 }
 
-//=================================================
+//====================================================================================
 
-void trierCompagnie(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols)
+void fusion(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin, int  typeTri)
 {
-    int indMin ;
-    for (int i = 0 ; i < nbVols ; i++) {
-        indMin = rechercheCompagnieMinFrom(n, tabIndices, listeVols, nbVols, i) ;
-        if (indMin != i) {
-            echangeIndicesTab(n, tabIndices, indMin, i);
+    int iMilieu = (iDeb + iFin)/2 ;
+    int i = iDeb, j = iMilieu + 1, k = 0, comp;
+    char chaine1[30], chaine2[30] ;
+
+    while (i <= iMilieu && j <= iFin) {
+        switch(typeTri){
+        case 1:
+            comp = ecartHeures(listeVols[tabIndices[i]].h_decollage, listeVols[tabIndices[j]].h_decollage) ; break ;
+            break ;
+        case 2:
+            copyCharToLower(listeVols[tabIndices[i]].destination, chaine1) ;
+            copyCharToLower(listeVols[tabIndices[j]].destination,chaine2) ;
+            comp = strcmp(chaine1, chaine2) ;
+            break ;
+        case 3:
+            copyCharToLower(listeVols[tabIndices[i]].compagnie, chaine1) ;
+            copyCharToLower(listeVols[tabIndices[j]].compagnie,chaine2) ;
+            comp = strcmp(chaine1, chaine2) ;
+            break ;
         }
+
+        if (comp < 0) {
+            temp[k] = tabIndices[i] ;
+            i++ ;
+        }
+
+        else {
+            temp[k] = tabIndices[j] ;
+            j++ ;
+        }
+        k++ ;
+    }
+
+    while (i <= iMilieu) {
+        temp[k] = tabIndices[i] ;
+        i++ ; k++ ;
+    }
+
+    while (j <= iFin) {
+        temp[k] = tabIndices[j] ;
+        j++ ; k++ ;
+    }
+
+    k = 0 ;
+    while (k <= iFin - iDeb) {
+        tabIndices[iDeb + k] = temp[k] ;
+        temp[k] = 0 ;
+        k++ ;
     }
 }
 
-void trierDestination(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols)
+void triFusionH_Decollage(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin)
 {
-    int indMin ;
-    for (int i = 0 ; i < nbVols ; i++) {
-        indMin = rechercheDestinationMinFrom(n, tabIndices, listeVols, nbVols, i) ;
-        if (indMin != i) {
-            echangeIndicesTab(n, tabIndices, indMin, i);
-        }
+    if (iDeb < iFin) {
+        int iMilieu = (iDeb + iFin)/2 ;
+        triFusionH_Decollage(tabIndices, temp, listeVols, iDeb, iMilieu) ;
+        triFusionH_Decollage(tabIndices, temp, listeVols, iMilieu + 1, iFin) ;
+        fusion(tabIndices, temp, listeVols, iDeb, iFin, 1) ;
     }
 }
 
-void trierHeureDecollage(int n, int tabIndices[n], struct Vol listeVols[n], int nbVols)
+void triFusionDestination(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin)
 {
-    int indMin ;
-    for (int i = 0 ; i < nbVols ; i++) {
-        indMin = rechercheHeureDecollageMinFrom(nbVols, listeVols, tabIndices, i) ;
-        if (indMin != i) {
-            echangeIndicesTab(n, tabIndices, indMin, i);
-        }
+    if (iDeb < iFin) {
+        int iMilieu = (iDeb + iFin)/2 ;
+        triFusionDestination(tabIndices, temp, listeVols, iDeb, iMilieu) ;
+        triFusionDestination(tabIndices, temp, listeVols, iMilieu + 1, iFin) ;
+        fusion(tabIndices, temp, listeVols, iDeb, iFin, 2) ;
+    }
+}
+
+void triFusionCompagnie(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin)
+{
+    if (iDeb < iFin) {
+        int iMilieu = (iDeb + iFin)/2 ;
+        triFusionCompagnie(tabIndices, temp, listeVols, iDeb, iMilieu) ;
+        triFusionCompagnie(tabIndices, temp, listeVols, iMilieu + 1, iFin) ;
+        fusion(tabIndices, temp, listeVols, iDeb, iFin, 3) ;
+    }
+}
+
+void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[], int typeTri)
+{
+    int iDeb = 0, iFin = nbVols - 1 ;
+    switch(typeTri) {
+        case 1:
+            triFusionH_Decollage(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
+        case 2:
+            triFusionDestination(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
+        case 3:
+            triFusionCompagnie(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
+        default:
+            printf("\nTri invalide\n") ;
     }
 }

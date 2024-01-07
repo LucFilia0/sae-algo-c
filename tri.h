@@ -6,8 +6,15 @@ void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers]
 
 void trierPiste(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
 
-void trierCompagnie(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols) ;
 
-void trierDestination(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols) ;
+//===============================================
 
-void trierHeureDecollage(int n, int tabIndices[n], struct Vol listeVols[n],int nbVols) ;
+void fusion(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin, int  typeTri) ;
+
+void triFusionH_Decollage(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin) ;
+
+void triFusionDestination(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin) ;
+
+void triFusionCompagnie(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin) ;
+
+void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[], int typeTri) ;
