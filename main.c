@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
                         showTitle("VOIR UN VOL");
                         int vol[1] = {numVol-1};
 
-                        printf("Vol %d :\n", numVol);
+                        printf("\nVol %d :\n", numVol);
                         afficheTableauVols(listeVols, 1, vol);
 
                         printf("\n\nListe des passagers :\n");
@@ -129,24 +129,24 @@ int main(int argc, char *argv[])
                         int rechercheMult = 0;
 
                         printf("\n======================================="
-                               "\n1 - Compagnie : %s"
-                               "\n2 - Destination : %s"
-                               "\n3 - Heure de decollage : %s"
+                               "\n 1 - Compagnie : %s"
+                               "\n 2 - Destination : %s"
+                               "\n 3 - Heure de decollage : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
                         userEntryInt("Choisissez les criteres a appliquer\n\n[entree] pour valider/retour", &rechercheMult, 0, 3);
 
                         if(rechercheMult == 1) {
-                            showTitle("RECHERCHE AVANCEE -> compagnie");
+                            showTitle("RECHERCHE AVANCEE -> Compagnie");
                             userEntryChar("\nCompagnie", compagnie, 50, 1);
                         }
                         else if(rechercheMult == 2) {
-                            showTitle("RECHERCHE AVANCEE -> destination");
-                            userEntryChar("Destination", destination, 50, 1);
+                            showTitle("RECHERCHE AVANCEE -> Destination");
+                            userEntryChar("\nDestination", destination, 50, 1);
                         }
                         else if(rechercheMult == 3) {
-                            showTitle("RECHERCHE AVANCEE -> heure de decollage");
-                            userEntryChar("Heure de decollage (HH:MM)", heureDecollage, 50, 1);
+                            showTitle("RECHERCHE AVANCEE -> Heure de decollage");
+                            userEntryChar("\nHeure de decollage (HH:MM)", heureDecollage, 50, 1);
                         }
                         else {
                             if(strcmp(compagnie, "") != 0 || strcmp(destination, "") != 0 || strcmp(heureDecollage, "") != 0) {
@@ -161,9 +161,9 @@ int main(int argc, char *argv[])
                         showTitle("RECHERCHE AVANCEE");
                         //On garde l'affichage sympa
                         printf("\n======================================="
-                               "\n1 - Compagnie : %s"
-                               "\n2 - Destination : %s"
-                               "\n3 - Heure de decollage : %s"
+                               "\n 1 - Compagnie : %s"
+                               "\n 2 - Destination : %s"
+                               "\n 3 - Heure de decollage : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
                         rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndicesNomsCompagnie, tabIndicesDestination, tabIndicesH_Decollage, tabIndices);

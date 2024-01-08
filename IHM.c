@@ -104,18 +104,18 @@ void showTitle(const char *title) {
     printf(" ________________________________________________________"
            "\n/\t\t\t\t\t\t\t \\\n|\t\t\tGESTION'AIR\t\t\t |\n\\"
            "________________________________________________________/"
-           "\n\n>> %s\n", title);
+           "\n\n>> %s\n____________________________________________________________\n", title);
 }
 
 void showTime(struct Date ajd, struct Heure mtn) {
-    printf(" \no<[ ");
+    printf(" \n-<[ ");
     if(ajd.mois < 10)
         printf("%d/0%d/%d", ajd.jour, ajd.mois, ajd.annee);
     else
         printf("%d/%d/%d", ajd.jour, ajd.mois, ajd.annee);
     char heureChar[5] = "";
     afficherHeureDans(mtn, heureChar);
-    printf(" | %s ]>o\n\n", heureChar);
+    printf(" | %s ]>-\n\n", heureChar);
 }
 
 void afficheLigneVide(int nbColumns, int widthColumns) {
