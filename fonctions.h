@@ -39,3 +39,5 @@ void retarderVol(int tabIndices[], struct Vol listeVols[],int retardAccumule, in
 int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde) ;
 
 int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde, int tpsRetard) ;
+
+void updatePiste(int nbVols, int tabIndices[], struct Vol listeVols[], int n, int tabNumVol[n]) ;
