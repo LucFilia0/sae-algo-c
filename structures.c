@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "structures.h"
 #include "fichier.h"
@@ -133,6 +134,11 @@ int compareHeures(struct Heure h1, struct Heure h2) {
             exit = 2;
         }
     }
+    return exit;
+}
+
+int castHeureEnMinute(struct Heure heure) {
+    int exit = heure.heure * 60 + heure.minute;
     return exit;
 }
 
@@ -299,4 +305,25 @@ void initPassagers(struct Vol *vol, const char *listePassagers)
         }
         ++i;
     }
+}
+
+/** ##---- FONCTIONS TIME.H ----## */
+
+void getHeureSystemInto(struct Heure *heure) {
+    time_t now;
+    time(&now);
+    struct tm *heureActuelle = localtime(&now);
+
+    heure->heure = heureActuelle->tm_hour;
+    heure->minute = heureActuelle->tm_min;
+}
+
+void getDateSystemInto(struct Date *date) {
+    time_t now;
+    time(&now);
+    struct tm *heureActuelle = localtime(&now);
+
+    date->jour = heureActuelle->tm_mday;
+    date->mois = heureActuelle->tm_mon + 1;
+    date->annee = heureActuelle->tm_year + 1900;
 }

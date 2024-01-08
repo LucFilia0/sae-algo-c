@@ -44,6 +44,8 @@ void ajouterHeure(struct Heure *heure, int val);
 
 int compareHeures(struct Heure h1, struct Heure h2);
 
+int castHeureEnMinute(struct Heure heure);
+
 void afficherHeureDans(struct Heure heure, char *chaine);
 
 /** ##---- DECLARATIONS FONCTIONS IMPORTATION DONNEES ----## */
@@ -53,3 +55,9 @@ void importDataBase(FILE *fichier, struct Vol *listeVols, int *nb_vols);
 void initVol(struct Vol *vol, char *informations);
 
 void initPassagers(struct Vol *vol, const char *listePassagers);
+
+/** ##---- FONCTIONS TIME.H ----## */
+
+void getHeureSystemInto(struct Heure *heure);
+
+void getDateSystemInto(struct Date *date);

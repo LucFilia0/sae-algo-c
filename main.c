@@ -25,6 +25,11 @@ int main(int argc, char *argv[])
     }
     else
     {
+        // SET HEURE ET DATE
+        struct Heure mtn;
+        struct Date ajd;
+        getDateSystemInto(&ajd);
+
         int nbVols = 0;
         importDataBase(fichier, listeVols, &nbVols);
 
@@ -65,31 +70,48 @@ int main(int argc, char *argv[])
 
         // ARBRE EVENEMENTS
         do {
+            getHeureSystemInto(&mtn);
             int menu = 1;
 
-            showTitle();
+            showTitle("ACCUEIL");
+            showTime(ajd, mtn);
 
-            userEntryInt("1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter", &entry, 1, 4);
+            printf("\nVols recents et a venir (-30mn/+10mn) :\n");
+            int indicesVolsAccueil[NB_VOLS_MAX] = {0};
+            rechercheVolsAccueil(nbVols, listeVols, tabIndicesH_Decollage, indicesVolsAccueil, mtn);
+            if(indicesVolsAccueil[0] != -1) {
+                afficheTableauVols(listeVols, nbVols, indicesVolsAccueil);
+            }else {
+                printf("\n---- Aucun vol recent ou a venir ----\n");
+            }
+
+            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter", &entry, 1, 4);
 
             /** ---- VOIR UN VOL ----## **/
             if(entry == 1) {
                 do {
+                    showTitle("VOIR UN VOL");
                     int numVol = 0;
                     int indices[100] = {0};
 
-                    userEntryInt("Entrez le numero du vol", &numVol, 1, nbVols);
+                    userEntryInt("Entrez le numero du vol", &numVol, 0, nbVols);
 
-                    int vol[1] = {numVol-1};
+                    if(numVol>0) {
+                        showTitle("VOIR UN VOL");
+                        int vol[1] = {numVol-1};
 
-                    printf("Vol %d :\n", numVol);
-                    afficheTableauVols(listeVols, 1, vol);
+                        printf("Vol %d :\n", numVol);
+                        afficheTableauVols(listeVols, 1, vol);
 
-                    printf("\n\nListe des passagers :\n");
-                    trierPassagers(100, listeVols[numVol-1].listePassagers, indices);
-                    afficheTableauPassagers(listeVols[numVol-1], 100, indices);
+                        printf("\n\nListe des passagers :\n");
+                        trierPassagers(100, listeVols[numVol-1].listePassagers, indices, ajd);
+                        afficheTableauPassagers(listeVols[numVol-1], 100, indices);
 
-                    waitPress();
-                    returnMenu(&menu);
+                        waitPress();
+                        returnMenu(&menu);
+                    }else {
+                        menu = 2;
+                    }
                 }while(menu != 2);
 
             }
@@ -103,10 +125,10 @@ int main(int argc, char *argv[])
                     int rechercheValidee = 0, retour = 0; // 1 pour 'validée'
 
                     do {
+                        showTitle("RECHERCHE AVANCEE");
                         int rechercheMult = 0;
 
-                        printf("RECHERCHE AVANCEE :"
-                               "\n======================================="
+                        printf("\n======================================="
                                "\n1 - Compagnie : %s"
                                "\n2 - Destination : %s"
                                "\n3 - Heure de decollage : %s"
@@ -115,12 +137,15 @@ int main(int argc, char *argv[])
                         userEntryInt("Choisissez les criteres a appliquer\n\n[entree] pour valider/retour", &rechercheMult, 0, 3);
 
                         if(rechercheMult == 1) {
-                            userEntryChar("Compagnie", compagnie, 50, 1);
+                            showTitle("RECHERCHE AVANCEE -> compagnie");
+                            userEntryChar("\nCompagnie", compagnie, 50, 1);
                         }
                         else if(rechercheMult == 2) {
+                            showTitle("RECHERCHE AVANCEE -> destination");
                             userEntryChar("Destination", destination, 50, 1);
                         }
                         else if(rechercheMult == 3) {
+                            showTitle("RECHERCHE AVANCEE -> heure de decollage");
                             userEntryChar("Heure de decollage (HH:MM)", heureDecollage, 50, 1);
                         }
                         else {
@@ -133,9 +158,9 @@ int main(int argc, char *argv[])
                     }while(rechercheValidee != 1 && retour != 1);
 
                     if(rechercheValidee == 1) {
+                        showTitle("RECHERCHE AVANCEE");
                         //On garde l'affichage sympa
-                        printf("RECHERCHE AVANCEE :"
-                               "\n======================================="
+                        printf("\n======================================="
                                "\n1 - Compagnie : %s"
                                "\n2 - Destination : %s"
                                "\n3 - Heure de decollage : %s"
@@ -166,52 +191,70 @@ int main(int argc, char *argv[])
             */
             else if(entry==3) {
                 int choix = 0;
-                userEntryInt("1 - Voir la piste\n2 - Retarder un vol", &choix, 1, 2);
+                showTitle("PISTE");
+                userEntryInt("1 - Voir la piste par heure de decollage\n2 - Voir la piste par numero de vol", &choix, 0, 2);
 
                 // --> VOIR LA PISTE
-                if(choix == 1) {
-                    printf("\nPISTE :\n");
-
-                    afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
-                    waitPress();
-                }
-
-                // --> AJOUTER RETARD
-                else if(choix == 2) {
-                    if (nbVols <= 0) {
-                        printf("La liste des vols est vide") ;
+                if(choix != 0) {
+                    if(choix == 1) {
+                        afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
                     }
-                    else {
-                        int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
-                        struct Heure ancienneHeure ;
-
-                        userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 1, nbVols);
-                        indiceVolRetarde = rechercheIndiceAvecNumVol(nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
-                        ancienneHeure.heure = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.heure ;
-                        ancienneHeure.minute = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.minute ;
-
-                        userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
-                        retardFinal = ajoutRetard(nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
-
-                        if (retardFinal == -1) {
-                            printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
+                    else if(choix == 2) {
+                        int indicesOrdreNumVol[NB_VOLS_MAX] = {0};
+                        for(int i=0; i<nbVols; ++i) {
+                            indicesOrdreNumVol[i] = i;
                         }
+                        indicesOrdreNumVol[nbVols] = -1;
 
-                        else if(retardFinal == -2) {
-                            printf("Le vol est annule, il ne peut pas etre retarde\n");
-                        }
-
-                        else {
-                            struct Heure nouvelleHeure ;
-                            nouvelleHeure.heure = ancienneHeure.heure ;
-                            nouvelleHeure.minute = ancienneHeure.minute ;
-
-                            printf("Le vol a ete retarde de %d minutes\n",retardFinal);
-                            ajouterHeure(&nouvelleHeure, retardFinal) ;
-                            printf("%d:%d -> %d:%d\n",ancienneHeure.heure, ancienneHeure.minute, nouvelleHeure.heure, nouvelleHeure.minute) ;
-                        }
+                        afficheTableauVols(listeVols, nbVols, indicesOrdreNumVol);
                     }
-                    waitPress() ;
+
+                    int choixRetard = 0;
+                    userEntryInt("\n1 - Retarder un vol\n2 - Retour", &choixRetard, 1, 2);
+
+                    // --> AJOUTER RETARD
+                    if(choixRetard == 1) {
+                        do {
+                            if (nbVols <= 0) {
+                                printf("La liste des vols est vide") ;
+                            }
+                            else {
+                                int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
+                                struct Heure ancienneHeure ;
+
+                                userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 1, nbVols);
+                                indiceVolRetarde = rechercheIndiceAvecNumVol(nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
+                                ancienneHeure.heure = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.heure ;
+                                ancienneHeure.minute = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.minute ;
+
+                                userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
+                                retardFinal = ajoutRetard(nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
+
+                                if (retardFinal == -1) {
+                                    printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
+                                }
+
+                                else if(retardFinal == -2) {
+                                    printf("Le vol est annule, il ne peut pas etre retarde\n");
+                                }
+
+                                else {
+                                    struct Heure nouvelleHeure ;
+                                    nouvelleHeure.heure = ancienneHeure.heure ;
+                                    nouvelleHeure.minute = ancienneHeure.minute ;
+
+                                    printf("Le vol a ete retarde de %d minutes\n",retardFinal);
+                                    ajouterHeure(&nouvelleHeure, retardFinal) ;
+                                    printf("%d:%d -> %d:%d\n",ancienneHeure.heure, ancienneHeure.minute, nouvelleHeure.heure, nouvelleHeure.minute) ;
+                                }
+                                waitPress();
+                                returnMenu(&menu);
+                            }
+                        }while(menu != 2);
+
+                    }else {
+                        continue;
+                    }
                 }
             }
 

@@ -96,12 +96,26 @@ void returnMenu(int *menu) {
 
 /** ##---- DECLARATIONS FONCTIONS AFFICHAGE ----## */
 
-void showTitle() {
+void showTitle(const char *title) {
     /*
         :fonction:
             Affiche le titre le l'application (ceci est provisoire)
     */
-    printf("\n>> GESTION'AIR\n\n");
+    printf(" ________________________________________________________"
+           "\n/\t\t\t\t\t\t\t \\\n|\t\t\tGESTION'AIR\t\t\t |\n\\"
+           "________________________________________________________/"
+           "\n\n>> %s\n", title);
+}
+
+void showTime(struct Date ajd, struct Heure mtn) {
+    printf(" \no<[ ");
+    if(ajd.mois < 10)
+        printf("%d/0%d/%d", ajd.jour, ajd.mois, ajd.annee);
+    else
+        printf("%d/%d/%d", ajd.jour, ajd.mois, ajd.annee);
+    char heureChar[5] = "";
+    afficherHeureDans(mtn, heureChar);
+    printf(" | %s ]>o\n\n", heureChar);
 }
 
 void afficheLigneVide(int nbColumns, int widthColumns) {
@@ -179,7 +193,7 @@ void afficheLignePassager(struct Passager passager, int nbColumns, int widthColu
 
                 break;
             case 3: sprintf(element, "%d", passager.numSiege); break;
-            case 4: sprintf(element, "%f", passager.prixBillet); break;
+            case 4: sprintf(element, "%.2f", passager.prixBillet); break;
             default: printf("\nCas non traite par switch\n"); break;
         }
         afficheCentre(element, widthColumns);

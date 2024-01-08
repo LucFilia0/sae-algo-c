@@ -2,7 +2,7 @@
 
 /** ##---- DECLARATIONS FONCTIONS TRI */
 
-void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]);
+void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], struct Date ajd);
 
 void trierPiste(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols]);
 

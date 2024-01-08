@@ -28,7 +28,7 @@ void trierPrixBilletsPassagers(int nbPassagers, struct Passager listePassagers[n
     }
 }
 
-void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]) {
+void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], struct Date ajd) {
     /*
         :entree:
             'nbPassagers' -> le nombre de passagers / la taille de la liste
@@ -39,7 +39,6 @@ void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers]
                 - Les passagers de 12 ans et moins devant
                 - Les passagers sont affichés selon leur prix de billet, par ordre décroissant
     */
-    struct Date ajd = {11, 1, 2024}; // 11 janvier 2024
     int agePassager = 0;
 
     int listePassagersMoinsDouze[100] = {0}, indMD = 0;

@@ -418,3 +418,60 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
     if(ind<nbVols)
         indices[ind] = -1;
 }
+
+
+/** ##---- AFFICHAGE ACCUEIL DES VOLS ----## **/
+
+
+
+void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], struct Heure heureActuelle) {
+    int deb = 0;
+    int fin = nbVols-1;
+    int mid = 0, ind = 0;
+
+    int trouve = -1;
+    int now = castHeureEnMinute(heureActuelle);
+
+    do {
+        mid = (deb+fin)/2;
+        int heurePointee = castHeureEnMinute(listeVols[indicesTri[mid]].h_decollage);
+        if(now-30 <= heurePointee && heurePointee <= now+10) {
+            trouve = mid;
+        }
+        else {
+            if(heurePointee > now+10) {
+                fin = mid-1;
+            }
+            if(heurePointee < now-30) {
+                deb = mid+1;
+            }
+        }
+    }while(deb < fin && trouve == -1);
+
+    if(trouve != -1) {
+        int h_prec = 0, h_suiv = 0;
+        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        int prec = trouve-1;
+        h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
+        int suiv = trouve+1;
+        h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
+        ++ind;
+        do {
+            if(now-30 <= h_prec && h_prec <= now+10) {
+                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                ++ind;
+                --prec;
+                h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
+            }
+            if(now-30 <= h_suiv && h_suiv <= now+10) {
+                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                ++ind;
+                ++suiv;
+                h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
+            }
+        }while((now-30 <= h_prec && h_prec <= now+10) || (now-30 <= h_suiv && h_suiv <= now+10));
+    }
+    if(ind < nbVols) {
+        indices[ind] = -1;
+    }
+}

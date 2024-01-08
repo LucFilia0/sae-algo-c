@@ -2,7 +2,9 @@
 
 /** ##---- DECLARATIONS FONCTIONS AFFICHAGE ----## */
 
-void showTitle();
+void showTitle(const char *title);
+
+void showTime(struct Date ajd, struct Heure mtn);
 
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax);
 
