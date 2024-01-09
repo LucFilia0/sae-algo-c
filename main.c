@@ -60,20 +60,6 @@ int main(int argc, char *argv[])
         }
         updatePiste(nbVols, tabIndicesH_Decollage, listeVols, NB_VOLS_MAX, temp) ;
 
-        /*
-        printf("\nTri par compagnie : ");
-        afficheTab(nbVols, tabIndicesNomsCompagnie);
-        afficheTableauVols(listeVols, nbVols, tabIndicesNomsCompagnie);
-        printf("\nTri par destination : ");
-        afficheTab(nbVols, tabIndicesDestination);
-        //afficheTableauVols(listeVols, nbVols, tabIndicesDestination);
-        printf("\nTri par h_decollage : ");
-        afficheTab(nbVols, tabIndicesH_Decollage);
-        //afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
-        */
-
-
-
         // ARBRE EVENEMENTS
         do {
             int menu = 1;

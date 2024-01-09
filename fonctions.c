@@ -375,6 +375,8 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
         heureActuelle.heure = heureMin.heure ;
         heureActuelle.minute = heureMin.minute ;
 
+        /*
+        ====== Partie qui a de grandes chances de servir à rien ========
         if (indiceVol + 1 < nbVols) {
             do {
                 test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
@@ -388,6 +390,7 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
                 }
             } while ((test == -1) && (indiceVol + 1 < nbVols)) ;
         }
+        */
 
         // Vérifie si on peut insérer le vol à l'heure sélectionnée, sinon on ajout 1 minute à l'heure
         while (place == 0 && retardAccumule <=60) {
@@ -417,9 +420,8 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
             // Incremente et situe l'heure dans le tableau
             if (place == 0) {
                 if (indiceVol + 1 < nbVols) {
-                    ecart = ecartHeures(heureSuivante,heureActuelle) ;
 
-                    if (ecart == 0) {
+                    if (ecart2 == 0) {
                         indiceVol++ ;
                         heurePrecedente.heure = heureSuivante.heure ;
                         heurePrecedente.minute = heureSuivante.minute ;
@@ -440,8 +442,8 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
                     }
 
                     else {
-                        retardAccumule = retardAccumule + ecart ;
-                        ajouterHeure(&heureActuelle,ecart) ;
+                        retardAccumule = retardAccumule + ecart2 ;
+                        ajouterHeure(&heureActuelle,ecart2) ;
                     }
 
                 }
