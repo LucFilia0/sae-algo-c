@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
     }
     else
     {
+        // SET KKKONSOLE
+        //system("color e0");
+
         // SET HEURE ET DATE
         struct Heure mtn;
         struct Date ajd;
@@ -76,7 +79,7 @@ int main(int argc, char *argv[])
             showTitle("ACCUEIL");
             showTime(ajd, mtn);
 
-            printf("\nVols a venir (3h) :\n");
+            printf("\n Vols a venir (dans les 3 prochaines heures) :\n");
             int indicesVolsAccueil[NB_VOLS_MAX] = {0};
             rechercheVolsAccueil(nbVols, listeVols, tabIndicesH_Decollage, indicesVolsAccueil, mtn);
             if(indicesVolsAccueil[0] != -1) {
@@ -271,5 +274,5 @@ int main(int argc, char *argv[])
         /** THE END **/
         fclose(fichier);
     }
-    return EXIT_SUCCESS;
+    exit(EXIT_SUCCESS);
 }

@@ -117,7 +117,7 @@
 
 1704459914 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
 
-1704804764 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1704818245 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -178,7 +178,7 @@
 
 1704742676 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
 
-1704752795 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
+1704818829 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -204,7 +204,7 @@
 	"tri.h"
 	"recherches.h"
 
-1704804238 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
+1704805094 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

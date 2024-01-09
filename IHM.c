@@ -82,18 +82,6 @@ void waitPress() {
     system("cls");
 }
 
-void returnMenu(int *menu) {
-    /*
-        :entree:
-            'menu' -> variable 'menu', dans le main, qui doit être modifié
-        :types:
-            'menu' est un pointeur
-        :fonction:
-            modifie menu, automatise l'affichage du message
-    */
-    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", menu, 1, 2);
-}
-
 /** ##---- DECLARATIONS FONCTIONS AFFICHAGE ----## */
 
 void showTitle(const char *title) {
@@ -105,6 +93,19 @@ void showTitle(const char *title) {
            "\n/\t\t\t\t\t\t\t \\\n|\t\t\tGESTION'AIR\t\t\t |\n\\"
            "________________________________________________________/"
            "\n\n>> %s\n____________________________________________________________\n", title);
+}
+
+void returnMenu(int *menu) {
+    /*
+        :entree:
+            'menu' -> variable 'menu', dans le main, qui doit être modifié
+        :types:
+            'menu' est un pointeur
+        :fonction:
+            modifie menu, automatise l'affichage du message
+    */
+    showTitle("RETOUR ?");
+    userEntryInt("1 - Nouvelle Recherche\n2 - Menu", menu, 1, 2);
 }
 
 void showTime(struct Date ajd, struct Heure mtn) {
