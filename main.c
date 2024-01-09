@@ -76,10 +76,12 @@ int main(int argc, char *argv[])
             showTitle("ACCUEIL");
             showTime(ajd, mtn);
 
-            printf("\nVols recents et a venir (-30mn/+10mn) :\n");
+            printf("\nVols a venir (3h) :\n");
             int indicesVolsAccueil[NB_VOLS_MAX] = {0};
             rechercheVolsAccueil(nbVols, listeVols, tabIndicesH_Decollage, indicesVolsAccueil, mtn);
             if(indicesVolsAccueil[0] != -1) {
+                int nbVolsAccueil = compterElmntTab(nbVols, indicesVolsAccueil);
+                triFusion(nbVolsAccueil, indicesVolsAccueil, temp, listeVols, 1) ;
                 afficheTableauVols(listeVols, nbVols, indicesVolsAccueil);
             }else {
                 printf("\n---- Aucun vol recent ou a venir ----\n");

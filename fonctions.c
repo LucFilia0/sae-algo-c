@@ -205,6 +205,15 @@ void afficheTab(int taille, int tab[taille]) {
     printf("%d]\n", tab[i]);
 }
 
+int compterElmntTab(int taille, int tab[taille]) {
+    int cpt=0, i=0;
+    while(i<taille && tab[i]!=-1) {
+        ++cpt;
+        ++i;
+    }
+    return cpt;
+}
+
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2) {
     /*
         :fonction:

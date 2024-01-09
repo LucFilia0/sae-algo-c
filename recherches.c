@@ -435,14 +435,14 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
     do {
         mid = (deb+fin)/2;
         int heurePointee = castHeureEnMinute(listeVols[indicesTri[mid]].h_decollage);
-        if(now-30 <= heurePointee && heurePointee <= now+10) {
+        if(now <= heurePointee && heurePointee <= now + 180) {
             trouve = mid;
         }
         else {
-            if(heurePointee > now+10) {
+            if(heurePointee > now+180) {
                 fin = mid-1;
             }
-            if(heurePointee < now-30) {
+            if(heurePointee < now) {
                 deb = mid+1;
             }
         }
@@ -457,19 +457,23 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
         h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
         ++ind;
         do {
-            if(now-30 <= h_prec && h_prec <= now+10) {
-                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
-                ++ind;
+            if(now <= h_prec && h_prec <= now + 180) {
+                if(strcmp(listeVols[indicesTri[prec]].etatVol, "Annule")!=0) {
+                    indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                    ++ind;
+                }
                 --prec;
                 h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
             }
-            if(now-30 <= h_suiv && h_suiv <= now+10) {
-                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
-                ++ind;
+            if(now <= h_suiv && h_suiv <= now + 180) {
+                if(strcmp(listeVols[indicesTri[suiv]].etatVol, "Annule")!=0) {
+                    indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                    ++ind;
+                }
                 ++suiv;
                 h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
             }
-        }while((now-30 <= h_prec && h_prec <= now+10) || (now-30 <= h_suiv && h_suiv <= now+10));
+        }while((now <= h_prec && h_prec <= now + 180) || (now <= h_suiv && h_suiv <= now + 180));
     }
     if(ind < nbVols) {
         indices[ind] = -1;

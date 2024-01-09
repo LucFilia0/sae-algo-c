@@ -22,6 +22,8 @@ void indexFill(int n, int tabIndices[n], int nbVols);
 
 void afficheTab(int taille, int tab[taille]);
 
+int compterElmntTab(int taille, int tab[taille]);
+
 void echangeIndicesTab(int taille, int tab[taille], int ind1, int ind2);
 
 void copieTabDansTab(int taille, int copie[taille], int colle[taille]);
