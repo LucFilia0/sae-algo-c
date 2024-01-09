@@ -413,6 +413,7 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
                     place = 0 ;
                 }
             }
+
             // Incremente et situe l'heure dans le tableau
             if (place == 0) {
                 if (indiceVol + 1 < nbVols) {
