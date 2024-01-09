@@ -73,7 +73,7 @@ def filtre_par_dichotomie(tab: [int], val: int) -> ([int]):
     
 
 
-# Définition des fonctions
+# Algos de tri
 
 def fusion(tab,iDeb,iFin):
     global cpt
@@ -135,13 +135,6 @@ def echanger(tab,a,b):
     tab[b]=tmp # 2
     cpt = cpt+7
     
-def tri_ultime(tab):
-    global cpt
-    cpt = cpt+5
-    if len(tab)<2 or len(tab)>25: # 5
-        tri_fusion(tab,0,len(tab)-1)
-    else:
-        tri_selection(tab)
     
 def tab_min(tab,i):
     global cpt
@@ -232,6 +225,8 @@ def copier(tab):
         tab2[i]=tab[i]
     return tab2
 
+# Algos de recherche
+
 def recherche_linéaire(tab,val):
     """
     entrée: tab:[int], val:int ;
@@ -309,6 +304,7 @@ def recherche_balayage(tab,val):
         while i<len(tab) and tab[i]<val: # 5
             i = i+pas # 2
             cpt = cpt+7
+            
         if i<len(tab) and tab[i]==val: #5
                cpt = cpt+5
                return i
@@ -323,7 +319,50 @@ def recherche_balayage(tab,val):
         cpt=cpt+5
     return -1
 
+def rechercheBalayage2(tab, val):
+    global cpt
+    pas = len(tab)//4
+    return rechercheBalayageRec(tab,val,pas, 0,len(tab)-1, False)
 
+def getIndice(iFin, i, j, pas):
+    global cpt
+    if j < 3:
+        return i + pas
+    else:
+        return iFin
+        
+ 
+def rechercheBalayageRec(tab, val, pas,iDeb, iFin,trouve):
+    global cpt
+    if pas>0 and not trouve:
+        i = iDeb
+        j = 0
+        while j < 4:
+            if tab[i] < val:
+                i = getIndice(iFin, i, j, pas)     
+            else:
+                if tab[i] == val:
+                    trouve = True
+                    done = True
+                    return i
+                else:
+                    iFin = getIndice(iFin, i, j, pas)
+                    if pas == 1:
+                        pas = 0
+                    else:
+                        nvPas = pas//4
+                    return rechercheBalayageRec(tab, val, nvPas, i-pas, iFin, trouve)
+    else:
+        print(trouve)
+        if not trouve:
+            return -1
+                    
+                    
+                
+            
+    
+
+# Algos heures et retards
 
 def create_tab_heure(taille,step_max):
     tab=zeros(taille,'i')
@@ -333,34 +372,10 @@ def create_tab_heure(taille,step_max):
         tab[i] = tab[i-1]+randint(5,step_max)
         i=i+1
     return tab
-
-
-
-def ecart_heures(heure1,heure2):
-    global cpt
-    cpt = cpt +3
-    if heure2 > heure1:
-        ecart = heure2-heure1
-    else:
-        ecart = heure1-heure2
-    return ecart
-        
-
-
-def decaler_vol(tab,deb,fin):
-    global cpt
-    tmp = tab[deb]
-    cpt = cpt + 2
-    while deb<fin:
-        tab[deb]=tab[deb+1]
-        deb = deb + 1
-        cpt = cpt + 7
-    tab[fin]=tmp
-    cpt = cpt + 2
     
     
     
-def afficher_tab_heure(tab):
+def afficherTabHeure(tab):
     i = 0
     print("[",end=' ')
     while i < len(tab):
@@ -386,106 +401,151 @@ def echange_suivant(tab,indice):
     tab[indice] = tmp
 
 
-def ajout_retard(tab,indice_vol_retarde,tps_retard):
-    heure_min = tab[indice_vol_retarde] + tps_retard
-    indice_vol = indice_vol_retarde
+def ecartHeures(h1,h2):
+    global cpt 
+    heureEcart = h1//100 - h2//100
+    minuteEcart = h1%100 - h2%100
     
-    if heure_min <=1320:
-            
-        if len(tab) > 1:
-            place = False
-            retard_accumule = 0
-            
-            while indice_vol + 1 < len(tab) and tab[indice_vol+1] < heure_min:
-                retard_accumule = retard_accumule + ecart_heures(tab[indice_vol],tab[indice_vol+1])
-                indice_vol = indice_vol + 1
-            
-            if indice_vol + 1 < len(tab) and tab[indice_vol+1] - 5 >= heure_min and retard_accumule - 5 <= 60:
-                tab[indice_vol_retarde] = tab[indice_vol+1] - 5
-                place = True
+    cpt = cpt + 9
+    if minuteEcart < 0 :
+        minuteEcart = minuteEcart + 60
+        heureEcart = heureEcart - 1
         
-            while not place and indice_vol + 1 < len(tab) and retard_accumule <= 60:
-                ecart = ecart_heures(tab[indice_vol],tab[indice_vol+1])
-                
-                if tab[indice_vol] +5 >= heure_min:
-                    
-                    if ecart >= 10 and tab[indice_vol] + 5 <= 1320:
-                        tab[indice_vol_retarde] = tab[indice_vol] + 5
-                        retard_accumule = retard_accumule + 5
-                        place = True
-                    
-                if not place:
-                    indice_vol = indice_vol + 1
-                    retard_accumule = retard_accumule + ecart
+        cpt = cpt + 4
+    
+    return heureEcart*60 + minuteEcart
         
-            if not place and retard_accumule <= 60 and tab[len(tab)-1] + 5 <= 1320:
-                if tab[len(tab)-1] + 5 >= heure_min:
-                    tab[indice_vol_retarde] = tab[len(tab)-1] + 5
-                    retard_accumule = retard_accumule + 5
-                else:
-                    tab[indice_vol_retarde] = heure_min
-                    retard_accumule = tps_retard
+
+def decalerJusqua(tab,indiceDebut,indiceFin):
+    global cpt
+    temp = tab[indiceDebut]
+    i = indiceDebut
+    
+    cpt = cpt + 4
+    while i < indiceFin:
+        tab[i] = tab[i+1]
+        i = i + 1
+        
+        cpt = cpt + 6
+    tab[indiceFin] = temp
+    cpt = cpt +  4
+    
+def ajoutHeure(heure1, val):
+    heure = heure1//100
+    minute = heure1%100
+    
+    minute = minute+val
+    
+    while minute >= 60:
+        heure = heure + 1
+        minute = minute - 60
+        
+    while minute < 0 :
+        heure = heure -1
+        minute = minute + 60
+        
+    return heure*100+minute
+        
+
+
+def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
+    global cpt
+    
+    heureMin = ajoutHeure(tab[indiceVolRetarde], tpsRetard)
+    heureMax = ajoutHeure(tab[indiceVolRetarde], 60)
+    if heureMax > 2200:
+        heureMax = 2200
+    
+    retardAccumule = tpsRetard
+    indiceVol = indiceVolRetarde
+    place = False
+    
+    
+    if len(tab) > 1:
+        while indiceVol + 1 < len(tab) and tab[indiceVol+1] < heureMin:
+            indiceVol = indiceVol + 1
+
+        heureActuelle = heureMin
+
+        while not place and retardAccumule <= 60 and heureActuelle <= heureMax:
+            if indiceVol > indiceVolRetarde :
+                ecart1 = ecartHeures(heureActuelle, tab[indiceVol])
+                if ecart1 >= 5:
                     place = True
- 
-            if retard_accumule > 60 or retard_accumule == -1:
-                tab[indice_vol_retarde] = -1
-                retard_accumule = -1
-                decaler_vol(tab,indice_vol_retarde,len(tab)-1)
-        
-            else:
-                decaler_vol(tab,indice_vol_retarde,indice_vol)
+                    
+            if indiceVol + 1 < len(tab) :
+                ecart2 = ecartHeures(tab[indiceVol + 1], heureActuelle)
+                if ecart2 >= 5:
+                    place = True
+                else:
+                    place = False
+            
+            if place == 0 :
+                if indiceVol + 1 < len(tab) :
+                    if ecart2 == 0 :
+                        indiceVol = indiceVol + 1
+                        retardAccumule = retardAccumule + 5
+                        heureActuelle = ajoutHeure(heureActuelle, 5)
+                        
+                    else:
+                        retardAccumule = retardAccumule + ecart2
+                        heureActuelle = ajoutHeure(heureActuelle, ecart2)
+                
+                else:
+                    retardAccumule = retardAccumule + 1
+                    heureActuelle = ajoutHeure(heureActuelle, 1)
+    
+        if place:
+            tab[indiceVolRetarde] = heureActuelle
+            decalerJusqua(tab, indiceVolRetarde, indiceVol)
         
         else:
-            tab[0] = heure_min
-            retard_accumule = tps_retard
-    
-    else:
-        tab[indice_vol_retarde] = -1
-        retard_accumule = -1
-        if len(tab) > 1:
-            decaler_vol(tab,indice_vol_retarde,len(tab)-1)
-                
-            
-    return retard_accumule
-                            
-                
-                
-def test_optimisation(tab,indice_vol_retarde,tps_retard):
-    heure_min = tab[indice_vol_retarde] + tps_retard
-    heure_max = tab[indice_vol_retarde] + 60
-    indice_vol = indice_vol_retarde
-    retard_accumule = 0
-    if len(tab) > 1:
-        while indice_vol + 1 < len(tab):
-            ecart = ecart_heures(tab[indice_vol],tab[indice_vol+1])
-            if ecart >=10:
-                if tab[indice_vol] +5 >=heure_max:
-                    retard_accumule = -1
+            tab[indiceVolRetarde] = -1
+            retardAccumule = -1
+            decalerJusqua(tab, indiceVolRetarde, len(tab)-1)
 
+    else:
+        tab[indiceVolRetarde] = tab[indiceVolRetarde] + tpsRetard
+        retardAccumule = tpsRetard
     
-    
+    return retardAccumule
+
+
+# Fonction de test  
     
 def tab_valide(tab):
     i = 1
     while i < len(tab):
-        if ecart_heures(tab[i],tab[i-1]) < 5 or (tab[i] < tab[i-1] and tab[i]!=-1) :
+        ecart = ecartHeures(tab[i],tab[i-1])
+        if (ecart < 5 and ecart > -5) or (tab[i] < tab[i-1] and tab[i]!=-1) :
             return False
         i = i+1
     return True
 
 
 
-cpt = 0 # pas touche
-
-tab = [randint(-50, 50) for i in range(100)]
-tab = array(tab, int)
-
-indices = zeros(len(tab), int)
-tri_fusion(tab, 0, len(tab)-1)
+cpt = 0
+"""
+taille = 10
+tab=array([randint(0,20) for i in range(40)],'i')
+tri_fusion(tab,0,39)
 print(tab)
-indices = filtre_par_dichotomie(tab,1)
+cpt = 0
+print(recherche_dichotomie(tab, 12))
+print(f"dichotomie : {cpt}")
+cpt = 0
+print(recherche_balayage(tab,12))
+print(f"balayage : {cpt}")
+cpt = 0
+print(recherche_linéaire(tab,12))
+print(f"linéaire : {cpt}")
+cpt = 0
+"""
+tab=array([randint(0,20) for i in range(40)],'i')
+tri_fusion(tab,0,39)
+print(tab)
+cpt = 0
+print(rechercheBalayage2(tab, 12))
+print(recherche_linéaire(tab,12))
 
-print(indices)
-print(cpt)
-    
             
