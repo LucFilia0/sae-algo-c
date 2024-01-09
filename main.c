@@ -14,9 +14,19 @@
 
 int main(int argc, char *argv[])
 {
-    struct Vol listeVols[NB_VOLS_MAX];
+    char nomFichier[50] = "";
+    const char* csvBase = "data_vols.csv";
 
-    const char* nomFichier = "data_vols.csv";
+    int whatFile = 0;
+    userEntryInt(" 1 - Utiliser les vols de base\n 2 - Importer un fichier", &whatFile, 0, 2);
+
+    if(whatFile == 2) {
+        char newFile[50] = "";
+        userEntryChar("Nom du fichier à importer", newFile, 50, 0);
+        copieChar(newFile, nomFichier, 0);
+    }else {
+        copieChar(csvBase, nomFichier, 0);
+    }
     FILE *fichier;
     fichier = fopen(nomFichier, "r");
 
@@ -26,13 +36,14 @@ int main(int argc, char *argv[])
     else
     {
         // SET KKKONSOLE
-        //system("color e0");
+        //system("color 3f");
 
         // SET HEURE ET DATE
         struct Heure mtn;
         struct Date ajd;
         getDateSystemInto(&ajd);
 
+        struct Vol listeVols[NB_VOLS_MAX];
         int nbVols = 0;
         importDataBase(fichier, listeVols, &nbVols);
 
@@ -87,7 +98,7 @@ int main(int argc, char *argv[])
                 triFusion(nbVolsAccueil, indicesVolsAccueil, temp, listeVols, 1) ;
                 afficheTableauVols(listeVols, nbVols, indicesVolsAccueil);
             }else {
-                printf("\n---- Aucun vol recent ou a venir ----\n");
+                printf("\n---- Aucun vol a venir ----\n");
             }
 
             userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter", &entry, 1, 4);
