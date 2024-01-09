@@ -7,6 +7,7 @@
 #include "fonctions.h"
 #include "IHM.h"
 #include "tri.h"
+#include "recherches.h"
 
 /** ##-- DEFINITIONS FONCTIONS CHAINES DE CARACTERES --## */
 
@@ -299,16 +300,16 @@ void retarderVol(int tabIndices[], struct Vol listeVols[],int retardAccumule, in
     listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute = heureActuelle.minute ;
 }
 
-int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde)
+int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVol)
 {
     char chaine[30] ;
-    strcpy(chaine,listeVols[tabIndices[indiceVolRetarde]].etatVol) ;
+    strcpy(chaine,listeVols[tabIndices[indiceVol]].etatVol) ;
     if (chaine[0] == 'A') {
         if (chaine[1] == ' ') {
             return 0 ;
         }
         else {
-            return 1 ;
+            return -1 ;
         }
     }
 
@@ -328,9 +329,9 @@ int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolR
 
 int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde, int tpsRetard) {
 
-    int retardInitial = etatVol(nbVols, tabIndices, listeVols, indiceVolRetarde) ;
-    if (retardInitial==-1) {
-        printf("Le vol ne peut pas etre retarde car il est annule") ;
+    if (etatVol(nbVols, tabIndices, listeVols, indiceVolRetarde) == -1) {
+        printf("Un vol annule ne peut pas etre retarde") ;
+        printf("%d",indiceVolRetarde) ;
         return -2 ;
     }
 
@@ -340,12 +341,13 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
     heureMax.heure = listeVols[tabIndices[indiceVolRetarde]].h_decollage.heure ;
     heureMax.minute = listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute ;
 
-    int place = 0, retardAccumule = tpsRetard + retardInitial, indiceVol = indiceVolRetarde ;
+    int place = 0, retardAccumule = tpsRetard , indiceVol = indiceVolRetarde, test ;
     struct Heure heurePrecedente, heureActuelle, heureSuivante ;
     int ecart, ecart1, ecart2 ;
 
     ajouterHeure(&heureMin,retardAccumule) ;
     ajouterHeure(&heureMax,60) ;
+
     if ((heureMax.heure >= 22 && heureMax.minute > 0) || heureMax.heure >= 23) {
         heureMax.heure = 22 ;
         heureMax.minute = 0 ;
@@ -355,26 +357,50 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
 
         // Se place à l'heure juste avant l'heure minimum
         while (indiceVol + 1 < nbVols) {
-            heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
-            heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
-            ecart = ecartHeures(heureMin, heureSuivante) ;
-            if (ecart <= 0) {
-                break ;
+            if (etatVol(nbVols, tabIndices, listeVols, indiceVol) != -1) {
+                heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
+                heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+                ecart = ecartHeures(heureMin, heureSuivante) ;
+                if (ecart <= 0) {
+                    break ;
+                }
             }
             indiceVol++ ;
         }
 
         if (indiceVol > indiceVolRetarde) {
-            heurePrecedente.heure = listeVols[tabIndices[indiceVol]].h_decollage.heure ;
-            heurePrecedente.minute = listeVols[tabIndices[indiceVol]].h_decollage.minute ;
+            do {
+                test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
+                if (test != -1) {
+                    heurePrecedente.heure = listeVols[tabIndices[indiceVol]].h_decollage.heure ;
+                    heurePrecedente.minute = listeVols[tabIndices[indiceVol]].h_decollage.minute ;
+                }
+                else {
+                    indiceVol-- ;
+                }
+            } while ((test == -1) && (indiceVol > indiceVolRetarde)) ;
         }
 
         heureActuelle.heure = heureMin.heure ;
         heureActuelle.minute = heureMin.minute ;
+
+        /*
+        ====== Partie qui a de grandes chances de servir à rien ========
         if (indiceVol + 1 < nbVols) {
-            heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
-            heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+            do {
+                test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
+                if (test != -1){
+                    heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
+                    heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+                }
+
+                else {
+                    indiceVol++ ;
+                }
+            } while ((test == -1) && (indiceVol + 1 < nbVols)) ;
         }
+        */
+
         // Vérifie si on peut insérer le vol à l'heure sélectionnée, sinon on ajout 1 minute à l'heure
         while (place == 0 && retardAccumule <=60) {
             ecart = ecartHeures(heureMax,heureActuelle) ;
@@ -399,26 +425,46 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
                     place = 0 ;
                 }
             }
+
             // Incremente et situe l'heure dans le tableau
             if (place == 0) {
                 if (indiceVol + 1 < nbVols) {
-                    ecart = ecartHeures(heureSuivante,heureActuelle) ;
 
-                    if (ecart == 0) {
+                    if (ecart2 == 0) {
                         indiceVol++ ;
                         heurePrecedente.heure = heureSuivante.heure ;
                         heurePrecedente.minute = heureSuivante.minute ;
-                        heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
-                        heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+                        do {
+                            test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
+                            if (test != -1){
+                                heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
+                                heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+                            }
 
-                        retardAccumule = retardAccumule + 4 ;
-                        ajouterHeure(&heureActuelle,4) ;
+                            else {
+                                indiceVol++ ;
+                            }
+                        } while ((test == -1) && (indiceVol + 1 < nbVols)) ;
+
+                        retardAccumule = retardAccumule + 5 ;
+                        ajouterHeure(&heureActuelle,5) ;
                     }
+
+                    else {
+                        retardAccumule = retardAccumule + ecart2 ;
+                        ajouterHeure(&heureActuelle,ecart2) ;
+                    }
+
                 }
 
-                retardAccumule++ ;
-                ajouterHeure(&heureActuelle,1) ;
+                else {
+                    retardAccumule++ ;
+                    ajouterHeure(&heureActuelle,1) ;
+
+                }
+
             }
+
         }
     }
 
@@ -441,4 +487,16 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
     }
 
     return retardAccumule ;
+}
+
+void updatePiste(int nbVols, int tabIndices[], struct Vol listeVols[], int n, int tabIndiceVol[n])
+{
+    int etatRetard, indiceVol ;
+    for (int i = 0 ; i < nbVols ; i++) {
+        indiceVol = rechercheIndiceAvecNumVol(nbVols, tabIndices, listeVols, tabIndiceVol[i]) ;
+        etatRetard = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
+        if (etatRetard > 0) {
+            ajoutRetard(nbVols, tabIndices, listeVols, indiceVol, etatRetard) ;
+       }
+    }
 }
