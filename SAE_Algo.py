@@ -7,42 +7,42 @@ import time
 
 # Définition des fonctions
 
-def fusion(t,d,f):
+def fusion(tab,iDeb,iFin):
     global cpt
-    r=zeros(f-d+1,'i') # 1
-    m=(d+f)//2 # 3
-    i1=d # 1
-    i2=m+1 # 2
-    k=0 # 1
+    temp = zeros(iFin - iDeb + 1,'i') # 1
+    iMilieu = (iDeb + iFin)//2 # 3
+    i = iDeb # 1
+    j = iMilieu + 1 # 2
+    k = 0 # 1
     cpt = cpt+8
-    while (i1<=m and i2 <=f): # 3
-        if (t[i1] < t[i2]): # 3
-            r[k] = t[i1] # 3
-            i1=i1+1 # 2
+    while (i <= iMilieu and j <= iFin): # 3
+        if (tab[i] < tab[j]): # 3
+            temp[k] = tab[i] # 3
+            i = i + 1 # 2
             cpt = cpt+5
         else:
-            r[k] = t[i2] # 3
-            i2=i2+1 # 2
+            temp[k] = tab[j] # 3
+            j = j + 1 # 2
             cpt = cpt+5
-        k=k+1 # 2
+        k = k + 1 # 2
         cpt = cpt+6
     cpt = cpt+3
-    while (i1 <=m): # 1
+    while (i <= iMilieu): # 1
         cpt = cpt+8
-        r[k] = t[i1] # 3
-        i1=i1+1 # 2
+        temp[k] = tab[i] # 3
+        i = i + 1 # 2
         k=k+1 # 2
     cpt = cpt+1
-    while (i2 <=f): # 1
-        r[k] = t[i2] # 3
-        i2=i2+1 # 2
-        k=k+1 # 2
+    while (j <= iFin): # 1
+        temp[k] = tab[j] # 3
+        j = j + 1 # 2
+        k = k + 1 # 2
         cpt = cpt+8
-    k=0
+    k = 0
     cpt = cpt+2
-    while k <= (f-d): # 2
-        t[d+k]=r[k] # 4
-        k=k+1 # 2
+    while k <= (iFin - iDeb): # 2
+        tab[iDeb + k] = temp[k] # 4
+        k = k + 1 # 2
         cpt = cpt+8
     cpt = cpt+2
         
@@ -188,9 +188,8 @@ def recherche_linéaire(tab,val):
 
 
 
-def recherche_dichotomie(tab,val):
+def recherche_dichotomie(tab: [int], val: int) -> (int):
     """
-    entrée: tab:[int], val:int ;
     pré-cond: None ;
     sortie: i_val,cpt:int ;
     post-cond: i_val vaut l'indice de la 1ere occurrence de la valeur recherchée,
@@ -358,6 +357,7 @@ def ajout_retard(tab,indice_vol_retarde,tps_retard):
                 else:
                     tab[indice_vol_retarde] = heure_min
                     retard_accumule = tps_retard
+                    place = True
  
             if retard_accumule > 60 or retard_accumule == -1:
                 tab[indice_vol_retarde] = -1
@@ -379,42 +379,23 @@ def ajout_retard(tab,indice_vol_retarde,tps_retard):
                 
             
     return retard_accumule
+                            
+                
                 
 def test_optimisation(tab,indice_vol_retarde,tps_retard):
     heure_min = tab[indice_vol_retarde] + tps_retard
     heure_max = tab[indice_vol_retarde] + 60
-    print(heure_min)
-    print(heure_max)
-    i = indice_vol_retarde
-    i_max = -1
-    tmp = zeros(len(tab)+2,'i')
-    tmp[1] = heure_min
-    k = 2
-    while i < len(tab) and i_max == -1 and i < len(tab):
-        if tab[i] >=heure_min:
-            if tmp[0] == 0:
-                tmp[0] = tab[i-1]
-            if tab[i] >= heure_max:
-                i_max = i-1
-            else:
-                tmp[k] = tab[i]
-                k = k + 1
-        i = i + 1      
-    tmp[k] = heure_max
-    tmp[k+1] = tab[i+1]
-    k_max = k
-    k = 3
-    place = False
-    ecart = ecart_heures(tmp[0],tmp[2])
-    if ecart >= 10 and tmp[2]:
-        print('a')
-    while k < k_max - 2 and not place:
-        ecart = ecart_heures(tmp[k],tmp[k+1])
-        if tmp[k] + 5 <= tmp[k_max] and ecart >=10:
-            print('fuck')
+    indice_vol = indice_vol_retarde
+    retard_accumule = 0
+    if len(tab) > 1:
+        while indice_vol + 1 < len(tab):
+            ecart = ecart_heures(tab[indice_vol],tab[indice_vol+1])
+            if ecart >=10:
+                if tab[indice_vol] +5 >=heure_max:
+                    retard_accumule = -1
+
     
     
-    return tmp
     
 def tab_valide(tab):
     i = 1
@@ -429,19 +410,8 @@ def tab_valide(tab):
 cpt = 0
 
 taille = 10
-tab=create_tab_heure(taille,20)
-a = randint(0,taille-1)
-b = randint(0,60)
-print(f"heure_min : {tab[a] + b}")
-tab2 = copier(tab)
-print(f"retard : {ajout_retard(tab,a,b)}")
-print(f"a = {a} b = {b}")
-for i in range(len(tab)):
-    print(f"{i}:{tab2[i]}",end=' ')
-print(' ')
-for i in range(len(tab)):
-    print(f"{i}:{tab[i]}",end=' ')
-print(' ')
-print(test_optimisation(tab,0,20))
-    
+tab=array([randint(0,20) for i in range(40)],'i')
+print(tab)
+tri_fusion(tab,0,39 )
+print(tab)
             
