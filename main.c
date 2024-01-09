@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     const char* nomFichier = "data_vols.csv";
     FILE *fichier;
-    fichier = fopen(nomFichier, "r");
+    fichier = fopen(nomFichier, "r") ;
 
     if(fichier==NULL) {
         perror(nomFichier);
@@ -57,19 +57,16 @@ int main(int argc, char *argv[])
         triFusion(nbVols, tabIndicesDestination, temp, listeVols, 2) ;
         triFusion(nbVols, tabIndicesNomsCompagnie, temp, listeVols, 3) ;
 
-        /*
-        printf("\nTri par compagnie : ");
-        afficheTab(nbVols, tabIndicesNomsCompagnie);
-        afficheTableauVols(listeVols, nbVols, tabIndicesNomsCompagnie);
-        printf("\nTri par destination : ");
-        afficheTab(nbVols, tabIndicesDestination);
-        //afficheTableauVols(listeVols, nbVols, tabIndicesDestination);
-        printf("\nTri par h_decollage : ");
-        afficheTab(nbVols, tabIndicesH_Decollage);
-        //afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
-        */
-
-
+        // GESTION DE LA PISTE
+        for (int i = 0 ; i < NB_VOLS_MAX ; i++) {
+                if (i < nbVols) {
+                    temp[i] = listeVols[tabIndicesH_Decollage[i]].numVol ;
+                }
+                else {
+                    temp[i] = -1 ;
+                }
+        }
+        updatePiste(nbVols, tabIndicesH_Decollage, listeVols, NB_VOLS_MAX, temp) ;
 
         // ARBRE EVENEMENTS
         do {
