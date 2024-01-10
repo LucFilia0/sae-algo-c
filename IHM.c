@@ -7,6 +7,7 @@
 #include "fonctions.h"
 #include "IHM.h"
 #include "tri.h"
+#include "retard.h"
 
 /** ##---- DECLARATION DES FONCTIONS D'INTERACTION AVEC L'UTILISATEUR ----## */
 

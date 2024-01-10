@@ -9,6 +9,7 @@
 #include "IHM.h"
 #include "tri.h"
 #include "recherches.h"
+#include "retard.h"
 
 #define NB_VOLS_MAX 192 //attention aussi dans structures.c & tri.c
 
@@ -106,7 +107,7 @@ int main(int argc, char *argv[])
                         afficheTableauVols(listeVols, 1, vol);
 
                         printf("\n\nListe des passagers :\n");
-                        trierPassagers(100, listeVols[numVol-1].listePassagers, indices, ajd);
+                        trierPassagers(100, listeVols[numVol-1].listePassagers, indices, temp, ajd);
                         afficheTableauPassagers(listeVols[numVol-1], 100, indices);
 
                         waitPress();

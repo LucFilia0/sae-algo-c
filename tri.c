@@ -8,6 +8,7 @@
 #include "IHM.h"
 #include "tri.h"
 #include "recherches.h"
+#include "retard.h"
 
 #define NB_VOLS_MAX 192 // attention aussi dans main.c
 
@@ -28,7 +29,7 @@ void trierPrixBilletsPassagers(int nbPassagers, struct Passager listePassagers[n
     }
 }
 
-void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], struct Date ajd) {
+void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int temp[], struct Date ajd) {
     /*
         :entree:
             'nbPassagers' -> le nombre de passagers / la taille de la liste
@@ -58,12 +59,13 @@ void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers]
     if(indMD<100) {
         listePassagersMoinsDouze[indMD] = -1;
     }
+
     if(indPD<100) {
         listePassagersPlusDouze[indPD] = -1;
     }
 
-    trierPrixBilletsPassagers(100, listePassagers, listePassagersMoinsDouze);
-    trierPrixBilletsPassagers(100, listePassagers, listePassagersPlusDouze);
+    triFusionPrixBillet(listePassagersMoinsDouze, temp, listePassagers, 0, indMD-1) ;
+    triFusionPrixBillet(listePassagersPlusDouze, temp, listePassagers, 0, indPD-1);
 
     concatenerTableaux(100, listePassagersMoinsDouze, 100, listePassagersPlusDouze, nbPassagers, indices);
 }
@@ -84,6 +86,7 @@ void fusion(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int 
 {
     int iMilieu = (iDeb + iFin)/2 ;
     int i = iDeb, j = iMilieu + 1, k = 0, comp;
+    double compPrix ;
     char chaine1[30], chaine2[30] ;
 
     while (i <= iMilieu && j <= iFin) {
@@ -173,7 +176,59 @@ void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[],
             triFusionDestination(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
         case 3:
             triFusionCompagnie(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
+        case 4:
+            printf("Cette fonction ne prend pas en charge ce tri, voir trierPassagers\n") ; break ;
         default:
             printf("\nTri invalide\n") ;
     }
 }
+
+void fusionPrixBillet(int tabIndices[], int temp[], struct Passager listePassagers[], int iDeb, int iFin)
+{
+    int iMilieu = (iDeb + iFin)/2 ;
+    int i = iDeb, j = iMilieu + 1, k = 0 ;
+    double comp ;
+    char chaine1[30], chaine2[30] ;
+
+    while (i <= iMilieu && j <= iFin) {
+        comp = listePassagers[tabIndices[i]].prixBillet - listePassagers[tabIndices[j]].prixBillet ;
+        if (comp > 0) {
+            temp[k] = tabIndices[i] ;
+            i++ ;
+        }
+
+        else {
+            temp[k] = tabIndices[j] ;
+            j++ ;
+        }
+        k++ ;
+    }
+
+    while (i <= iMilieu) {
+        temp[k] = tabIndices[i] ;
+        i++ ; k++ ;
+    }
+
+    while (j <= iFin) {
+        temp[k] = tabIndices[j] ;
+        j++ ; k++ ;
+    }
+
+    k = 0 ;
+    while (k <= iFin - iDeb) {
+        tabIndices[iDeb + k] = temp[k] ;
+        temp[k] = 0 ;
+        k++ ;
+    }
+}
+
+void triFusionPrixBillet(int tabIndices[], int temp[], struct Passager listePassagers[], int iDeb, int iFin)
+{
+    if (iDeb < iFin) {
+        int iMilieu = (iDeb + iFin)/2 ;
+        triFusionPrixBillet(tabIndices, temp, listePassagers, iDeb, iMilieu) ;
+        triFusionPrixBillet(tabIndices, temp, listePassagers, iMilieu + 1, iFin) ;
+        fusionPrixBillet(tabIndices, temp, listePassagers, iDeb, iFin) ;
+    }
+}
+
