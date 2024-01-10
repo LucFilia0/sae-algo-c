@@ -494,7 +494,6 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     
     return retardAccumule
 
-
 # Fonction de test  
     
 def tabValide(tab):
@@ -560,9 +559,30 @@ def test():
                 print(f"Indice de la valeur : {rechercheBalayage(tab, val)}, Nombre d'opérations : {cpt}")
             cpt = 0
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
-            print(conserver)
             
         if ans == 2:
+            choix = entreeUtilisateur("Quelle filtre voulez vous appliquer ?\n1- Linéaire\n2- Dichotomie\n=> ", 1, 2)
+            if conserver > 0:
+                taille = tabTaille[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTaille[0]} valeurs\n2- Moyen : {tabTaille[1]} valeurs\n3- Grand : {tabTaille[2]} valeurs\n=> ",1,3) - 1]
+                tab = array([randint(0,taille) for i in range(taille)],'i')
+                
+            print(tab)
+            val = int(input("Rentrez la valeur que vous souhaitez chercher\n=> "))
+            
+            if choix == 1:
+                print(f"Indice de la valeur : {filtreLineaire(tab, val)}, Nombre d'opérations : {cpt}")
+            
+            else:
+                tri = entreeUtilisateur("Inclure le tri dans le décompte des opérations (le tri fusion sera utilisé par défaut) ?\n1- Oui\n2- Non\n=> ", 1, 2)
+                triFusion(tab, 0, taille-1)
+                if tri == 2:
+                    cpt = 0
+                print(f"Indice de la valeur : {filtreParDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
+            cpt = 0
+            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
+        
+        
+        if ans == 3:
             choix = entreeUtilisateur("Quel tri voulez vous tester ?\n1- Sélection\n2- Insertion\n3- Crêpe\n4- Fusion\n=> ", 1, 4)
             if conserver > 0:
                 taille = tabTaille[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTaille[0]} valeurs\n2- Moyen : {tabTaille[1]} valeurs\n3- Grand : {tabTaille[2]} valeurs\n=> ",1,3) - 1]
@@ -584,28 +604,7 @@ def test():
             print(tab)
             print(f"Nombre d'opérations : {cpt}")
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
-        
-        if ans == 3:
-            choix = entreeUtilisateur("Quelle filtre voulez vous appliquer ?\n1- Linéaire\n2- Dichotomie\n=> ", 1, 2)
-            if conserver > 0:
-                taille = tabTaille[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTaille[0]} valeurs\n2- Moyen : {tabTaille[1]} valeurs\n3- Grand : {tabTaille[2]} valeurs\n=> ",1,3) - 1]
-                tab = array([randint(0,taille) for i in range(taille)],'i')
-                
-            print(tab)
-            val = int(input("Rentrez la valeur que vous souhaitez chercher\n=> "))
-            
-            if choix == 1:
-                print(f"Indice de la valeur : {filtreLineaire(tab, val)}, Nombre d'opérations : {cpt}")
-            
-            else:
-                tri = entreeUtilisateur("Inclure le tri dans le décompte des opérations (le tri fusion sera utilisé par défaut) ?\n1- Oui\n2- Non\n=> ", 1, 2)
-                triFusion(tab, 0, taille-1)
-                if tri == 2:
-                    cpt = 0
-                print(f"Indice de la valeur : {filtreParDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
-            cpt = 0
-            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
-        
+
         if ans == 4:
             if conserver == 2:
                 taille = tabTailleRetard[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTailleRetard[0]} valeurs\n2- Moyen : {tabTailleRetard[1]} valeurs\n3- Grand : {tabTailleRetard[2]} valeurs\n=> ",1,3) - 1]
@@ -646,10 +645,5 @@ def test():
 
 cpt = 0
 
-for i in range(1000):
-    tab = create_tab_heure(60, 15, randint(360,540))
-    ajoutRetard(tab, 0, 30)
-    if not tabValide(tab):
-        print(f"{i} : {tab}")
-    
+test()
             
