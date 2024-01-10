@@ -205,6 +205,16 @@ void fusionPrixBillet(int tabIndices[], int temp[], struct Passager listePassage
 
     while (i <= iMilieu && j <= iFin) {
         comp = listePassagers[tabIndices[i]].prixBillet - listePassagers[tabIndices[j]].prixBillet ;
+        if(comp == 0) {
+            int alpha = compareOrdreAlpha(listePassagers[tabIndices[i]].nom, listePassagers[tabIndices[j]].nom);
+            if(alpha == 1) {
+                temp[k] = tabIndices[i];
+                ++i;
+            }else {
+                temp[k] = tabIndices[j];
+                ++j;
+            }
+        }
         if (comp > 0) {
             temp[k] = tabIndices[i] ;
             i++ ;

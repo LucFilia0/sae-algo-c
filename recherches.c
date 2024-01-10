@@ -513,24 +513,31 @@ void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], in
     trouve = rechercheDichotomieSalleEmb(nbVols, listeVols, indicesTri, salleEmb);
 
     if(trouve != -1) {
-        if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[trouve]].h_decollage)) < heureAct+30)
+        int h1=castHeureEnMinute(listeVols[indicesTri[trouve]].h_decollage);
+
+        if(h1 >= heureAct-10 && h1 <= heureAct+30) {
             indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+            ++ind;
+        }
         prec = trouve-1;
         suiv = trouve+1;
-        ++ind;
 
         while(listeVols[indicesTri[prec]].salleEmbarquement == salleEmb || listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
+            int h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
+            int h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
             if(listeVols[indicesTri[prec]].salleEmbarquement == salleEmb) {
-                if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage)) < heureAct+30)
+                if(h_prec >= heureAct-10 && h_prec <= heureAct+30) {
                     indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                    ++ind;
+                }
                 --prec;
-                ++ind;
             }
             if(listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
-                if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage)) < heureAct+30)
+                if(h_suiv >= heureAct-10 && h_suiv <= heureAct+30) {
                     indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                    ++ind;
+                }
                 ++suiv;
-                ++ind;
             }
         }
     }

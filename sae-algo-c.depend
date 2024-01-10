@@ -117,7 +117,7 @@
 
 1704459914 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
 
-1704894816 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1704910047 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -128,6 +128,7 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+	"retard.h"
 
 1704390000 s.h"
 
@@ -149,7 +150,7 @@
 
 1704893848 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
 
-1704838385 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
+1704897326 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -159,8 +160,9 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+	"retard.h"
 
-1704838385 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+1704897326 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
 
 1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
 
@@ -179,7 +181,7 @@
 
 1704742676 c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.h
 
-1704837671 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
+1704897326 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\ihm.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -188,13 +190,14 @@
 	"fonctions.h"
 	"IHM.h"
 	"tri.h"
+	"retard.h"
 
 1703514619 .h"
 	"fichier.h"
 
-1704742243 c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.h
+1704897326 c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.h
 
-1704742225 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.c
+1704897326 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\tri.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -204,8 +207,9 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+	"retard.h"
 
-1704895332 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
+1704909444 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -215,6 +219,7 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+	"retard.h"
 
 1704201665 source:c:\users\foudou\documents\sae-algo-c-passenger\fichier.c
 	<stdio.h>
@@ -473,7 +478,7 @@
 
 1704917882 c:\users\natha\onedrive\documents\sae c\tri.h
 
-1704917882 source:c:\users\natha\onedrive\documents\sae c\main.c
+1704919340 source:c:\users\natha\onedrive\documents\sae c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -488,7 +493,7 @@
 
 1704917882 c:\users\natha\onedrive\documents\sae c\recherches.h
 
-1704917882 source:c:\users\natha\onedrive\documents\sae c\recherches.c
+1704919340 source:c:\users\natha\onedrive\documents\sae c\recherches.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -511,7 +516,7 @@
 	"IHM.h"
 	"tri.h"
 
-1704917882 source:c:\users\natha\onedrive\documents\sae c\tri.c
+1704919340 source:c:\users\natha\onedrive\documents\sae c\tri.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -537,7 +542,21 @@
 
 1704917882 c:\users\natha\onedrive\documents\sae c\retard.h
 
-1704917882 source:c:\users\natha\onedrive\documents\sae c\retard.c
+1704919098 source:c:\users\natha\onedrive\documents\sae c\retard.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"structures.h"
+	"fichier.h"
+	"fonctions.h"
+	"IHM.h"
+	"tri.h"
+	"recherches.h"
+	"retard.h"
+
+1704897326 c:\users\fauco\documents\programation\c\projets\sae-algo-c\retard.h
+
+1704897326 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\retard.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
