@@ -452,12 +452,12 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
         int h_prec = 0, h_suiv = 0;
         if(etatVol(nbVols, indicesTri, listeVols, trouve)!=-1) {
             indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+            ++ind;
         }
         int prec = trouve-1;
         h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
         int suiv = trouve+1;
         h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
-        ++ind;
         do {
             if(now <= h_prec && h_prec <= now + 180) {
                 if(etatVol(nbVols, indicesTri, listeVols, prec)!=-1) {
@@ -526,7 +526,7 @@ void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], in
                 ++ind;
             }
             if(listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
-                if(if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage)) < heureAct+30))
+                if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage)) < heureAct+30)
                     indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
                 ++suiv;
                 ++ind;

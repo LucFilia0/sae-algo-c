@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
                 printf("\n---- Aucun vol a venir ----\n");
             }
 
-            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter\n5 - Voir les écrans d'embarquement", &entry, 1, 5);
+            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter\n5 - Voir les ecrans d'embarquement", &entry, 1, 5);
 
             /** ---- VOIR UN VOL ----## **/
             if(entry == 1) {
