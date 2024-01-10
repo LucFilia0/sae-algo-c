@@ -41,7 +41,7 @@ void decalerDeJusqua(int nbVols, int tabIndices[], int indiceVolRetarde, int nou
 void retarderVol(int tabIndices[], struct Vol listeVols[],int retardAccumule, int indiceVolRetarde, struct Heure heureActuelle)
 {
     char chaine[30] ;
-    sprintf(chaine,"Retarde (%d min)",retardAccumule) ;
+    sprintf(chaine,"Replace (%d min)",retardAccumule) ;
     strcpy(listeVols[tabIndices[indiceVolRetarde]].etatVol,chaine) ;
     listeVols[tabIndices[indiceVolRetarde]].h_decollage.heure = heureActuelle.heure ;
     listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute = heureActuelle.minute ;

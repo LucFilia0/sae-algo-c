@@ -509,7 +509,7 @@
 	"IHM.h"
 	"tri.h"
 
-1704891933 source:c:\users\natha\onedrive\documents\sae c\tri.c
+1704895449 source:c:\users\natha\onedrive\documents\sae c\tri.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -519,6 +519,7 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+	"retard.h"
 
 1704892372 source:c:\users\natha\onedrive\documents\sae c\fonctions.c
 	<stdio.h>
