@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         copieChar(csvBase, nomFichier, 0);
     }
     FILE *fichier;
-    fichier = fopen(nomFichier, "r") ;
+    fichier = fopen(nomFichier, "r");
 
     if(fichier==NULL) {
         perror(nomFichier);
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
                 printf("\n---- Aucun vol a venir ----\n");
             }
 
-            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter\n5 - Voir les ecrans d'embarquement", &entry, 1, 5);
+            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Voir les ecrans d'embarquement\n5 - Quitter", &entry, 1, 5);
 
             /** ---- VOIR UN VOL ----## **/
             if(entry == 1) {
@@ -195,7 +195,6 @@ int main(int argc, char *argv[])
                             printf("\n---- Aucun vol ne correspond a votre recherche ----\n");
                         }
 
-
                         waitPress();
                         returnMenu(&menu);
                     }else {
@@ -280,15 +279,36 @@ int main(int argc, char *argv[])
                 }
             }
 
-            if(entry == 5) {
-                int salleEmb = 0;
-                userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 1, nbVols);
-                int volActuel[NB_VOLS_MAX] = {0};
-                rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volActuel, salleEmb, mtn);
+            if(entry == 4) {
+                do {
+                    int salleEmb = 0;
 
-                if(volActuel[0] != -1) {
-                    afficheTableauVols(listeVols, nbVols, volActuel);
-                }
+                    showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-30/+10mn)");
+                    userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 0, nbVols);
+
+                    int volsActuels[NB_VOLS_MAX] = {0};
+                    rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volsActuels, salleEmb, mtn);
+
+                    showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-30/+10mn)");
+                    showTime(ajd, mtn);
+                    printf("Salle d'embarquement %d\n====================================================================\n", salleEmb);
+
+                    if(volsActuels[0] != -1) {
+                        int i=0;
+                        int ordrePassagers[100] = {0};
+
+                        while(volsActuels[i] != -1) {
+                            printf("\nListe des passagers du vol %d :\n", volsActuels[i]);
+                            trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
+                            afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
+                            ++i;
+                        }
+                    }else {
+                        printf("---- Aucun vol au depart de cette salle dans l'immediat... ----");
+                    }
+                    waitPress();
+                    returnMenu(&menu);
+                }while(menu != 2);
             }
 
             /** ---- QUIT ---- **/
