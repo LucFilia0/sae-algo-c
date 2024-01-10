@@ -100,6 +100,11 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
         heureMax.minute = 0 ;
     }
 
+    if (indiceVolRetarde == nbVols - 1) {
+            ajouterHeure(&listeVols[tabIndices[indiceVolRetarde]].h_decollage, tpsRetard) ;
+            retarderVol(tabIndices, listeVols, tpsRetard, indiceVolRetarde, listeVols[tabIndices[indiceVolRetarde]].h_decollage) ;
+    }
+
     if (nbVols > 1) {
 
         // Se place à l'heure juste avant l'heure minimum
@@ -155,16 +160,27 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
                 break ;
             }
 
-            if (indiceVol > indiceVolRetarde)
+            if (indiceVol > indiceVolRetarde) {
                 ecart1 = ecartHeures(heureActuelle, heurePrecedente) ;
                 if (ecart1 >= 5) {
                     place = 1 ;
+                    test = 0 ;
                 }
+
+                else {
+                    place = 0 ;
+                    test = 1 ;
+                }
+            }
+
+            else {
+                test = 0 ;
+            }
 
             if (indiceVol + 1 < nbVols) {
                 ecart2 = ecartHeures(heureSuivante,heureActuelle) ;
 
-                if (ecart2 >= 5) {
+                if (ecart2 >= 5 && test == 0) {
                     place = 1 ;
                 }
 
