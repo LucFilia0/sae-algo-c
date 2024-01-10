@@ -30,13 +30,13 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
     char entry[100] = ""; //entrée de l'utilisateur
     char verified[100] = ""; //chaine contenant les chiffres, pour ensuite etre caster en int
 
+    printf("\n%s", message);
 
     do {
         int v = 0;
         clearChar(entry);
         clearChar(verified);
-
-        printf("\n%s\n => ", message);
+        printf("\n => ");
         fgets(entry, 100, stdin);// pas touche au 100
 
         for(int i=0; i<strlen(entry); i++) {
@@ -46,12 +46,12 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
             }
         }
 
-        system("cls");
         *data = atoi(verified);
         if(*data<nbMin || *data>nbMax) {
             printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
         }
     }while(*data<nbMin || *data>nbMax);
+    system("cls");
 }
 
 void userEntryChar(const char *message, char *data, int length, int clearChaine) {

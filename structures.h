@@ -28,7 +28,7 @@ struct Vol {
     int numComptoir;
     struct Heure h_debEnregistrement;
     struct Heure h_finEnregistrement;
-    struct Heure salleEmbarquement;
+    int salleEmbarquement;
     struct Heure h_debEmbarquement;
     struct Heure h_finEmbarquement;
     struct Heure h_decollage;

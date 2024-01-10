@@ -224,7 +224,7 @@ void initVol(struct Vol *vol, char *infoVol)
                 case 3: vol->numComptoir = atoi(info); break;
                 case 4: setHeure(info, &(vol->h_debEnregistrement)); break;
                 case 5: setHeure(info, &(vol->h_finEnregistrement)); break;
-                case 6: setHeure(info, &(vol->salleEmbarquement)); break;
+                case 6: vol->salleEmbarquement = atoi(info); break;
                 case 7: setHeure(info, &(vol->h_debEmbarquement)); break;
                 case 8: setHeure(info, &(vol->h_finEmbarquement)); break;
                 case 9: setHeure(info, &(vol->h_decollage)); break;

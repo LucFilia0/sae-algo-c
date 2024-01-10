@@ -25,3 +25,7 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
 /** ##---- AFFICHAGE ACCUEIL DES VOLS ----## **/
 
 void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], struct Heure heureActuelle);
+
+/** ##---- RECHERCHE VOL A VENIR DANS SALLE EMBARQUEMENT ----## */
+
+void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], int salleEmb, struct Heure mtn);

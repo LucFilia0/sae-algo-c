@@ -15,9 +15,19 @@
 
 int main(int argc, char *argv[])
 {
-    struct Vol listeVols[NB_VOLS_MAX];
+    char nomFichier[50] = "";
+    const char* csvBase = "data_vols.csv";
 
-    const char* nomFichier = "data_vols.csv";
+    int whatFile = 0;
+    userEntryInt(" 1 - Utiliser les vols de base\n 2 - Importer un fichier", &whatFile, 0, 2);
+
+    if(whatFile == 2) {
+        char newFile[50] = "";
+        userEntryChar("Nom du fichier a importer", newFile, 50, 0);
+        copieChar(newFile, nomFichier, 0);
+    }else {
+        copieChar(csvBase, nomFichier, 0);
+    }
     FILE *fichier;
     fichier = fopen(nomFichier, "r") ;
 
@@ -27,15 +37,21 @@ int main(int argc, char *argv[])
     else
     {
         // SET KKKONSOLE
-        //system("color e0");
+        //system("color 3f");
 
         // SET HEURE ET DATE
         struct Heure mtn;
         struct Date ajd;
         getDateSystemInto(&ajd);
 
+        struct Vol listeVols[NB_VOLS_MAX];
         int nbVols = 0;
         importDataBase(fichier, listeVols, &nbVols);
+
+        if(nbVols<=0) {
+            printf("\n/!\\ - ERREUR : Aucun vol à importer\n");
+            exit(EXIT_FAILURE);
+        }
 
         // TECHNIQUE DE BRIGAND POUR METTRE EN PLEIN ECRAN
         keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
@@ -74,6 +90,7 @@ int main(int argc, char *argv[])
             getHeureSystemInto(&mtn);
             int menu = 1;
 
+            /** ---- ACCUEIL ---- **/
             showTitle("ACCUEIL");
             showTime(ajd, mtn);
 
@@ -85,10 +102,10 @@ int main(int argc, char *argv[])
                 triFusion(nbVolsAccueil, indicesVolsAccueil, temp, listeVols, 1) ;
                 afficheTableauVols(listeVols, nbVols, indicesVolsAccueil);
             }else {
-                printf("\n---- Aucun vol recent ou a venir ----\n");
+                printf("\n---- Aucun vol a venir ----\n");
             }
 
-            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter", &entry, 1, 4);
+            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Quitter\n5 - Voir les ecrans d'embarquement", &entry, 1, 5);
 
             /** ---- VOIR UN VOL ----## **/
             if(entry == 1) {
@@ -116,7 +133,6 @@ int main(int argc, char *argv[])
                         menu = 2;
                     }
                 }while(menu != 2);
-
             }
 
             /** ---- RECHERCHE AVANCEE ----- **/
@@ -260,6 +276,18 @@ int main(int argc, char *argv[])
                     }
                 }
             }
+
+            /*
+            if(entry == 5) {
+                int salleEmb = 0;
+                userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 1, nbVols);
+                int volActuel[NB_VOLS_MAX] = {0};
+                rechercheVolActuelDansSalleEmb(nbVols, listeVols, ..., volActuel, salleEmb, mtn);
+
+                if(volActuel[0] != -1) {
+                    afficheTableauVols(listeVols, nbVols, volActuel);
+                }
+            }*/
 
             /** ---- QUIT ---- **/
             else {
