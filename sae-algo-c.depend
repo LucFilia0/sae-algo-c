@@ -117,7 +117,7 @@
 
 1704459914 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fichier.h
 
-1704838152 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
+1704893413 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -147,9 +147,9 @@
 	"fonctions.h"
 	"IHM.h"
 
-1704739825 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
+1704893848 c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.h
 
-1704804665 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
+1704838385 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -158,12 +158,13 @@
 	"fonctions.h"
 	"IHM.h"
 	"tri.h"
+	"recherches.h"
 
-1704804607 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
+1704838385 c:\users\fauco\documents\programation\c\projets\sae-algo-c\fonctions.h
 
 1703010805 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\untitled6.c
 
-1704739816 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
+1704893907 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\structures.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -204,7 +205,7 @@
 	"tri.h"
 	"recherches.h"
 
-1704805094 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
+1704894021 source:c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -225,7 +226,7 @@
 
 1704282048 source:c:\users\foudou\documents\sae-algo-c-passenger\fonctions.c
 
-1704740831 c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.h
+1704894284 c:\users\fauco\documents\programation\c\projets\sae-algo-c\recherches.h
 
 1704201665 c:\users\foudou\documents\sae-algo-c-passenger\structures.h
 

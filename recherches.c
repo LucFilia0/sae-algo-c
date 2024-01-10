@@ -450,7 +450,9 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
 
     if(trouve != -1) {
         int h_prec = 0, h_suiv = 0;
-        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        if(etatVol(nbVols, indicesTri, listeVols, trouve)!=-1) {
+            indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        }
         int prec = trouve-1;
         h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
         int suiv = trouve+1;
@@ -458,7 +460,7 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
         ++ind;
         do {
             if(now <= h_prec && h_prec <= now + 180) {
-                if(strcmp(listeVols[indicesTri[prec]].etatVol, "Annule")!=0) {
+                if(etatVol(nbVols, indicesTri, listeVols, prec)!=-1) {
                     indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
                     ++ind;
                 }
@@ -466,7 +468,7 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
                 h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
             }
             if(now <= h_suiv && h_suiv <= now + 180) {
-                if(strcmp(listeVols[indicesTri[suiv]].etatVol, "Annule")!=0) {
+                if(etatVol(nbVols, indicesTri, listeVols, suiv)!=-1) {
                     indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
                     ++ind;
                 }
@@ -479,3 +481,66 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
         indices[ind] = -1;
     }
 }
+
+/** ##---- RECHERCHE VOL A VENIR DANS SALLE EMBARQUEMENT ----## */
+
+int rechercheDichotomieSalleEmb(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], int salleEmb) {
+    int deb = 0, fin = nbVols-1, mid = 0;
+    int exit = -1;
+
+    do {
+        mid=(deb+fin)/2;
+        if(listeVols[indices[mid]].salleEmbarquement == salleEmb) {
+            exit = mid;
+        }
+        else if(listeVols[indices[mid]].salleEmbarquement > salleEmb) {
+            fin = mid-1;
+        }else {
+            deb = mid+1;
+        }
+    }while(exit == -1 && deb<fin);
+    return exit;
+}
+
+void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], int salleEmb, struct Heure mtn) {
+    int trouve = 0, ind = 0;
+    int prec = 0, suiv = 0;
+    int h_decollageVol = 0;
+
+    int heureAct = castHeureEnMinute(mtn);
+
+    trouve = rechercheDichotomieSalleEmb(nbVols, listeVols, indicesTri, salleEmb);
+
+    if(trouve != -1) {
+        if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[trouve]].h_decollage)) < heureAct+30)
+            indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        prec = trouve-1;
+        suiv = trouve+1;
+        ++ind;
+
+        while(listeVols[indicesTri[prec]].salleEmbarquement == salleEmb || listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
+            if(listeVols[indicesTri[prec]].salleEmbarquement == salleEmb) {
+                if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage)) < heureAct+30)
+                    indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                --prec;
+                ++ind;
+            }
+            if(listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
+                if(if((h_decollageVol = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage)) < heureAct+30))
+                    indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                ++suiv;
+                ++ind;
+            }
+        }
+    }
+    if(ind<nbVols)
+        indices[ind] = -1;
+}
+
+
+
+
+
+
+
+
