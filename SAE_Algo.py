@@ -297,8 +297,8 @@ def recherche_balayage(tab,val):
     cpt = cpt+4
     while last==0: # 1
         if pas==1: # 1
-                last=1 # 1
-                cpt=cpt+1
+            last=1 # 1
+            cpt=cpt+1
         i = 0 #1
         cpt=cpt+2
         while i<len(tab) and tab[i]<val: # 5
@@ -321,8 +321,8 @@ def recherche_balayage(tab,val):
 
 def rechercheBalayage2(tab, val):
     global cpt
-    pas = len(tab)//4
-    return rechercheBalayageRec(tab,val,pas, 0,len(tab)-1, False)
+    pas = (len(tab)-1)//4
+    return rechercheBalayageRec(tab,val,pas, 0,len(tab)-1)
 
 def getIndice(iFin, i, j, pas):
     global cpt
@@ -332,30 +332,33 @@ def getIndice(iFin, i, j, pas):
         return iFin
         
  
-def rechercheBalayageRec(tab, val, pas,iDeb, iFin,trouve):
+def rechercheBalayageRec(tab, val, pas, iDeb, iFin):
     global cpt
-    if pas>0 and not trouve:
-        i = iDeb
-        j = 0
-        while j < 4:
-            if tab[i] < val:
-                i = getIndice(iFin, i, j, pas)     
-            else:
-                if tab[i] == val:
-                    trouve = True
-                    done = True
-                    return i
-                else:
-                    iFin = getIndice(iFin, i, j, pas)
-                    if pas == 1:
-                        pas = 0
-                    else:
-                        nvPas = pas//4
-                    return rechercheBalayageRec(tab, val, nvPas, i-pas, iFin, trouve)
+    i = iDeb
+    j = 0
+    print(f"pas : {pas}, {iDeb}, {iFin}")
+    if pas == 1:
+        while i <= iFin:
+            if tab[i] == val:
+                return i
+            i = i + 1
+        return -1
     else:
-        print(trouve)
-        if not trouve:
-            return -1
+        while j < 4:
+            if tab[getIndice(iFin, i, j, pas)] < val:
+                i = getIndice(iFin, i, j, pas)
+            else:
+                iFin = getIndice(iFin, i, j, pas)
+                pas = pas//4
+                if pas == 0:
+                    pas = 1
+                return rechercheBalayageRec(tab, val, pas, i, iFin)
+            j = j+1
+        return -1
+            
+            
+            
+        
                     
                     
                 
@@ -541,8 +544,9 @@ print(recherche_linéaire(tab,12))
 print(f"linéaire : {cpt}")
 cpt = 0
 """
-tab=array([randint(0,20) for i in range(40)],'i')
-tri_fusion(tab,0,39)
+b = (randint(10,40))
+tab=array([randint(0,20) for i in range(b)],'i')
+tri_fusion(tab,0,b-1)
 print(tab)
 cpt = 0
 print(rechercheBalayage2(tab, 12))
