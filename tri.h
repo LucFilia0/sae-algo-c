@@ -17,6 +17,8 @@ void triFusionDestination(int tabIndices[], int temp[], struct Vol listeVols[], 
 
 void triFusionCompagnie(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin) ;
 
+void triFusionSalleEmbarquement(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin) ;
+
 void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[], int typeTri) ;
 
 void fusionPrixBillet(int tabIndices[], int temp[], struct Passager listePassagers[], int iDeb, int iFin) ;

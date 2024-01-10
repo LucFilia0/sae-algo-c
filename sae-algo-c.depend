@@ -471,9 +471,9 @@
 
 1704891933 c:\users\natha\onedrive\documents\sae c\ihm.h
 
-1704895141 c:\users\natha\onedrive\documents\sae c\tri.h
+1704897096 c:\users\natha\onedrive\documents\sae c\tri.h
 
-1704896293 source:c:\users\natha\onedrive\documents\sae c\main.c
+1704897074 source:c:\users\natha\onedrive\documents\sae c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -488,7 +488,7 @@
 
 1704896293 c:\users\natha\onedrive\documents\sae c\recherches.h
 
-1704891933 source:c:\users\natha\onedrive\documents\sae c\recherches.c
+1704896639 source:c:\users\natha\onedrive\documents\sae c\recherches.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -498,6 +498,7 @@
 	"IHM.h"
 	"tri.h"
 	"recherches.h"
+	"retard.h"
 
 1704896293 source:c:\users\natha\onedrive\documents\sae c\structures.c
 	<stdio.h>
@@ -510,7 +511,7 @@
 	"IHM.h"
 	"tri.h"
 
-1704895449 source:c:\users\natha\onedrive\documents\sae c\tri.c
+1704897098 source:c:\users\natha\onedrive\documents\sae c\tri.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

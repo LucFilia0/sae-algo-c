@@ -63,16 +63,19 @@ int main(int argc, char *argv[])
         struct Vol *v;
         int entry, recherche, numVol, heure, quit = 0;
         char compagnie[50], destination[50];
-        int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX], tabIndicesNomsCompagnie[NB_VOLS_MAX], temp[NB_VOLS_MAX];
+        int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX] ;
+        int tabIndicesNomsCompagnie[NB_VOLS_MAX], tabIndicesSalleEmbarquement[NB_VOLS_MAX], temp[NB_VOLS_MAX];
 
         // TRI INDIRECTS
         indexFill(NB_VOLS_MAX, tabIndicesH_Decollage, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesDestination, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesNomsCompagnie, nbVols) ;
+        indexFill(NB_VOLS_MAX, tabIndicesSalleEmbarquement, nbVols) ;
 
         triFusion(nbVols, tabIndicesH_Decollage, temp, listeVols, 1) ;
         triFusion(nbVols, tabIndicesDestination, temp, listeVols, 2) ;
         triFusion(nbVols, tabIndicesNomsCompagnie, temp, listeVols, 3) ;
+        triFusion(nbVols, tabIndicesSalleEmbarquement, temp, listeVols, 4) ;
 
         // GESTION DE LA PISTE
         for (int i = 0 ; i < NB_VOLS_MAX ; i++) {
@@ -277,17 +280,16 @@ int main(int argc, char *argv[])
                 }
             }
 
-            /*
             if(entry == 5) {
                 int salleEmb = 0;
                 userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 1, nbVols);
                 int volActuel[NB_VOLS_MAX] = {0};
-                rechercheVolActuelDansSalleEmb(nbVols, listeVols, ..., volActuel, salleEmb, mtn);
+                rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volActuel, salleEmb, mtn);
 
                 if(volActuel[0] != -1) {
                     afficheTableauVols(listeVols, nbVols, volActuel);
                 }
-            }*/
+            }
 
             /** ---- QUIT ---- **/
             else {

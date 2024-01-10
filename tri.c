@@ -104,6 +104,9 @@ void fusion(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int 
             copyCharToLower(listeVols[tabIndices[j]].compagnie,chaine2) ;
             comp = strcmp(chaine1, chaine2) ;
             break ;
+        case 4:
+            comp = listeVols[tabIndices[i]].salleEmbarquement - listeVols[tabIndices[j]].salleEmbarquement ;
+            break ;
         }
 
         if (comp < 0) {
@@ -166,6 +169,16 @@ void triFusionCompagnie(int tabIndices[], int temp[], struct Vol listeVols[], in
     }
 }
 
+void triFusionSalleEmbarquement(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin)
+{
+    if (iDeb < iFin) {
+        int iMilieu = (iDeb + iFin)/2 ;
+        triFusionSalleEmbarquement(tabIndices, temp, listeVols, iDeb, iMilieu) ;
+        triFusionSalleEmbarquement(tabIndices, temp, listeVols, iMilieu + 1, iFin) ;
+        fusion(tabIndices, temp, listeVols, iDeb, iFin, 4) ;
+    }
+}
+
 void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[], int typeTri)
 {
     int iDeb = 0, iFin = nbVols - 1 ;
@@ -177,7 +190,7 @@ void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[],
         case 3:
             triFusionCompagnie(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
         case 4:
-            printf("Cette fonction ne prend pas en charge ce tri, voir trierPassagers\n") ; break ;
+            triFusionSalleEmbarquement(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
         default:
             printf("\nTri invalide\n") ;
     }
