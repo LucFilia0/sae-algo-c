@@ -698,7 +698,7 @@ def afficheTabHeure(tab):
     print("]")
 
 def entreeUtilisateur(str,min,max):
-    ans = 0
+    ans = min - 1
     while ans < min or ans > max:
         ans = int(input(str))
         if ans < min or ans > max:
@@ -712,8 +712,8 @@ def test():
     cpt = 0
     done = False
     conserver = 2
-    tabTaille = [10,50,200]
-    tabTailleRetard = [10,30,64]
+    tabTaille = [10,100,500]
+    tabTailleRetard = [10,30,80]
     while not done:
         if conserver//2 > 0:
             ans = entreeUtilisateur("Quels Algorithmes souhaitez vous tester ?\n1- Recherches\n2- Filtres\n3- Tris\n4- Ajout de retard\n5- Quitter\n=> ",1,5)
@@ -750,7 +750,7 @@ def test():
                 print(f"Indice de la valeur : {rechercheBalayage(tab, val)}, Nombre d'opérations : {cpt}")
             
             cpt = 0
-            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
+            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1- Oui\n2- Non\n=> ", 1, 2)-1)*2
             
         if ans == 2:
             choix = entreeUtilisateur("Quelle filtre voulez vous appliquer ?\n1- Linéaire\n2- Dichotomie\n=> ", 1, 2)
@@ -778,7 +778,7 @@ def test():
                 print(f"Indice de la valeur : {filtreParDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
             
             cpt = 0
-            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
+            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1- Oui\n2- Non\n=> ", 1, 2)-1)*2
         
         
         if ans == 3:
@@ -792,7 +792,7 @@ def test():
             else:
                 tab = copyTab
             
-            print(tab)
+            print(f"======Avant======\n{tab}")
             if choix == 1:
                 triSelection(tab)
             if choix == 2:
@@ -802,9 +802,9 @@ def test():
             if choix ==4:
                 triFusion(tab)
             
-            print(tab)
+            print(f"======Après======\n{tab}")
             print(f"Nombre d'opérations : {cpt}")
-            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
+            conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1- Oui\n2- Non\n=> ", 1, 2)-1)*2
 
         if ans == 4:
             if conserver == 2:
@@ -814,16 +814,16 @@ def test():
                 elif taille == tabTailleRetard[1]:
                     tab = create_tab_heure(taille, 30, randint(360,540))
                 else:
-                    tab = create_tab_heure(taille, 15, 360)
+                    tab = create_tab_heure(taille, 12, 360)
                 copyTab = copier(tab)
             
             if conserver == 1:
                 tab = copier(copyTab)
              
             afficheTabHeure(tab) 
-            indiceVol = entreeUtilisateur("Saisissez l'indice du vol que vous voulez retarder\n =>", 1, taille-1)
+            indiceVol = entreeUtilisateur("Saisissez l'indice du vol que vous voulez retarder\n =>", 0, taille-1)
             heure = tab[indiceVol]
-            retard = entreeUtilisateur("Rentrez le retard que vous voulez appliquer au vol\n =>", 1, 60)
+            retard = entreeUtilisateur("Rentrez le retard que vous voulez appliquer au vol\n => ", 1, 60)
             retard = ajoutRetard(tab, indiceVol, retard)
             
             print(f"======Avant======\n{afficheTabHeure(copyTab)}")
