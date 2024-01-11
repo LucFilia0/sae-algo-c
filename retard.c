@@ -45,7 +45,7 @@ int etatVol(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVol)
         char chaineRetard[3] ;
         int i = 0, j = 0 ;
         while (chaine[i] != '\0' && j < 2) {
-           if (chaine[i] == '0' || chaine[i] == '1' || chaine[i] == '2' || chaine[i] == '3' || chaine[i] == '4' || chaine[i] == '5' || chaine[i] == '6' || chaine[i] == '7'|| chaine[i] == '8' || chaine[i] == '9') {
+           if (chaine[i] >= '0' && chaine[i] <= '9') {
                 chaineRetard[j] = chaine[i] ;
                 j++ ;
            }

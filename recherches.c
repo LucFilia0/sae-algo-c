@@ -372,28 +372,30 @@ void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], in
     trouve = rechercheDichotomieSalleEmb(nbVols, listeVols, indicesTri, salleEmb);
 
     if(trouve != -1) {
-        int h1=castHeureEnMinute(listeVols[indicesTri[trouve]].h_decollage);
+        int h_trouve=castHeureEnMinute(listeVols[indicesTri[trouve]].h_debEmbarquement);
 
-        if(h1 >= heureAct-10 && h1 <= heureAct+30) {
-            indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        if(h_trouve >= heureAct-10 && h_trouve <= heureAct+30) {
+            indices[ind] = indicesTri[trouve];
             ++ind;
         }
         prec = trouve-1;
         suiv = trouve+1;
 
+        int h_suiv = 0, h_prec = 0;
+
         while(listeVols[indicesTri[prec]].salleEmbarquement == salleEmb || listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
-            int h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
-            int h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
             if(listeVols[indicesTri[prec]].salleEmbarquement == salleEmb) {
+                h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_debEmbarquement);
                 if(h_prec >= heureAct-10 && h_prec <= heureAct+30) {
-                    indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+                    indices[ind] = indicesTri[prec];
                     ++ind;
                 }
                 --prec;
             }
             if(listeVols[indicesTri[suiv]].salleEmbarquement == salleEmb) {
+                h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_debEmbarquement);
                 if(h_suiv >= heureAct-10 && h_suiv <= heureAct+30) {
-                    indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+                    indices[ind] = indicesTri[suiv];
                     ++ind;
                 }
                 ++suiv;
@@ -402,6 +404,8 @@ void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], in
     }
     if(ind<nbVols)
         indices[ind] = -1;
+
+    afficheTab(nbVols, indices);
 }
 
 

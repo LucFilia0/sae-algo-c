@@ -197,11 +197,10 @@ int main(int argc, char *argv[])
 
                         waitPress();
                         returnMenu(&menu);
-                    }else {
+                    }else if(retour == 1) {
                         menu = 2;
                     }
                 }while(menu != 2);
-
             }
 
 
@@ -282,39 +281,48 @@ int main(int argc, char *argv[])
             /** ##---- VOIR LES ECRANS DES SALLES D'EMBARQUEMENT ----## */
             if(entry == 4) {
                 do {
+                    getHeureSystemInto(&mtn);
                     int salleEmb = 0;
 
-                    showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-30/+10mn)");
+                    showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-10/+30mn)");
                     userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 0, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
 
-                    int volsActuels[NB_VOLS_MAX] = {0};
-                    rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volsActuels, salleEmb, mtn);
+                    if(salleEmb != 0) {
+                        getHeureSystemInto(&mtn);
+                        int volsActuels[NB_VOLS_MAX] = {0};
+                        rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volsActuels, salleEmb, mtn);
 
-                    showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-30/+10mn)");
-                    getHeureSystemInto(&mtn);
-                    showTime(ajd, mtn);
-                    printf("Salle d'embarquement %d\n====================================================================\n", salleEmb);
+                        showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-10/+30mn)");
+                        showTime(ajd, mtn);
+                        printf("Salle d'embarquement %d\n====================================================================", salleEmb);
 
-                    if(volsActuels[0] != -1) {
-                        int i=0;
-                        int ordrePassagers[100] = {0};
+                        if(volsActuels[0] != -1) {
+                            int i=0;
+                            int ordrePassagers[100] = {0};
+                            char h_decollageChar[7] = "";
+                            char h_debEmbChar[7] = "";
 
-                        while(volsActuels[i] != -1) {
-                            printf("\nListe des passagers du vol %d :\n", volsActuels[i]);
-                            trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
-                            afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
-                            ++i;
+                            while(volsActuels[i] != -1) {
+                                afficherHeureDans(listeVols[volsActuels[i]].h_decollage, h_decollageChar);
+                                afficherHeureDans(listeVols[volsActuels[i]].h_debEmbarquement, h_debEmbChar);
+                                printf("\n\nListe des passagers du vol %d (embarquement %s / depart %s) :\n", listeVols[volsActuels[i]].numVol, h_debEmbChar, h_decollageChar);
+                                trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
+                                afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
+                                ++i;
+                            }
+                        }else {
+                            printf("\n\n---- Aucun embarquement en cours dans cette salle ----\n");
                         }
+                        waitPress();
+                        returnMenu(&menu);
                     }else {
-                        printf("\n---- Aucun vol au depart de cette salle dans l'immediat... ----");
+                        menu = 2;
                     }
-                    waitPress();
-                    returnMenu(&menu);
                 }while(menu != 2);
             }
 
             /** ---- QUIT ---- **/
-            else {
+            else if(entry == 5) {
                 quit=1;
             }
         }while(quit==0);
