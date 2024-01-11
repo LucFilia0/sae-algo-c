@@ -284,6 +284,14 @@ def tabMax(tab,i):
 
 
 def renverser(tab,i):
+    """
+    Inverse le tableau à partir de l'indice i
+    (l'appel renverser([1,3,4,2],1) donne [1,2,4,3])
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque
+        i (int): Indice à partir duquel on renverse le tableau.
+    """
     global cpt
     j = len(tab)-1
     cpt = cpt + 3
@@ -468,6 +476,14 @@ def rechercheBalayageRec(tab, val, pas, iDeb, iFin):
 # Algos heures et retards
 
 def decalerJusqua(tab,indiceDebut,indiceFin):
+    """
+    Decale la valeur à l'indice indiceDebut à l'indice indiceFin.
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque
+        indiceDebut (int): Indice de la valeur à décaler
+        indiceFin (_type_): Indice jusqu'auquel on décale les valeurs.
+    """
     global cpt
     temp = tab[indiceDebut]
     i = indiceDebut
