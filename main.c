@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
                         printf("\n======================================="
                                "\n 1 - Compagnie : %s"
                                "\n 2 - Destination : %s"
-                               "\n 3 - Heure de decollage : %s"
+                               "\n 3 - Heure de decollage (+3h) : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
                         userEntryInt("Choisissez les criteres a appliquer\n\n[entree] pour valider/retour", &rechercheMult, 0, 3);
@@ -185,10 +185,10 @@ int main(int argc, char *argv[])
                         printf("\n======================================="
                                "\n 1 - Compagnie : %s"
                                "\n 2 - Destination : %s"
-                               "\n 3 - Heure de decollage : %s"
+                               "\n 3 - Heure de decollage (+3h) : %s"
                                "\n=======================================\n", compagnie, destination, heureDecollage);
 
-                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, tabIndicesNomsCompagnie, tabIndicesDestination, tabIndicesH_Decollage, tabIndices);
+                        rechercheAvancee(compagnie, destination, heureDecollage, nbVols, listeVols, temp, tabIndicesNomsCompagnie, tabIndicesDestination, tabIndicesH_Decollage, tabIndices);
                         if(tabIndices[0] != -1) { //Si au moins un vol est trouvé
                             afficheTableauVols(listeVols, nbVols, tabIndices);
                         }else {
@@ -212,14 +212,17 @@ int main(int argc, char *argv[])
             else if(entry==3) {
                 int choix = 0;
                 showTitle("PISTE");
-                userEntryInt("1 - Voir la piste par heure de decollage\n2 - Voir la piste par numero de vol", &choix, 0, 2);
+                userEntryInt("Voir la piste triee par :\n\n1 - heure de decollage\n2 - numero de vol", &choix, 0, 2);
 
+                showTitle("PISTE");
                 // --> VOIR LA PISTE
                 if(choix != 0) {
                     if(choix == 1) {
+                        printf("\nTriee par heure de decollage :\n");
                         afficheTableauVols(listeVols, nbVols, tabIndicesH_Decollage);
                     }
                     else if(choix == 2) {
+                        printf("\nTriee par numero de vol :\n");
                         int indicesOrdreNumVol[NB_VOLS_MAX] = {0};
                         for(int i=0; i<nbVols; ++i) {
                             indicesOrdreNumVol[i] = i;
@@ -285,6 +288,7 @@ int main(int argc, char *argv[])
                     int salleEmb = 0;
 
                     showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-10/+30mn)");
+                    printf("\n(Salles d'embarquement : %d - %d)\n", listeVols[tabIndicesSalleEmbarquement[0]].salleEmbarquement, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
                     userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 0, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
 
                     if(salleEmb != 0) {

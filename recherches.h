@@ -16,8 +16,7 @@ void rechercheHeureDecollage(const char *heureDecollage, int nbVols, struct Vol 
 
 /** ##---- RECHERCHE AVANCEE ----## */
 
-void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[], int indicesTriCompagnie[], int indicesTriDestination[], int indicesTriH_Decollage[], int indices[]);
-
+void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[], int temp[], int indicesTriCompagnie[], int indicesTriDestination[], int indicesTriH_Decollage[], int indices[]);
 /** ##---- AFFICHAGE ACCUEIL DES VOLS ----## **/
 
 void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], struct Heure heureActuelle);

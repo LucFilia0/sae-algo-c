@@ -40,15 +40,26 @@ void userEntryInt(const char *message, int *data, int nbMin, int nbMax) {
         fgets(entry, 100, stdin);// pas touche au 100
 
         for(int i=0; i<strlen(entry); i++) {
-            if(entry[i]=='0'||entry[i]=='1'||entry[i]=='2'||entry[i]=='3'||entry[i]=='4'||entry[i]=='5'||entry[i]=='6'||entry[i]=='7'||entry[i]=='8'||entry[i]=='9') {
+            if(entry[i] >= '0' && entry[i] <= '9') {
                 verified[v] = entry[i];
                 v++;
             }
         }
 
-        *data = atoi(verified);
+        if(strlen(entry)==1) {
+            *data = 0;
+        }
+        else if(strcmp(verified, "")==0) {
+            *data = -1;
+        }else {
+            *data = atoi(verified);
+        }
         if(*data<nbMin || *data>nbMax) {
-            printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
+            if(nbMin == 0) {
+                printf("\n---- Veuillez saisir une valeur entre 1 et %d ----\n", nbMax);
+            }else {
+                printf("\n---- Veuillez saisir une valeur entre %d et %d ----\n", nbMin, nbMax);
+            }
         }
     }while(*data<nbMin || *data>nbMax);
     system("cls");

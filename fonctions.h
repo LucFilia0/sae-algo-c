@@ -16,6 +16,8 @@ void copyCharToLower(const char *copie, char *colle);
 
 int compareOrdreAlpha(const char *chaine1, const char *chaine2);
 
+int charContainedIn(const char *chaine1, const char *chaine2);
+
 /** ##---- DECLARATIONS FONCTIONS TABLEAUX ----## */
 
 void indexFill(int n, int tabIndices[n], int nbVols);

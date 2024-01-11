@@ -131,18 +131,22 @@ void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[]
 int rechercheDichotomieH_Decollage(int nbVols, struct Vol listeVols[], int indices[], struct Heure heure) {
     int deb = 0, fin = nbVols-1, mid = 0;
     int exit = -1;
+    int heureAct = castHeureEnMinute(heure);
+    int h_mid = 0;
 
     do {
         mid=(deb+fin)/2;
-        if(ecartHeures(listeVols[indices[mid]].h_decollage, heure)==0) {
+        h_mid = castHeureEnMinute(listeVols[indices[mid]].h_decollage);
+        if(h_mid >= heureAct && h_mid <= heureAct+180) {
             exit = mid;
         }
-        else if(ecartHeures(listeVols[indices[mid]].h_decollage, heure)==1) {
+        else if(h_mid > heureAct+180) {
             fin = mid-1;
         }else {
             deb = mid+1;
         }
     }while(exit == -1 && deb<fin);
+
     return exit;
 }
 
@@ -152,29 +156,32 @@ void rechercheH_DecollageD(const char *entry, int nbVols, struct Vol listeVols[]
 
     struct Heure heure;
     setHeure(entry, &heure);
+    int heureAct = castHeureEnMinute(heure);
 
     trouve = rechercheDichotomieH_Decollage(nbVols, listeVols, indicesTri, heure);
 
     if(trouve != -1) {
-        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        int h_trouve = castHeureEnMinute(listeVols[indicesTri[trouve]].h_decollage);
+        if(h_trouve >= heureAct && h_trouve <= heureAct+180) {
+            indices[ind] = indicesTri[trouve];
+            ++ind;
+        }
         prec = trouve-1;
         suiv = trouve+1;
-        ++ind;
 
-        //char destinationPrec[50] = "", destinationSuiv[50] = "";
-        //copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
-        //copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
-        while(ecartHeures(listeVols[indicesTri[prec]].h_decollage, heure)==0 || ecartHeures(listeVols[indicesTri[prec]].h_decollage, heure)==0) {
-            if(ecartHeures(listeVols[indicesTri[prec]].h_decollage, heure)==0) {
-                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
-                --prec;
-                ++ind;
-            }
-            if(ecartHeures(listeVols[indicesTri[prec]].h_decollage, heure)==0) {
-                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
-                ++suiv;
-                ++ind;
-            }
+        int h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
+        int h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
+        while(h_prec >= heureAct && h_prec <= heureAct+180 && prec>=0) {
+            indices[ind] = indicesTri[prec];
+            ++ind;
+            --prec;
+            h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_decollage);
+        }
+        while(h_suiv >= heureAct && h_suiv <= heureAct+180 && indicesTri[suiv]!=-1) {
+            indices[ind] = indicesTri[suiv];
+            ++ind;
+            ++suiv;
+            h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_decollage);
         }
     }
     if(ind<nbVols)
@@ -222,7 +229,7 @@ int rechercheIntDansTab(int val, int taille, int tab[taille]) {
 
 /** ##---- RECHERCHE AVANCEE ----## */
 
-void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[], int indicesTriCompagnie[], int indicesTriDestination[], int indicesTriH_Decollage[], int indices[]) {
+void rechercheAvancee(const char *compagnie, const char *destination, const char *heureDecollage, int nbVols, struct Vol listeVols[], int temp[], int indicesTriCompagnie[], int indicesTriDestination[], int indicesTriH_Decollage[], int indices[]) {
     /*
         :entree:
             'compagnie' -> le nom de la compagnie
@@ -238,12 +245,6 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
     int indicesCompagnie[NB_VOLS_MAX] = {0};
     int indicesDestination[NB_VOLS_MAX] = {0};
     int indicesHeureDecollage[NB_VOLS_MAX] = {0};
-
-    /*
-    rechercheCompagnie(compagnie, nbVols, listeVols, indicesCompagnie);
-    rechercheDestination(destination, nbVols, listeVols, indicesDestination);
-    rechercheHeureDecollage(heureDecollage, nbVols, listeVols, indicesHeureDecollage);
-    */
 
     rechercheCompagnieD(compagnie, nbVols, listeVols, indicesTriCompagnie, indicesCompagnie);
     rechercheDestinationD(destination, nbVols, listeVols, indicesTriDestination, indicesDestination);
@@ -262,6 +263,9 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
         copieTabDansTab(NB_VOLS_MAX, indicesHeureDecollage, indicesReference);
     }
 
+    int n = compterElmntTab(nbVols, indicesReference);
+    triFusion(n, indicesReference, temp, listeVols, 1);
+
     int existInCompagnie = 0;
     int existInDestination = 0;
     int existInHeureDecollage = 0;
@@ -277,6 +281,7 @@ void rechercheAvancee(const char *compagnie, const char *destination, const char
         }
         ++i;
     }
+
     if(ind<nbVols)
         indices[ind] = -1;
 }

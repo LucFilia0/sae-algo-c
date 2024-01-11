@@ -173,6 +173,38 @@ int compareOrdreAlpha(const char *chaine1, const char *chaine2) {
     return alpha;
 }
 
+int charContainedIn(const char *chaine1, const char *chaine2) {
+    int contained = 0;
+    int trouve = 0;
+    int ok = 0;
+    int i=0, j=0;
+
+    char chaine1Lowered[50] = "", chaine2Lowered[50] = "";
+
+    copyCharToLower(chaine1, chaine1Lowered);
+    copyCharToLower(chaine2, chaine2Lowered);
+
+    while(i<strlen(chaine2Lowered)) {
+        if(chaine2Lowered[i] == chaine1Lowered[j]) {
+            ok = 1;
+            while(ok == 1 && j<strlen(chaine1Lowered)) {
+                if(chaine2Lowered[i+j] == chaine1Lowered[j]) {
+                    ++j;
+                }else {
+                    ok = 0;
+                }
+            }
+            if(j==strlen(chaine1Lowered)) {
+                contained = 1;
+            }
+            j = 0;
+        }
+        ++i;
+    }
+
+    return contained;
+}
+
 /** ##---- DEFINITIONS FONCTIONS TABLEAUX ----## */
 
 void indexFill(int n, int tabIndices[n], int nbVols)
