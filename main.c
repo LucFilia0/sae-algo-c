@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     const char* csvBase = "data_vols.csv";
 
     int whatFile = 0;
+    printf("\n===== CHOIX DU FICHIER CSV ======\n");
     userEntryInt(" 1 - Utiliser les vols de base\n 2 - Importer un fichier", &whatFile, 0, 2);
 
     if(whatFile == 2) {
@@ -65,18 +66,21 @@ int main(int argc, char *argv[])
         int entry, recherche, numVol, heure, quit = 0;
         char compagnie[50], destination[50];
         int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX] ;
-        int tabIndicesNomsCompagnie[NB_VOLS_MAX], tabIndicesSalleEmbarquement[NB_VOLS_MAX], temp[NB_VOLS_MAX];
+        int tabIndicesNomsCompagnie[NB_VOLS_MAX], tabIndicesSalleEmbarquement[NB_VOLS_MAX];
+        int tabIndicesComptoirsErg[NB_VOLS_MAX], temp[NB_VOLS_MAX];
 
         // TRI INDIRECTS
         indexFill(NB_VOLS_MAX, tabIndicesH_Decollage, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesDestination, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesNomsCompagnie, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesSalleEmbarquement, nbVols) ;
+        indexFill(NB_VOLS_MAX, tabIndicesComptoirsErg, nbVols);
 
         triFusion(nbVols, tabIndicesH_Decollage, temp, listeVols, 1) ;
         triFusion(nbVols, tabIndicesDestination, temp, listeVols, 2) ;
         triFusion(nbVols, tabIndicesNomsCompagnie, temp, listeVols, 3) ;
         triFusion(nbVols, tabIndicesSalleEmbarquement, temp, listeVols, 4) ;
+        triFusion(nbVols, tabIndicesComptoirsErg, temp, listeVols, 5);
 
         // GESTION DE LA PISTE
         for (int i = 0 ; i < NB_VOLS_MAX ; i++) {
@@ -109,7 +113,7 @@ int main(int argc, char *argv[])
                 printf("\n---- Aucun vol a venir ----\n");
             }
 
-            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Voir les ecrans d'embarquement\n5 - Quitter", &entry, 1, 5);
+            userEntryInt("\n\n1 - Voir un vol\n2 - Recherche avancee\n3 - Gestion de la piste\n4 - Voir les ecrans\n5 - Quitter", &entry, 1, 5);
 
             /** ---- VOIR UN VOL ----## **/
             if(entry == 1) {
@@ -239,28 +243,31 @@ int main(int argc, char *argv[])
                     // --> AJOUTER RETARD
                     if(choixRetard == 1) {
                         do {
+                            showTitle("RETARDER UN VOL");
                             if (nbVols <= 0) {
-                                printf("La liste des vols est vide") ;
+                                printf("\nLa liste des vols est vide") ;
                             }
                             else {
                                 int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
                                 struct Heure ancienneHeure ;
 
-                                userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 0, nbVols);
+                                userEntryInt("\nEntrez le numero du vol que vous souhaitez retarder", &numVol, 0, nbVols);
+                                showTitle("RETARDER UN VOL");
                                 if (numVol != 0) {
                                     indiceVolRetarde = rechercheIndiceAvecNumVol(nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
                                     ancienneHeure.heure = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.heure ;
                                     ancienneHeure.minute = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.minute ;
 
-                                    userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
+                                    userEntryInt("\nEntrez le retard qu'a le vol", &tpsRetard, 1, 60);
+                                    showTitle("RETARD FINAL");
                                     retardFinal = ajoutRetard(nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
 
                                     if (retardFinal == -1) {
-                                        printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
+                                        printf("\nLe vol n'a pas pu etre place, il a donc ete annule\n");
                                     }
 
                                     else if(retardFinal == -2) {
-                                        printf("Le vol est annule, il ne peut pas etre retarde\n");
+                                        printf("\nLe vol est annule, il ne peut pas etre retarde\n");
                                     }
 
                                     else {
@@ -268,7 +275,7 @@ int main(int argc, char *argv[])
                                         nouvelleHeure.heure = ancienneHeure.heure ;
                                         nouvelleHeure.minute = ancienneHeure.minute ;
 
-                                        printf("Le vol a ete retarde de %d minutes\n",retardFinal);
+                                        printf("\nLe vol a ete retarde de %d minutes\n",retardFinal);
                                         ajouterHeure(&nouvelleHeure, retardFinal) ;
                                         char chaineHeure1[10], chaineHeure2[10] ;
                                         afficherHeureDans(ancienneHeure, chaineHeure1) ;
@@ -290,48 +297,44 @@ int main(int argc, char *argv[])
                 }
             }
 
-            /** ##---- VOIR LES ECRANS DES SALLES D'EMBARQUEMENT ----## */
+            /** ##---- VOIR LES ECRANS ----## */
             if(entry == 4) {
-                do {
-                    getHeureSystemInto(&mtn);
-                    int salleEmb = 0;
+                showTitle("VOIR LES ECRANS");
+                int ecranAVoir = 0;
+                userEntryInt("Voir les ecrans des :\n\n1 - salles d'embarquement\n2 - comptoirs d'enregistrement", &ecranAVoir, 0, 2);
 
-                    showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-10/+30mn)");
-                    printf("\n(Salles d'embarquement : %d - %d)\n", listeVols[tabIndicesSalleEmbarquement[0]].salleEmbarquement, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
-                    userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 0, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
-
-                    if(salleEmb != 0) {
+                if(ecranAVoir == 1) {
+                    /** ##---- SALLES EMBARQUEMENT ----## */
+                    do {
                         getHeureSystemInto(&mtn);
-                        int volsActuels[NB_VOLS_MAX] = {0};
-                        rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volsActuels, salleEmb, mtn);
+                        int salleEmb = 0;
 
-                        showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-10/+30mn)");
-                        showTime(ajd, mtn);
-                        printf("Salle d'embarquement %d\n====================================================================", salleEmb);
+                        showTitle("VOIR LES ECRANS -> salles d'embarquement (-10/+30mn)");
+                        printf("\n(Salles d'embarquement : %d - %d)\n", listeVols[tabIndicesSalleEmbarquement[0]].salleEmbarquement, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
 
-                        if(volsActuels[0] != -1) {
-                            int i=0;
-                            int ordrePassagers[100] = {0};
-                            char h_decollageChar[7] = "";
-                            char h_debEmbChar[7] = "";
+                        afficherSallesActuelles(nbVols, listeVols, tabIndicesSalleEmbarquement, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement, ajd, mtn, temp);
 
-                            while(volsActuels[i] != -1) {
-                                afficherHeureDans(listeVols[volsActuels[i]].h_decollage, h_decollageChar);
-                                afficherHeureDans(listeVols[volsActuels[i]].h_debEmbarquement, h_debEmbChar);
-                                printf("\n\nListe des passagers du vol %d (embarquement %s / depart %s) :\n", listeVols[volsActuels[i]].numVol, h_debEmbChar, h_decollageChar);
-                                trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
-                                afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
-                                ++i;
-                            }
-                        }else {
-                            printf("\n\n---- Aucun embarquement en cours dans cette salle ----\n");
-                        }
                         waitPress();
                         returnMenu(&menu);
-                    }else {
-                        menu = 2;
-                    }
-                }while(menu != 2);
+                    }while(menu != 2);
+                }
+
+                else if(ecranAVoir == 2) {
+                    do {
+                        getHeureSystemInto(&mtn);
+                        int comptoir = 0;
+
+                        showTitle("VOIR LES ECRANS -> comptoirs d'enregistrement");
+                        printf("\n(Comptoirs d'enregistrement : %d - %d)\n", listeVols[tabIndicesComptoirsErg[0]].numComptoir, listeVols[tabIndicesComptoirsErg[nbVols-1]].numComptoir);
+
+                        afficherComtoirsActuels(nbVols, listeVols, tabIndicesComptoirsErg, listeVols[tabIndicesComptoirsErg[nbVols-1]].numComptoir, ajd, mtn, temp);
+
+                        waitPress();
+                        returnMenu(&menu);
+                    }while(menu != 2);
+                }else {
+                    continue;
+                }
             }
 
             /** ---- QUIT ---- **/

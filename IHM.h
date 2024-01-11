@@ -17,3 +17,7 @@ void showTime(struct Date ajd, struct Heure mtn);
 void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]);
 
 void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPassagers]);
+
+void afficherSallesActuelles(int nbVols, struct Vol listeVols[nbVols], int tabIndicesSallesEmbarquement[nbVols], int nbSalles, struct Date ajd, struct Heure mtn, int temp[nbVols]);
+
+void afficherComtoirsActuels(int nbVols, struct Vol listeVols[nbVols], int tabIndicesComptoirsErg[nbVols], int nbComptoirs, struct Date ajd, struct Heure mtn, int temp[nbVols]);

@@ -8,6 +8,9 @@
 #include "IHM.h"
 #include "tri.h"
 #include "retard.h"
+#include "recherches.h"
+
+#define NB_VOLS_MAX 192
 
 /** ##---- DECLARATION DES FONCTIONS D'INTERACTION AVEC L'UTILISATEUR ----## */
 
@@ -89,8 +92,8 @@ void waitPress() {
         :fonction:
             Attend que l'utilisateur appuie sur [entrée] pour effacer l'écran
     */
-    printf("\n\nAppuyez sur [entree]...");
-    getchar();
+    printf("\n\n");
+    system("pause");
     system("cls");
 }
 
@@ -292,5 +295,67 @@ void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPass
             afficheLignePassager(vol.listePassagers[indices[i]], nbColumns, widthColumns);
             afficheLigneVide(nbColumns, widthColumns);
         }
+    }
+}
+
+/** ##---- AFFICHER LES SALLES D'EMBARQUEMENT ----## */
+
+void afficherSallesActuelles(int nbVols, struct Vol listeVols[nbVols], int tabIndicesSallesEmbarquement[nbVols], int nbSalles, struct Date ajd, struct Heure mtn, int temp[nbVols]) {
+    int salle = 1;
+    while(salle <= nbSalles) {
+        printf("\n\nSalle %d :", salle);
+
+        int volsAvecSalle[NB_VOLS_MAX] = {0};
+        rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSallesEmbarquement, volsAvecSalle, salle, mtn);
+
+        if(volsAvecSalle[0] != -1) {
+            int i=0;
+            int ordrePassagers[100] = {0};
+            char h_decollageChar[7] = "";
+            char h_debEmbChar[7] = "";
+
+            while(volsAvecSalle[i] != -1) {
+                afficherHeureDans(listeVols[volsAvecSalle[i]].h_decollage, h_decollageChar);
+                afficherHeureDans(listeVols[volsAvecSalle[i]].h_debEnregistrement, h_debEmbChar);
+                printf(" Vol %d (embarquement %s / depart %s) :\n", listeVols[volsAvecSalle[i]].numVol, h_debEmbChar, h_decollageChar);
+                trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
+                afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
+                ++i;
+            }
+        }else {
+            printf("\n\n---- Aucun embarquement en cours dans cette salle ----\n");
+        }
+        ++salle;
+    }
+}
+
+/** ##---- AFFICHER LES COMPTOIRS D'ENREGISTREMENT ----## */
+
+void afficherComtoirsActuels(int nbVols, struct Vol listeVols[nbVols], int tabIndicesComptoirsErg[nbVols], int nbComptoirs, struct Date ajd, struct Heure mtn, int temp[nbVols]) {
+    int cmpt = 1;
+    while(cmpt <= nbComptoirs) {
+        printf("\n\nComptoir %d :", cmpt);
+
+        int volsAvecNumCompt[NB_VOLS_MAX] = {0};
+        rechercheVolAuNumComptoir(nbVols, listeVols, tabIndicesComptoirsErg, volsAvecNumCompt, cmpt, mtn);
+
+        if(volsAvecNumCompt[0] != -1) {
+            int i=0;
+            int ordrePassagers[100] = {0};
+            char h_decollageChar[7] = "";
+            char h_debErgChar[7] = "";
+
+            while(volsAvecNumCompt[i] != -1) {
+                afficherHeureDans(listeVols[volsAvecNumCompt[i]].h_decollage, h_decollageChar);
+                afficherHeureDans(listeVols[volsAvecNumCompt[i]].h_debEnregistrement, h_debErgChar);
+                printf(" Vol %d (enregistrement %s / depart %s) :\n", listeVols[volsAvecNumCompt[i]].numVol, h_debErgChar, h_decollageChar);
+                trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
+                afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
+                ++i;
+            }
+        }else {
+            printf("\n\n---- Aucun enregistrement en cours a ce comptoir ----\n");
+        }
+        ++cmpt;
     }
 }

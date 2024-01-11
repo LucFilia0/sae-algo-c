@@ -52,19 +52,17 @@ void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[], 
         char compagniePrec[50] = "", compagnieSuiv[50] = "";
         copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
         copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
-        while(strcmp(entryLowered, compagniePrec)==0 || strcmp(entryLowered, compagnieSuiv)==0) {
-            if(strcmp(compagniePrec, entryLowered)==0) {
-                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
-                --prec;
-                ++ind;
-                copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
-            }
-            if(strcmp(compagnieSuiv, entryLowered)==0) {
-                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
-                ++suiv;
-                ++ind;
-                copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
-            }
+        while(strcmp(entryLowered, compagniePrec)==0 && prec>=0) {
+            indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+            --prec;
+            ++ind;
+            copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
+        }
+        while(strcmp(compagnieSuiv, entryLowered)==0 && indicesTri[suiv]<nbVols) {
+            indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+            ++suiv;
+            ++ind;
+            copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
         }
     }
     if(ind<nbVols)
@@ -109,19 +107,17 @@ void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[]
         char destinationPrec[50] = "", destinationSuiv[50] = "";
         copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
         copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
-        while(strcmp(entryLowered, destinationPrec)==0 || strcmp(entryLowered, destinationSuiv)==0) {
-            if(strcmp(destinationPrec, entryLowered)==0) {
-                indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
-                --prec;
-                ++ind;
-                copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
-            }
-            if(strcmp(destinationSuiv, entryLowered)==0) {
-                indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
-                ++suiv;
-                ++ind;
-                copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
-            }
+        while(strcmp(entryLowered, destinationPrec)==0 && prec>=0) {
+            indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+            --prec;
+            ++ind;
+            copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
+        }
+        while(strcmp(destinationSuiv, entryLowered)==0 && suiv<nbVols) {
+            indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+            ++suiv;
+            ++ind;
+            copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
         }
     }
     if(ind<nbVols)
@@ -370,7 +366,6 @@ int rechercheDichotomieSalleEmb(int nbVols, struct Vol listeVols[nbVols], int in
 void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], int salleEmb, struct Heure mtn) {
     int trouve = 0, ind = 0;
     int prec = 0, suiv = 0;
-    int h_decollageVol = 0;
 
     int heureAct = castHeureEnMinute(mtn);
 
@@ -409,12 +404,70 @@ void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], in
     }
     if(ind<nbVols)
         indices[ind] = -1;
-
-    afficheTab(nbVols, indices);
 }
 
+/** ##---- RECHERCHE VOLS AU NUM DE COMPTOIR ----## */
 
+int rechercheDichotomieComptoir(int nbVols, struct Vol listeVols[nbVols], int indices[nbVols], int comptoir) {
+    int deb = 0, fin = nbVols-1, mid = 0;
+    int exit = -1;
 
+    do {
+        mid=(deb+fin)/2;
+        if(listeVols[indices[mid]].numComptoir == comptoir) {
+            exit = mid;
+        }
+        else if(listeVols[indices[mid]].numComptoir > comptoir) {
+            fin = mid-1;
+        }else {
+            deb = mid+1;
+        }
+    }while(exit == -1 && deb<fin);
+    return exit;
+}
+
+void rechercheVolAuNumComptoir(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], int comptoir, struct Heure mtn) {
+    int trouve = 0, ind = 0;
+    int prec = 0, suiv = 0;
+
+    int heureAct = castHeureEnMinute(mtn);
+
+    trouve = rechercheDichotomieComptoir(nbVols, listeVols, indicesTri, comptoir);
+
+    if(trouve != -1) {
+        int h_trouve=castHeureEnMinute(listeVols[indicesTri[trouve]].h_debEnregistrement);
+
+        if(h_trouve >= heureAct-10 && h_trouve <= heureAct+30) {
+            indices[ind] = indicesTri[trouve];
+            ++ind;
+        }
+        prec = trouve-1;
+        suiv = trouve+1;
+
+        int h_suiv = 0, h_prec = 0;
+
+        while(listeVols[indicesTri[prec]].numComptoir == comptoir || listeVols[indicesTri[suiv]].numComptoir == comptoir) {
+            if(listeVols[indicesTri[prec]].numComptoir == comptoir) {
+                h_prec = castHeureEnMinute(listeVols[indicesTri[prec]].h_debEnregistrement);
+                if(h_prec >= heureAct-10 && h_prec <= heureAct+30) {
+                    indices[ind] = indicesTri[prec];
+                    ++ind;
+                }
+                --prec;
+            }
+            if(listeVols[indicesTri[suiv]].numComptoir == comptoir) {
+                h_suiv = castHeureEnMinute(listeVols[indicesTri[suiv]].h_debEnregistrement);
+                if(h_suiv >= heureAct-10 && h_suiv <= heureAct+30) {
+                    indices[ind] = indicesTri[suiv];
+                    ++ind;
+                }
+                ++suiv;
+            }
+        }
+    }
+    if(ind<nbVols)
+        indices[ind] = -1;
+}
 
 
 

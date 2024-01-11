@@ -24,3 +24,7 @@ void rechercheVolsAccueil(int nbVols, struct Vol listeVols[nbVols], int indicesT
 /** ##---- RECHERCHE VOL A VENIR DANS SALLE EMBARQUEMENT ----## */
 
 void rechercheVolActuelDansSalleEmb(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], int salleEmb, struct Heure mtn);
+
+/** ##---- RECHERCHE VOLS AU NUM DE COMPTOIR ----## */
+
+void rechercheVolAuNumComptoir(int nbVols, struct Vol listeVols[nbVols], int indicesTri[nbVols], int indices[nbVols], int comptoir, struct Heure mtn);
