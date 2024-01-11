@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     if(fichier==NULL) {
         perror(nomFichier);
     }
+
     else
     {
         // SET KKKONSOLE
@@ -245,33 +246,41 @@ int main(int argc, char *argv[])
                                 int numVol, tpsRetard, indiceVolRetarde, retardFinal ;
                                 struct Heure ancienneHeure ;
 
-                                userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 1, nbVols);
-                                indiceVolRetarde = rechercheIndiceAvecNumVol(nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
-                                ancienneHeure.heure = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.heure ;
-                                ancienneHeure.minute = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.minute ;
+                                userEntryInt("Entrez le numero du vol que vous souhaitez retarder", &numVol, 0, nbVols);
+                                if (numVol != 0) {
+                                    indiceVolRetarde = rechercheIndiceAvecNumVol(nbVols, tabIndicesH_Decollage, listeVols, numVol) ;
+                                    ancienneHeure.heure = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.heure ;
+                                    ancienneHeure.minute = listeVols[tabIndicesH_Decollage[indiceVolRetarde]].h_decollage.minute ;
 
-                                userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
-                                retardFinal = ajoutRetard(nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
+                                    userEntryInt("Entrez le retard qu'a le vol", &tpsRetard, 1, 60);
+                                    retardFinal = ajoutRetard(nbVols, tabIndicesH_Decollage, listeVols, indiceVolRetarde, tpsRetard) ;
 
-                                if (retardFinal == -1) {
-                                    printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
+                                    if (retardFinal == -1) {
+                                        printf("Le vol n'a pas pu etre place, il a donc ete annule\n");
+                                    }
+
+                                    else if(retardFinal == -2) {
+                                        printf("Le vol est annule, il ne peut pas etre retarde\n");
+                                    }
+
+                                    else {
+                                        struct Heure nouvelleHeure ;
+                                        nouvelleHeure.heure = ancienneHeure.heure ;
+                                        nouvelleHeure.minute = ancienneHeure.minute ;
+
+                                        printf("Le vol a ete retarde de %d minutes\n",retardFinal);
+                                        ajouterHeure(&nouvelleHeure, retardFinal) ;
+                                        char chaineHeure1[10], chaineHeure2[10] ;
+                                        afficherHeureDans(ancienneHeure, chaineHeure1) ;
+                                        afficherHeureDans(nouvelleHeure, chaineHeure2) ;
+                                        printf("%s -> %s\n",chaineHeure1, chaineHeure2) ;
+                                    }
+                                    waitPress();
+                                    returnMenu(&menu);
                                 }
-
-                                else if(retardFinal == -2) {
-                                    printf("Le vol est annule, il ne peut pas etre retarde\n");
-                                }
-
                                 else {
-                                    struct Heure nouvelleHeure ;
-                                    nouvelleHeure.heure = ancienneHeure.heure ;
-                                    nouvelleHeure.minute = ancienneHeure.minute ;
-
-                                    printf("Le vol a ete retarde de %d minutes\n",retardFinal);
-                                    ajouterHeure(&nouvelleHeure, retardFinal) ;
-                                    printf("%d:%d -> %d:%d\n",ancienneHeure.heure, ancienneHeure.minute, nouvelleHeure.heure, nouvelleHeure.minute) ;
+                                    menu = 2 ;
                                 }
-                                waitPress();
-                                returnMenu(&menu);
                             }
                         }while(menu != 2);
 

@@ -69,7 +69,7 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
     heureMax.heure = listeVols[tabIndices[indiceVolRetarde]].h_decollage.heure ;
     heureMax.minute = listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute ;
 
-    int place = 0, retardAccumule = tpsRetard , indiceVol = indiceVolRetarde, test ;
+    int place = 0, retardAccumule = tpsRetard , indiceVol = indiceVolRetarde, test, done = 0 ;
     struct Heure heurePrecedente, heureActuelle, heureSuivante ;
     int ecart, ecart1, ecart2 ;
 
@@ -82,140 +82,125 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
     }
 
     if (indiceVolRetarde == nbVols - 1) {
-            ajouterHeure(&listeVols[tabIndices[indiceVolRetarde]].h_decollage, tpsRetard) ;
-            retarderVol(tabIndices, listeVols, tpsRetard, indiceVolRetarde, listeVols[tabIndices[indiceVolRetarde]].h_decollage) ;
+        ajouterHeure(&listeVols[tabIndices[indiceVolRetarde]].h_decollage, tpsRetard) ;
+        retarderVol(tabIndices, listeVols, tpsRetard, indiceVolRetarde, listeVols[tabIndices[indiceVolRetarde]].h_decollage) ;
     }
 
-    if (nbVols > 1) {
-
-        // Se place à l'heure juste avant l'heure minimum
-        while (indiceVol + 1 < nbVols) {
-            if (etatVol(nbVols, tabIndices, listeVols, indiceVol) != -1) {
-                heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
-                heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
-                ecart = ecartHeures(heureMin, heureSuivante) ;
-                if (ecart <= 0) {
-                    break ;
-                }
+    // Se place à l'heure juste avant l'heure minimum
+    while (indiceVol + 1 < nbVols) {
+        if (etatVol(nbVols, tabIndices, listeVols, indiceVol) != -1) {
+            heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
+            heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+            ecart = ecartHeures(heureMin, heureSuivante) ;
+            if (ecart <= 0) {
+                break ;
             }
-            indiceVol++ ;
+        }
+        indiceVol++ ;
+    }
+
+    if (indiceVol > indiceVolRetarde) {
+        do {
+            test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
+            if (test != -1) {
+                heurePrecedente.heure = listeVols[tabIndices[indiceVol]].h_decollage.heure ;
+                heurePrecedente.minute = listeVols[tabIndices[indiceVol]].h_decollage.minute ;
+            }
+            else {
+                indiceVol-- ;
+            }
+        } while ((test == -1) && (indiceVol > indiceVolRetarde)) ;
+    }
+
+    heureActuelle.heure = heureMin.heure ;
+    heureActuelle.minute = heureMin.minute ;
+
+    // Vérifie si on peut insérer le vol à l'heure sélectionnée, sinon on ajout 1 minute à l'heure
+    while (place == 0 && retardAccumule <=60) {
+        ecart = ecartHeures(heureMax,heureActuelle) ;
+        if (ecart < 0) {
+            break ;
         }
 
         if (indiceVol > indiceVolRetarde) {
-            do {
-                test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
-                if (test != -1) {
-                    heurePrecedente.heure = listeVols[tabIndices[indiceVol]].h_decollage.heure ;
-                    heurePrecedente.minute = listeVols[tabIndices[indiceVol]].h_decollage.minute ;
-                }
-                else {
-                    indiceVol-- ;
-                }
-            } while ((test == -1) && (indiceVol > indiceVolRetarde)) ;
-        }
-
-        heureActuelle.heure = heureMin.heure ;
-        heureActuelle.minute = heureMin.minute ;
-
-        /*
-        ====== Partie qui a de grandes chances de servir à rien ========
-        if (indiceVol + 1 < nbVols) {
-            do {
-                test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
-                if (test != -1){
-                    heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
-                    heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
-                }
-
-                else {
-                    indiceVol++ ;
-                }
-            } while ((test == -1) && (indiceVol + 1 < nbVols)) ;
-        }
-        */
-
-        // Vérifie si on peut insérer le vol à l'heure sélectionnée, sinon on ajout 1 minute à l'heure
-        while (place == 0 && retardAccumule <=60) {
-            ecart = ecartHeures(heureMax,heureActuelle) ;
-            if (ecart < 0) {
-                break ;
-            }
-
-            if (indiceVol > indiceVolRetarde) {
-                ecart1 = ecartHeures(heureActuelle, heurePrecedente) ;
-                if (ecart1 >= 5) {
-                    place = 1 ;
-                    test = 0 ;
-                }
-
-                else {
-                    place = 0 ;
-                    test = 1 ;
-                }
-            }
-
-            else {
+            ecart1 = ecartHeures(heureActuelle, heurePrecedente) ;
+            if (ecart1 >= 5) {
+                place = 1 ;
                 test = 0 ;
             }
 
-            if (indiceVol + 1 < nbVols) {
-                ecart2 = ecartHeures(heureSuivante,heureActuelle) ;
+            else {
+                place = 0 ;
+                test = 1 ;
+            }
+        }
 
-                if (ecart2 >= 5 && test == 0) {
-                    place = 1 ;
+        else {
+            test = 0 ;
+        }
+
+        if (indiceVol + 1 < nbVols) {
+            ecart2 = ecartHeures(heureSuivante,heureActuelle) ;
+
+            if (ecart2 >= 5 && test == 0) {
+                place = 1 ;
+            }
+
+            else {
+                place = 0 ;
+            }
+        }
+
+        // Incremente et situe l'heure dans le tableau
+        if (place == 0) {
+            done = 0 ;
+            if (indiceVol + 1 < nbVols) {
+
+                if (ecart2 == 0) {
+                    done = 1 ;
+                    indiceVol++ ;
+                    heurePrecedente.heure = heureSuivante.heure ;
+                    heurePrecedente.minute = heureSuivante.minute ;
+                    do {
+                        test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
+                        if (test != -1){
+                            heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
+                            heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
+                        }
+
+                        else {
+                            indiceVol++ ;
+                        }
+                    } while ((test == -1) && (indiceVol + 1 < nbVols)) ;
+
+                    retardAccumule = retardAccumule + 5 ;
+                    ajouterHeure(&heureActuelle,5) ;
                 }
 
                 else {
-                    place = 0 ;
-                }
-            }
 
-            // Incremente et situe l'heure dans le tableau
-            if (place == 0) {
-                if (indiceVol + 1 < nbVols) {
-
-                    if (ecart2 == 0) {
-                        indiceVol++ ;
-                        heurePrecedente.heure = heureSuivante.heure ;
-                        heurePrecedente.minute = heureSuivante.minute ;
-                        do {
-                            test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
-                            if (test != -1){
-                                heureSuivante.heure = listeVols[tabIndices[indiceVol + 1]].h_decollage.heure ;
-                                heureSuivante.minute = listeVols[tabIndices[indiceVol + 1]].h_decollage.minute ;
-                            }
-
-                            else {
-                                indiceVol++ ;
-                            }
-                        } while ((test == -1) && (indiceVol + 1 < nbVols)) ;
-
-                        retardAccumule = retardAccumule + 5 ;
-                        ajouterHeure(&heureActuelle,5) ;
+                    if (ecart2 < 5) {
+                        retardAccumule = retardAccumule + ecart2 ;
+                        ajouterHeure(&heureActuelle,ecart2) ;
+                        done = 1 ;
                     }
 
                     else {
-                        retardAccumule = retardAccumule + ecart2 ;
-                        ajouterHeure(&heureActuelle,ecart2) ;
+
+                        if (indiceVol > indiceVolRetarde && ecart1 > 0) {
+                            retardAccumule = retardAccumule + 5 - ecart1 ;
+                            ajouterHeure(&heureActuelle, 5 - ecart1) ;
+                            done = 1 ;
+                        }
                     }
-
                 }
-
-                else {
-                    retardAccumule++ ;
-                    ajouterHeure(&heureActuelle,1) ;
-
-                }
-
             }
 
+            if (done == 0) {
+                retardAccumule++ ;
+                ajouterHeure(&heureActuelle,1) ;
+            }
         }
-    }
-
-
-    else {
-        retarderVol(tabIndices, listeVols, tpsRetard, indiceVolRetarde, heureActuelle) ;
-        return tpsRetard ;
     }
 
     // Annule le vol et modifie la liste des vols

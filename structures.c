@@ -88,6 +88,8 @@ void ajouterHeure(struct Heure *heure, int val) {
         :fonction:
             ajoute la valeur 'val' à 'heure', en vérifiant toutes les contraintes liées aux bases 60 et 24
     */
+    /*
+    ========Ancienne version=========
     int nbHeure = heure->heure;
     int nbMinute = heure->minute;
 
@@ -113,6 +115,14 @@ void ajouterHeure(struct Heure *heure, int val) {
         }while(nbMinute<0);
         heure->minute = nbMinute;
     }
+    */
+    heure->minute = heure->minute + val ;
+    heure->heure = heure->heure + heure->minute/60 ;
+    heure->minute = heure->minute%60 ;
+    if (heure->minute < 0) {
+        heure->minute = heure->minute + 60 ;
+    }
+
 }
 
 int ecartHeures(struct Heure heure1, struct Heure heure2)
