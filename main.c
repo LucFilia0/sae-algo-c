@@ -305,33 +305,29 @@ int main(int argc, char *argv[])
 
                 if(ecranAVoir == 1) {
                     /** ##---- SALLES EMBARQUEMENT ----## */
-                    do {
                         getHeureSystemInto(&mtn);
                         int salleEmb = 0;
 
-                        showTitle("VOIR LES ECRANS -> salles d'embarquement (-10/+30mn)");
+                        showTitle("VOIR LES ECRANS -> salles d'embarquement (-30/+10mn)");
+                        showTime(ajd, mtn);
                         printf("\n(Salles d'embarquement : %d - %d)\n", listeVols[tabIndicesSalleEmbarquement[0]].salleEmbarquement, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
 
                         afficherSallesActuelles(nbVols, listeVols, tabIndicesSalleEmbarquement, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement, ajd, mtn, temp);
 
                         waitPress();
-                        returnMenu(&menu);
-                    }while(menu != 2);
                 }
 
                 else if(ecranAVoir == 2) {
-                    do {
                         getHeureSystemInto(&mtn);
                         int comptoir = 0;
 
                         showTitle("VOIR LES ECRANS -> comptoirs d'enregistrement");
+                        showTime(ajd, mtn);
                         printf("\n(Comptoirs d'enregistrement : %d - %d)\n", listeVols[tabIndicesComptoirsErg[0]].numComptoir, listeVols[tabIndicesComptoirsErg[nbVols-1]].numComptoir);
 
                         afficherComtoirsActuels(nbVols, listeVols, tabIndicesComptoirsErg, listeVols[tabIndicesComptoirsErg[nbVols-1]].numComptoir, ajd, mtn, temp);
 
                         waitPress();
-                        returnMenu(&menu);
-                    }while(menu != 2);
                 }else {
                     continue;
                 }

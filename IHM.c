@@ -313,11 +313,14 @@ void afficherSallesActuelles(int nbVols, struct Vol listeVols[nbVols], int tabIn
             int ordrePassagers[100] = {0};
             char h_decollageChar[7] = "";
             char h_debEmbChar[7] = "";
+            char h_finEmbChar[7] = "";
 
-            while(volsAvecSalle[i] != -1) {
+            while(volsAvecSalle[i] != -1 && i<nbSalles) {
                 afficherHeureDans(listeVols[volsAvecSalle[i]].h_decollage, h_decollageChar);
-                afficherHeureDans(listeVols[volsAvecSalle[i]].h_debEnregistrement, h_debEmbChar);
-                printf(" Vol %d (embarquement %s / depart %s) :\n", listeVols[volsAvecSalle[i]].numVol, h_debEmbChar, h_decollageChar);
+                afficherHeureDans(listeVols[volsAvecSalle[i]].h_debEmbarquement, h_debEmbChar);
+                afficherHeureDans(listeVols[volsAvecSalle[i]].h_finEmbarquement, h_finEmbChar);
+
+                printf("\n\nVol %d (embarquement %s - %s / depart %s) :\n", listeVols[volsAvecSalle[i]].numVol, h_debEmbChar, h_finEmbChar, h_decollageChar);
                 trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
                 afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
                 ++i;
@@ -344,11 +347,14 @@ void afficherComtoirsActuels(int nbVols, struct Vol listeVols[nbVols], int tabIn
             int ordrePassagers[100] = {0};
             char h_decollageChar[7] = "";
             char h_debErgChar[7] = "";
+            char h_finErgChar[7] = "";
 
-            while(volsAvecNumCompt[i] != -1) {
+            while(volsAvecNumCompt[i] != -1 && i<nbComptoirs) {
                 afficherHeureDans(listeVols[volsAvecNumCompt[i]].h_decollage, h_decollageChar);
                 afficherHeureDans(listeVols[volsAvecNumCompt[i]].h_debEnregistrement, h_debErgChar);
-                printf(" Vol %d (enregistrement %s / depart %s) :\n", listeVols[volsAvecNumCompt[i]].numVol, h_debErgChar, h_decollageChar);
+                afficherHeureDans(listeVols[volsAvecNumCompt[i]].h_finEnregistrement, h_finErgChar);
+
+                printf(" Vol %d (enregistrement %s - %s / depart %s) :\n", listeVols[volsAvecNumCompt[i]].numVol, h_debErgChar, h_finErgChar, h_decollageChar);
                 trierPassagers(100, listeVols[i].listePassagers, ordrePassagers, temp, ajd);
                 afficheTableauPassagers(listeVols[i], 100, ordrePassagers);
                 ++i;
