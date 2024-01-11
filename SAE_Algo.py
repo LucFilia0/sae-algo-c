@@ -9,10 +9,14 @@ from math import *
 
 def filtreLineaire(tab: [int], val: int) -> ([int]):
     """
-    :entree: tab [int], val int
-    :pre-cond: len(tab)>0
-    :sortie: sort [int]
-    :post-cond: sort contient tous les indices de 'val' dans tab
+    Renvoie un tableau contenant les indices de toutes les occurrences de Val par ordre d'apparition, puis un -1
+    pour signifier la fin effective du tableau (le reste sera remplie de 0 inutiles).
+
+    Args:
+        tab ([int]): Tableau d'entiers triés par ordre croissant
+
+    Returns:
+        [int]: Tableau de taille len(tab) contenant les indices.
     """
     global cpt
 
@@ -20,6 +24,7 @@ def filtreLineaire(tab: [int], val: int) -> ([int]):
     i = 0
     j = 0
     cpt = cpt + 4
+    
     while i<len(tab) :
         if tab[i] == val :
             sort[j] = i
@@ -27,17 +32,23 @@ def filtreLineaire(tab: [int], val: int) -> ([int]):
             cpt = cpt + 4 # conditon comptee plus bas
         i = i+1
         cpt = cpt + 4
+    
     if j != len(tab)-1:
         sort[j] = -1
         cpt + 5
+    
     return sort
 
 def filtreParDichotomie(tab: [int], val: int) -> ([int]):
     """
-    :entree: tab [int], val int
-    :pre-cond: len(tab)>0, tab trié
-    :sortie: sort [int]
-    :post-cond: sort contient tous les indices de 'val' dans tab
+    Renvoie un tableau contenant les indices de toutes les occurrences de Val, puis un -1
+    pour signifier la fin effective du tableau (le reste sera remplie de 0 inutiles).
+
+    Args:
+        tab ([int]): Tableau d'entiers triés par ordre croissant
+
+    Returns:
+        [int]: Tableau de taille len(tab) contenant les indices.
     """
     global cpt
 
@@ -45,27 +56,32 @@ def filtreParDichotomie(tab: [int], val: int) -> ([int]):
     indice = rechercheDichotomie(tab, val)
     j = 1
     cpt = cpt+5
+    
     if(indice==-1):
         sort[0] = -1
         cpt=cpt+1
+    
     else:
         sort[0] = indice
-        curseur_g = indice
-        curseur_d = indice
+        curseurG = indice
+        curseurD = indice
         cpt=cpt+4
-        while(tab[curseur_g-1]==val or tab[curseur_d+1]==val):
-            if tab[curseur_g-1]==val:
-                curseur_g = curseur_g - 1
-                sort[j] = curseur_g
-                j = j+1
-                cpt=cpt+9
-            if tab[curseur_d+1]==val:
-                curseur_d = curseur_d + 1
-                sort[j] = curseur_d
-                j = j+1
-                cpt=cpt+9
-            cpt=cpt+7
-    if j!=len(tab)-1 and sort[0]!=-1:
+        
+        while curseurG - 1 >= 0 and tab[curseurG - 1] == val:
+            curseurG = curseurG - 1
+            sort[j] = curseurG
+            j = j + 1
+            cpt = cpt + 13
+        cpt = cpt + 6
+            
+        while curseurD + 1 < len(tab) and tab[curseurD + 1] == val:
+            curseurD = curseurD + 1
+            sort[j] = curseurD
+            j = j + 1
+            cpt = cpt + 13
+        cpt = cpt + 6
+            
+    if j != len(tab)-1 and sort[0] != -1:
         sort[j] = -1
         cpt=cpt+2
     cpt=cpt+4
@@ -77,12 +93,13 @@ def filtreParDichotomie(tab: [int], val: int) -> ([int]):
 
 def fusion(tab,iDeb,iFin):
     """
-    
+    Fusionne 2 sous-parties triées de telles sortes à ce que la fusion soit aussi triée
+    puis la met à la bonne place dans le tableau.
 
     Args:
-        tab (_type_): _description_
-        iDeb (_type_): _description_
-        iFin (_type_): _description_
+        tab ([int]): Tableau d'entiers quelconque
+        iDeb (int): 1er indice de la 1ere sous-partie
+        iFin (int): Dernier indice de la 2eme sous-partie
     """
     global cpt
     temp = zeros(iFin - iDeb + 1,'i')
@@ -91,11 +108,14 @@ def fusion(tab,iDeb,iFin):
     j = iMilieu + 1 
     k = 0 
     cpt = cpt+8
+    
     while (i <= iMilieu and j <= iFin):
+        
         if (tab[i] < tab[j]): 
             temp[k] = tab[i] 
             i = i + 1 
             cpt = cpt+5
+        
         else:
             temp[k] = tab[j] 
             j = j + 1 
@@ -103,12 +123,14 @@ def fusion(tab,iDeb,iFin):
         k = k + 1 
         cpt = cpt+6
     cpt = cpt+3
+    
     while (i <= iMilieu): 
         cpt = cpt+8
         temp[k] = tab[i] 
         i = i + 1 
         k=k+1 
     cpt = cpt+1
+    
     while (j <= iFin): 
         temp[k] = tab[j] 
         j = j + 1 
@@ -116,6 +138,7 @@ def fusion(tab,iDeb,iFin):
         cpt = cpt+8
     k = 0
     cpt = cpt+2
+    
     while k <= (iFin - iDeb): 
         tab[iDeb + k] = temp[k] 
         k = k + 1 
@@ -125,9 +148,16 @@ def fusion(tab,iDeb,iFin):
         
 def triFusionRec(tab,i,j):
     """
+    Sépare le tableau en 2 sous-parties jusqu'à ce que les sous-parties
+    aient une taille de 1, puis refusionne les sous-parties en les triant
+    jusqu'à finir avec un tableau trié.
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque, len(tab) > 0
     """
     global cpt
     cpt = cpt+1
+    
     if i<j:
         m = (i+j)//2
         cpt = cpt+3
@@ -136,10 +166,27 @@ def triFusionRec(tab,i,j):
         fusion(tab,i,j)
 
 def triFusion(tab):
-    triFusionRec(tab, 0, len(tab)-1)
+    """
+    Trie le tableau en utilisant le tri Fusion
+    Effectue le 1er appel à la fonction récursive
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque
+    """
+    global cpt
+    cpt = cpt + 3
+    triFusionRec(tab, 0, len(tab) - 1)
     
 
 def echanger(tab,a,b):
+    """
+    Echange les valeurs aux indices a et b de tab
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque, len(tab) > 0
+        a (int): Indice de la 1ere valeur
+        b (int): Indice de la 2eme valeur
+    """
     global cpt
     tmp=tab[a] 
     tab[a]=tab[b] 
@@ -148,6 +195,16 @@ def echanger(tab,a,b):
     
     
 def tabMin(tab,i):
+    """
+    Renvoie l'indice de la 1ere occurrence de la plus petite valeur à partir de l'indice i
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque, len(tab) > 0
+        i (int): Indice à partir duquel on cherche le minimum.
+
+    Returns:
+        int: Indice du minimum.
+    """
     global cpt
     ind_min=i
     cpt = cpt+1
@@ -162,6 +219,12 @@ def tabMin(tab,i):
 
 
 def triSelection(tab):
+    """
+    Trie le tableau en utilisant le tri par Sélection
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque
+    """
     global cpt 
     cpt = cpt+2
     i = 0
@@ -174,6 +237,12 @@ def triSelection(tab):
         cpt = cpt + 3
 
 def triInsertion(tab: [int]):
+    """
+    Trie le tableau en utilisant le tri par Insertion
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque
+    """
     i = 1
     global cpt
     while i < len(tab):
@@ -191,6 +260,16 @@ def triInsertion(tab: [int]):
         cpt = cpt + 3 + 1 
 
 def tabMax(tab,i):
+    """
+    Renvoie l'indice de la 1ere occurrence de la plus grande valeur à partir de l'indice i
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque, len(tab) > 0
+        i (int): Indice à partir duquel on cherche le maximum.
+
+    Returns:
+        int: Indice du maximum.
+    """
     global cpt
     ind_max=i
     cpt = cpt+1
@@ -217,6 +296,12 @@ def renverser(tab,i):
 
 
 def triCrepe(tab):
+    """
+    Trie le tableau en utilisant le tri Crêpe
+
+    Args:
+        tab ([int]): Tableau d'entiers quelconque
+    """
     global cpt
     i=0
     cpt = cpt + 1
@@ -227,12 +312,6 @@ def triCrepe(tab):
         i = i+1
         cpt = cpt+2
     renverser(tab,0)
-
-def copier(tab):
-    tab2=zeros(len(tab),'i')
-    for i in range(len(tab)):
-        tab2[i]=tab[i]
-    return tab2
 
 # Algos de recherche
 
@@ -388,11 +467,6 @@ def rechercheBalayageRec(tab, val, pas, iDeb, iFin):
         
 # Algos heures et retards
 
-def echange_suivant(tab,indice):
-    tmp = tab[indice+1]
-    tab[indice+1] = tab[indice]
-    tab[indice] = tmp
-
 def decalerJusqua(tab,indiceDebut,indiceFin):
     global cpt
     temp = tab[indiceDebut]
@@ -499,7 +573,7 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
             return -1
             
         
-    while indiceVol + 1 < len(tab) and tab[indiceVol+1] < heureMin:
+    while indiceVol + 1 < len(tab) and tab[indiceVol+1] <= heureMin:
         indiceVol = indiceVol + 1
         cpt = cpt + 9
         
@@ -507,7 +581,8 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     cpt = cpt + 8
 
     while not place and retardAccumule <= 60 and heureActuelle <= heureMax:
-        cpt = cpt + 6
+        done = False
+        cpt = cpt + 7
         if indiceVol > indiceVolRetarde :
             cpt = cpt + 3
             ecart1 = ecartHeures(heureActuelle, tab[indiceVol])
@@ -532,7 +607,7 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
                 cpt = cpt + 1
                 place = False
 
-        cpt = cpt + 1
+        cpt = cpt + 2
         if not place :
             cpt = cpt + 3
             if indiceVol + 1 < len(tab):
@@ -542,13 +617,25 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
                     retardAccumule = retardAccumule + 5
                     heureActuelle = ajoutHeure(heureActuelle, 5)
                     cpt = cpt + 6
-                    
+                    done = True
                 else:
-                    retardAccumule = retardAccumule + ecart2
-                    heureActuelle = ajoutHeure(heureActuelle, ecart2)
-                    cpt = cpt + 4
+                    cpt = cpt + 1
+                    if ecart2 < 5:
+                        retardAccumule = retardAccumule + ecart2
+                        heureActuelle = ajoutHeure(heureActuelle, ecart2)
+                        cpt = cpt + 4
+                        done = True
+                
+                    else:
+                        cpt = cpt + 1
+                        if indiceVol > indiceVolRetarde:
+                            retardAccumule = retardAccumule + 5 - ecart1
+                            heureActuelle = ajoutHeure(heureActuelle, 5 - ecart1)
+                            cpt = cpt + 4
+                            done = True
+    
             
-            else:
+            if not done:
                 retardAccumule = retardAccumule + 1
                 heureActuelle = ajoutHeure(heureActuelle, 1)
                 cpt = cpt + 4
@@ -568,7 +655,13 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
 
     return retardAccumule
 
-# Fonction de test  
+# Fonction de test 
+
+def copier(tab):
+    tab2=zeros(len(tab),'i')
+    for i in range(len(tab)):
+        tab2[i]=tab[i]
+    return tab2
     
 def tabValide(tab):
     i = 1
@@ -593,12 +686,24 @@ def create_tab_heure(taille, stepMax, heureDebut):
         i=i+1
     return tab
 
+def afficheTabHeure(tab):
+    i = 0
+    print("[",end='')
+    while i < len(tab):
+        print(f"{i}: {tab[i]//100}h{tab[i]%100}",end='   ')
+        i = i + 1
+        if i%5 == 0 and i < len(tab) - 1:
+            print("")
+            
+    print("]")
+
 def entreeUtilisateur(str,min,max):
     ans = 0
     while ans < min or ans > max:
         ans = int(input(str))
         if ans < min or ans > max:
             print(f"Saissez une valeur entre {min} et {max}")
+    print("")
     return ans
             
     
@@ -612,33 +717,51 @@ def test():
     while not done:
         if conserver//2 > 0:
             ans = entreeUtilisateur("Quels Algorithmes souhaitez vous tester ?\n1- Recherches\n2- Filtres\n3- Tris\n4- Ajout de retard\n5- Quitter\n=> ",1,5)
+        
+        
 
         if ans == 1:
             choix = entreeUtilisateur("Quelle recherche voulez vous tester ?\n1- Linéaire\n2- Dichotomie\n3- Balayage\n=> ", 1, 3)
             if conserver > 0:
                 taille = tabTaille[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTaille[0]} valeurs\n2- Moyen : {tabTaille[1]} valeurs\n3- Grand : {tabTaille[2]} valeurs\n=> ",1,3) - 1]
                 tab = array([randint(0,taille) for i in range(taille)],'i')
+                copyTab = copier(tab)
+            
+            else:
+                tab = copyTab
+            
             print(tab)
             val = int(input("Rentrez la valeur que vous souhaitez chercher\n=> "))
+            
             if choix == 1:
                 print(f"Indice de la valeur : {rechercheLinéaire(tab, val)}, Nombre d'opérations : {cpt}")
+            
             else:
                 tri = entreeUtilisateur("Inclure le tri dans le décompte des opérations (le tri fusion sera utilisé par défaut) ?\n1- Oui\n2- Non\n=> ", 1, 2)
                 triFusion(tab)
                 if tri == 2:
                     cpt = 0
+                print(f"Tableau trié : {tab}")
+            
             if choix == 2:
                 print(f"Indice de la valeur : {rechercheDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
+            
             if choix == 3:
                 print(f"Indice de la valeur : {rechercheBalayage(tab, val)}, Nombre d'opérations : {cpt}")
+            
             cpt = 0
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
             
         if ans == 2:
             choix = entreeUtilisateur("Quelle filtre voulez vous appliquer ?\n1- Linéaire\n2- Dichotomie\n=> ", 1, 2)
+            
             if conserver > 0:
                 taille = tabTaille[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTaille[0]} valeurs\n2- Moyen : {tabTaille[1]} valeurs\n3- Grand : {tabTaille[2]} valeurs\n=> ",1,3) - 1]
                 tab = array([randint(0,taille) for i in range(taille)],'i')
+                copyTab = copier(tab)
+            
+            else:
+                tab = copyTab
                 
             print(tab)
             val = int(input("Rentrez la valeur que vous souhaitez chercher\n=> "))
@@ -651,13 +774,16 @@ def test():
                 triFusion(tab)
                 if tri == 2:
                     cpt = 0
+                print(f"Tableau trié : {tab}")
                 print(f"Indice de la valeur : {filtreParDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
+            
             cpt = 0
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
         
         
         if ans == 3:
             choix = entreeUtilisateur("Quel tri voulez vous tester ?\n1- Sélection\n2- Insertion\n3- Crêpe\n4- Fusion\n=> ", 1, 4)
+            
             if conserver > 0:
                 taille = tabTaille[entreeUtilisateur(f"Quelle taille de tableau souhaitez vous utiliser ?\n1- Petit : {tabTaille[0]} valeurs\n2- Moyen : {tabTaille[1]} valeurs\n3- Grand : {tabTaille[2]} valeurs\n=> ",1,3) - 1]
                 tab = array([randint(0,taille) for i in range(taille)],'i')
@@ -675,6 +801,7 @@ def test():
                 triCrepe(tab)
             if choix ==4:
                 triFusion(tab)
+            
             print(tab)
             print(f"Nombre d'opérations : {cpt}")
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1 - Oui\n2- Non\n=> ", 1, 2)-1)*2
@@ -693,18 +820,20 @@ def test():
             if conserver == 1:
                 tab = copier(copyTab)
              
-            print(tab)   
+            afficheTabHeure(tab) 
             indiceVol = entreeUtilisateur("Saisissez l'indice du vol que vous voulez retarder\n =>", 1, taille-1)
+            heure = tab[indiceVol]
             retard = entreeUtilisateur("Rentrez le retard que vous voulez appliquer au vol\n =>", 1, 60)
             retard = ajoutRetard(tab, indiceVol, retard)
-            print(f"Avant : {copyTab}")
-            print(f"Après : {tab}")
+            
+            print(f"======Avant======\n{afficheTabHeure(copyTab)}")
+            print(f"======Après======\n{afficheTabHeure(tab)}")
+            
             if retard >= 0:
-                print(f"Le vol a été retardé de {retard} minutes.\nNombre d'opérations : {cpt}")
+                print(f"Le vol a été retardé de {retard} minutes. Nouvelle heure : {ajoutHeure(heure,retard)}\nNombre d'opérations : {cpt}")
             else:
                 print("Le vol n'a pas pu être placé et a été annulé")
-            
-               
+             
             conserver = entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n"+
                                           "1- Conserver le tableau modifié par la fonction\n"+
                                           "2- Revenir au tableau avant les modifications\n"+
