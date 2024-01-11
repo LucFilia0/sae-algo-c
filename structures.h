@@ -42,7 +42,7 @@ void setHeure(const char *chaine, struct Heure *heure);
 
 void ajouterHeure(struct Heure *heure, int val);
 
-int compareHeures(struct Heure h1, struct Heure h2);
+int ecartHeures(struct Heure heure1, struct Heure heure2) ;
 
 int castHeureEnMinute(struct Heure heure);
 

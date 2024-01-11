@@ -115,26 +115,23 @@ void ajouterHeure(struct Heure *heure, int val) {
     }
 }
 
-int compareHeures(struct Heure h1, struct Heure h2) {
-    int exit = 0;
-    if(h1.heure == h2.heure) {
-        if(h1.minute == h2.minute) {
-            exit = 0;
-        }
-        else if(h1.minute > h2.minute) {
-            exit = 1;
-        }
-        else {
-            exit = 2;
-        }
-    }else {
-        if(h1.heure > h2.heure) {
-            exit = 1;
-        }else {
-            exit = 2;
-        }
+int ecartHeures(struct Heure heure1, struct Heure heure2)
+{
+    /*
+        :entree:
+            'heure1' -> 1ere heure à comparer
+            'heure2' -> 2eme heure à comparer
+        :fonction:
+            Renvoie l'ecart en minutes entre les 2, l'écart sera négatif si la 1ere heure est avant la 2eme.
+    */
+    int ecart = 0, heureEcart = 0, minuteEcart = 0 ;
+    heureEcart = heure1.heure - heure2.heure ;
+    minuteEcart = heure1.minute - heure2.minute ;
+    if (minuteEcart < 0) {
+        minuteEcart = minuteEcart + 60 ;
+        heureEcart = heureEcart - 1 ;
     }
-    return exit;
+    return heureEcart*60 + minuteEcart ;
 }
 
 int castHeureEnMinute(struct Heure heure) {

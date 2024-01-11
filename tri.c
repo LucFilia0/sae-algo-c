@@ -14,74 +14,6 @@
 
 /** ##---- DEFINITIONS FONCTIONS TRI */
 
-void trierPrixBilletsPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers]) {
-    /*
-        :fonction:
-            tri par sélection, tri les passagers selon leur prix de billet. Ordre décroissant.
-            L'ordre est stocké dans 'indices'
-    */
-    int i=0;
-    int max = 0;
-    while(i<nbPassagers && indices[i] != -1) {
-        max = recherchePrixMaxFrom(nbPassagers, listePassagers, indices, i);
-        echangeIndicesTab(nbPassagers, indices, i, max);
-        ++i;
-    }
-}
-
-void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int temp[], struct Date ajd) {
-    /*
-        :entree:
-            'nbPassagers' -> le nombre de passagers / la taille de la liste
-            'listePassagers' -> la liste de tous les passagers, contenant toutes les infos
-            'indices' -> le tableau contenant l'ordre dans lequel afficher les passagers
-        :fonction:
-            Ordonne l'affichage des passagers selon les contraintes suivantes :
-                - Les passagers de 12 ans et moins devant
-                - Les passagers sont affichés selon leur prix de billet, par ordre décroissant
-    */
-    int agePassager = 0;
-
-    int listePassagersMoinsDouze[100] = {0}, indMD = 0;
-    int listePassagersPlusDouze[100] = {0}, indPD = 0;
-    for(int passager=0; passager<nbPassagers; ++passager) {
-        agePassager = ajd.annee - listePassagers[passager].dateNaissance.annee;
-        if(listePassagers[passager].numSiege != 0) {
-            if(agePassager<=12) {
-                listePassagersMoinsDouze[indMD] = passager;
-                ++indMD;
-            }else {
-                listePassagersPlusDouze[indPD] = passager;
-                ++indPD;
-            }
-        }
-    }
-    if(indMD<100) {
-        listePassagersMoinsDouze[indMD] = -1;
-    }
-
-    if(indPD<100) {
-        listePassagersPlusDouze[indPD] = -1;
-    }
-
-    triFusionPrixBillet(listePassagersMoinsDouze, temp, listePassagers, 0, indMD-1) ;
-    triFusionPrixBillet(listePassagersPlusDouze, temp, listePassagers, 0, indPD-1);
-
-    concatenerTableaux(100, listePassagersMoinsDouze, 100, listePassagersPlusDouze, nbPassagers, indices);
-}
-
-void trierPiste(int nbVols, struct Vol listeVols[], int indices[]) {
-    int i=0;
-    int min = 0;
-    while(i<nbVols) {
-        min = rechercheHeureDecollageMinFrom(nbVols, listeVols, indices, i);
-        echangeIndicesTab(nbVols, indices, i, min);
-        ++i;
-    }
-}
-
-//====================================================================================
-
 void fusion(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin, int  typeTri)
 {
     int iMilieu = (iDeb + iFin)/2 ;
@@ -253,5 +185,46 @@ void triFusionPrixBillet(int tabIndices[], int temp[], struct Passager listePass
         triFusionPrixBillet(tabIndices, temp, listePassagers, iMilieu + 1, iFin) ;
         fusionPrixBillet(tabIndices, temp, listePassagers, iDeb, iFin) ;
     }
+}
+
+void trierPassagers(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int temp[], struct Date ajd) {
+    /*
+        :entree:
+            'nbPassagers' -> le nombre de passagers / la taille de la liste
+            'listePassagers' -> la liste de tous les passagers, contenant toutes les infos
+            'indices' -> le tableau contenant l'ordre dans lequel afficher les passagers
+        :fonction:
+            Ordonne l'affichage des passagers selon les contraintes suivantes :
+                - Les passagers de 12 ans et moins devant
+                - Les passagers sont affichés selon leur prix de billet, par ordre décroissant
+    */
+    int agePassager = 0;
+
+    int listePassagersMoinsDouze[100] = {0}, indMD = 0;
+    int listePassagersPlusDouze[100] = {0}, indPD = 0;
+    for(int passager=0; passager<nbPassagers; ++passager) {
+        agePassager = ajd.annee - listePassagers[passager].dateNaissance.annee;
+        if(listePassagers[passager].numSiege != 0) {
+            if(agePassager<=12) {
+                listePassagersMoinsDouze[indMD] = passager;
+                ++indMD;
+            }else {
+                listePassagersPlusDouze[indPD] = passager;
+                ++indPD;
+            }
+        }
+    }
+    if(indMD<100) {
+        listePassagersMoinsDouze[indMD] = -1;
+    }
+
+    if(indPD<100) {
+        listePassagersPlusDouze[indPD] = -1;
+    }
+
+    triFusionPrixBillet(listePassagersMoinsDouze, temp, listePassagers, 0, indMD-1) ;
+    triFusionPrixBillet(listePassagersPlusDouze, temp, listePassagers, 0, indPD-1);
+
+    concatenerTableaux(100, listePassagersMoinsDouze, 100, listePassagersPlusDouze, nbPassagers, indices);
 }
 

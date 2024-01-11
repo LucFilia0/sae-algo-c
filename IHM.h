@@ -2,10 +2,6 @@
 
 /** ##---- DECLARATIONS FONCTIONS AFFICHAGE ----## */
 
-void showTitle(const char *title);
-
-void showTime(struct Date ajd, struct Heure mtn);
-
 void userEntryInt(const char *message, int *data, int nbMin, int nbMax);
 
 void userEntryChar(const char *message, char *data, int length, int clearChaine);
@@ -14,7 +10,9 @@ void waitPress();
 
 void returnMenu(int *menu);
 
-void afficheVol(struct Vol *vol);
+void showTitle(const char *title);
+
+void showTime(struct Date ajd, struct Heure mtn);
 
 void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]);
 

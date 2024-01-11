@@ -279,17 +279,19 @@ int main(int argc, char *argv[])
                 }
             }
 
+            /** ##---- VOIR LES ECRANS DES SALLES D'EMBARQUEMENT ----## */
             if(entry == 4) {
                 do {
                     int salleEmb = 0;
 
                     showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-30/+10mn)");
-                    userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 0, nbVols);
+                    userEntryInt("Entrez le numero de la salle d'embarquement", &salleEmb, 0, listeVols[tabIndicesSalleEmbarquement[nbVols-1]].salleEmbarquement);
 
                     int volsActuels[NB_VOLS_MAX] = {0};
                     rechercheVolActuelDansSalleEmb(nbVols, listeVols, tabIndicesSalleEmbarquement, volsActuels, salleEmb, mtn);
 
                     showTitle("VOIR LES ECRANS DES SALLES D'EMBARQUEMENT (-30/+10mn)");
+                    getHeureSystemInto(&mtn);
                     showTime(ajd, mtn);
                     printf("Salle d'embarquement %d\n====================================================================\n", salleEmb);
 
@@ -304,7 +306,7 @@ int main(int argc, char *argv[])
                             ++i;
                         }
                     }else {
-                        printf("---- Aucun vol au depart de cette salle dans l'immediat... ----");
+                        printf("\n---- Aucun vol au depart de cette salle dans l'immediat... ----");
                     }
                     waitPress();
                     returnMenu(&menu);

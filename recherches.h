@@ -8,10 +8,6 @@ void rechercheCompagnieD(const char *compagnie, int nbVols, struct Vol listeVols
 
 int rechercheIndiceAvecNumVol(int nbVols, int tabIndices[], struct Vol listeVols[], int numVol) ;
 
-int recherchePrixMaxFrom(int nbPassagers, struct Passager listePassagers[nbPassagers], int indices[nbPassagers], int deb);
-
-int rechercheHeureDecollageMinFrom(int nbVols, struct Vol listeVols[], int indices[], int deb);
-
 void rechercheCompagnie(const char *nomCompagnie, int nbVols, struct Vol listeVol[], int indices[]);
 
 void rechercheDestination(const char *nomDestination, int nbVols, struct Vol listeVols[], int indices[]);
