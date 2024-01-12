@@ -197,7 +197,8 @@ def echanger(tab,a,b):
     
 def tabMin(tab,i):
     """
-    Renvoie l'indice de la 1ere occurrence de la plus petite valeur à partir de l'indice i
+    Renvoie l'indice de la 1ere occurrence de la plus petite
+    valeur à partir de l'indice i
 
     Args:
         tab ([int]): Tableau d'entiers quelconque, len(tab) > 0
@@ -580,8 +581,11 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     cpt = cpt + 6
     retardAccumule = tpsRetard
     indiceVol = indiceVolRetarde
+    
     place = False
+    cpt = cpt + 3
     if indiceVolRetarde == len(tab) - 1:
+        cpt = cpt + 3
         if tpsRetard <=60:
             tab[indiceVolRetarde] = heureMin
             return tpsRetard
@@ -593,13 +597,14 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     while indiceVol + 1 < len(tab) and tab[indiceVol+1] <= heureMin:
         indiceVol = indiceVol + 1
         cpt = cpt + 9
+    
+
         
     heureActuelle = heureMin
     cpt = cpt + 8
 
-    while not place and retardAccumule <= 60 and heureActuelle <= heureMax:
-        done = False
-        cpt = cpt + 7
+    while not place and heureActuelle <= heureMax:
+        cpt = cpt + 4
         if indiceVol > indiceVolRetarde :
             cpt = cpt + 3
             ecart1 = ecartHeures(heureActuelle, tab[indiceVol])
@@ -620,12 +625,16 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
                         place = True
                     else:
                         place = False
+                else:
+                    cpt = cpt + 1
+                    place = True
             else:
                 cpt = cpt + 1
                 place = False
 
         cpt = cpt + 2
         if not place :
+            done = False
             cpt = cpt + 3
             if indiceVol + 1 < len(tab):
                 cpt = cpt + 1
@@ -735,8 +744,6 @@ def test():
         if conserver//2 > 0:
             ans = entreeUtilisateur("Quels Algorithmes souhaitez vous tester ?\n1- Recherches\n2- Filtres\n3- Tris\n4- Ajout de retard\n5- Quitter\n=> ",1,5)
         
-        
-
         if ans == 1:
             choix = entreeUtilisateur("Quelle recherche voulez vous tester ?\n1- Linéaire\n2- Dichotomie\n3- Balayage\n=> ", 1, 3)
             if conserver > 0:
@@ -807,9 +814,9 @@ def test():
                 copyTab = copier(tab)
                 
             else:
-                tab = copyTab
+                tab = copier(copyTab)
             
-            print(f"======Avant======\n{tab}")
+            print(f"========================Avant========================\n{tab}")
             if choix == 1:
                 triSelection(tab)
             if choix == 2:
@@ -819,7 +826,7 @@ def test():
             if choix ==4:
                 triFusion(tab)
             
-            print(f"======Après======\n{tab}")
+            print(f"========================Après========================\n{tab}")
             print(f"Nombre d'opérations : {cpt}")
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1- Oui\n2- Non\n=> ", 1, 2)-1)*2
 
@@ -833,18 +840,19 @@ def test():
                 else:
                     tab = create_tab_heure(taille, 12, 360)
                 copyTab = copier(tab)
-            
             if conserver == 1:
                 tab = copier(copyTab)
-             
-            afficheTabHeure(tab) 
+            
+            afficheTabHeure(tab)    
             indiceVol = entreeUtilisateur("Saisissez l'indice du vol que vous voulez retarder\n =>", 0, taille-1)
             heure = tab[indiceVol]
             retard = entreeUtilisateur("Rentrez le retard que vous voulez appliquer au vol\n => ", 1, 60)
             retard = ajoutRetard(tab, indiceVol, retard)
             
-            print(f"======Avant======\n{afficheTabHeure(copyTab)}")
-            print(f"======Après======\n{afficheTabHeure(tab)}")
+            print(f"========================Avant========================")
+            afficheTabHeure(copyTab)
+            print(f"========================Après========================")
+            afficheTabHeure(tab)
             
             if retard >= 0:
                 print(f"Le vol a été retardé de {retard} minutes. Nouvelle heure : {ajoutHeure(heure,retard)}\nNombre d'opérations : {cpt}")
@@ -857,44 +865,75 @@ def test():
                                           "3- Non\n=> ", 1, 3) -1
                 
         if ans == 5:
-            print("Merci de corriger notre SAE, on vous aime")
+            print("Merci de corriger notre SAE, on vous aime 🔥🔥🔥")
             done = True
             
             
 # Tests
+
+cpt = 0
+            
+    
+# Tests
 ticks = []
 cpt = 0
-a = 0
-data=[]
-tabTaille = [10,30,80]
+s = 0
+ins = 0
+c = 0
+f = 0
+data=[[],[],[],[]]
+tabTaille = [10,100,500]
 tabStep = [60,30,12]
+nbTours = 100
 for i in range(3):
-    for j in range(100):
-        tab1 = create_tab_heure(tabTaille[i],tabStep[i],360)
-        triFusion(tab1)
+    for j in range(nbTours):
+        tab1 = array([randint(0,tabTaille[i]) for k in range(tabTaille[i])],'i')
+        tab2 = copier(tab1)
+        tab3 = copier(tab1)
+        tab4 = copier(tab1)
+        triSelection(tab1)
+        s = s + cpt
         cpt = 0
-        ajoutRetard(tab1, randint(0,tabTaille[i]-1),randint(1,60))
-        a = a + cpt
+        triInsertion(tab2)
+        ins = ins + cpt
         cpt = 0
-    data.append(a/100)
+        triCrepe(tab3)
+        c = c + cpt
+        cpt = 0
+        triFusion(tab4)
+        f = f + cpt
+        cpt = 0
+        print(j)
+    data[0].append(s/nbTours)
+    data[1].append(ins/nbTours)
+    data[2].append(c/nbTours)
+    data[3].append(f/nbTours)
+    s = 0
+    ins = 0
+    c = 0
+    f = 0
 
 for i in range(10):
     ticks.append(500*i)
 X = arange(3)
 fig = plt.figure()
 ax = fig.add_axes([0.1,0.1,0.8,0.8])
-ax.set_xticks(X,["Taille : 10", "Taille : 30", "Taille:80"])
+ax.set_xticks(X,["Taille : 10", "Taille : 100", "Taille:500"])
 
 def addlabels(x,y):
     for i in range(len(x)):
         plt.text(x[i], y[i], y[i], ha = 'center')
 
-plt.title("Evolution nombre d'opérations de l'ajoutRetard en fonction de la taille.")
-ax.bar(X + 0.0, data, color = 'b', width = 0.5,label='Sélection')
-leg=ax.legend()
-
-addlabels(X, data)
-plt.ylabel("Nombre d'opérations moyens sur 100 éxécutions")
-ax.legend(fancybox=True, framealpha=1, shadow=True, borderpad=1)
+plt.title("Comparaison des tris")
+ax.bar(X, data[0], color = 'b', width = 0.2,label='Sélection')
+ax.bar(X + 0.2, data[1], color = 'g', width = 0.2,label='Insertion')
+ax.bar(X + 0.4, data[2], color = 'r', width = 0.2,label='Crêpe')
+ax.bar(X + 0.6, data[3], color = 'y', width = 0.2,label='Fusion')
+addlabels(X, data[0])
+addlabels(X + 0.2, data[1])
+addlabels(X + 0.4, data[2])
+addlabels(X + 0.6, data[3])
+plt.ylabel(f"Nombre d'opérations moyen sur {nbTours} éxécutions")
+leg = plt.legend()
 plt.show()
             

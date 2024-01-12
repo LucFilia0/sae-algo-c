@@ -596,8 +596,6 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     while indiceVol + 1 < len(tab) and tab[indiceVol+1] <= heureMin:
         indiceVol = indiceVol + 1
         cpt = cpt + 9
-    
-    print(f"IVR {indiceVolRetarde} IV {indiceVol}")
         
     heureActuelle = heureMin
     cpt = cpt + 8
