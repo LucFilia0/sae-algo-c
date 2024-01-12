@@ -597,8 +597,6 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     while indiceVol + 1 < len(tab) and tab[indiceVol+1] <= heureMin:
         indiceVol = indiceVol + 1
         cpt = cpt + 9
-    
-
         
     heureActuelle = heureMin
     cpt = cpt + 8
@@ -871,69 +869,40 @@ def test():
             
 # Tests
 
-cpt = 0
-            
-    
+cpt = 0           
 # Tests
 ticks = []
 cpt = 0
-s = 0
-ins = 0
-c = 0
-f = 0
-data=[[],[],[],[]]
+a = 0
+data=[]
 tabTaille = [10,100,500]
 tabStep = [60,30,12]
 nbTours = 100
 for i in range(3):
     for j in range(nbTours):
-        tab1 = array([randint(0,tabTaille[i]) for k in range(tabTaille[i])],'i')
-        tab2 = copier(tab1)
-        tab3 = copier(tab1)
-        tab4 = copier(tab1)
-        triSelection(tab1)
-        s = s + cpt
+        tab1 = create_tab_heure(tabTaille[i], tabStep[i], 360)
+        retard = retard = randint(1,60)
+        indice = randint(0, tabTaille[i]-1)
+        b = ajoutRetard(tab1, indice, retard)
+        a = a + cpt
         cpt = 0
-        triInsertion(tab2)
-        ins = ins + cpt
-        cpt = 0
-        triCrepe(tab3)
-        c = c + cpt
-        cpt = 0
-        triFusion(tab4)
-        f = f + cpt
-        cpt = 0
-        print(j)
-    data[0].append(s/nbTours)
-    data[1].append(ins/nbTours)
-    data[2].append(c/nbTours)
-    data[3].append(f/nbTours)
-    s = 0
-    ins = 0
-    c = 0
-    f = 0
+    data.append(a/nbTours)
+    a = 0
 
 for i in range(10):
     ticks.append(500*i)
 X = arange(3)
 fig = plt.figure()
 ax = fig.add_axes([0.1,0.1,0.8,0.8])
-ax.set_xticks(X,["Taille : 10", "Taille : 100", "Taille:500"])
+ax.set_xticks(X,["Taille : 10", "Taille : 30", "Taille:80"])
 
 def addlabels(x,y):
     for i in range(len(x)):
         plt.text(x[i], y[i], y[i], ha = 'center')
 
-plt.title("Comparaison des tris")
-ax.bar(X, data[0], color = 'b', width = 0.2,label='Sélection')
-ax.bar(X + 0.2, data[1], color = 'g', width = 0.2,label='Insertion')
-ax.bar(X + 0.4, data[2], color = 'r', width = 0.2,label='Crêpe')
-ax.bar(X + 0.6, data[3], color = 'y', width = 0.2,label='Fusion')
-addlabels(X, data[0])
-addlabels(X + 0.2, data[1])
-addlabels(X + 0.4, data[2])
-addlabels(X + 0.6, data[3])
-plt.ylabel(f"Nombre d'opérations moyen sur {nbTours} éxécutions")
-leg = plt.legend()
+plt.title("Evolution du nombre d'opérations de ajoutRetard en fonction de la taille")
+ax.bar(X, data, color = 'b', width = 0.2,label='')
+addlabels(X, data)
+plt.ylabel(f"Nombres d'opérations moyen sur {nbTours} éxécutions")
 plt.show()
             

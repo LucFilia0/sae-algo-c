@@ -585,7 +585,7 @@ def ajoutRetard(tab, indiceVolRetarde, tpsRetard):
     cpt = cpt + 3
     if indiceVolRetarde == len(tab) - 1:
         cpt = cpt + 3
-        if tpsRetard <=60:
+        if heureMin <= heureMax:
             tab[indiceVolRetarde] = heureMin
             return tpsRetard
         else:
@@ -713,7 +713,10 @@ def afficheTabHeure(tab):
     i = 0
     print("[",end='')
     while i < len(tab):
-        print(f"{i}: {tab[i]//100}h{tab[i]%100}",end='   ')
+        if tab[i] > 0:
+            print(f"{i}: {tab[i]//100}h{tab[i]%100}",end='   ')
+        else:
+            print(f"{i}: Annulé",end='   ')
         i = i + 1
         if i%5 == 0 and i < len(tab) - 1:
             print("")
@@ -737,6 +740,7 @@ def test():
     conserver = 2
     tabTaille = [10,100,500]
     tabTailleRetard = [10,30,80]
+    print("")
     while not done:
         if conserver//2 > 0:
             ans = entreeUtilisateur("Quels Algorithmes souhaitez vous tester ?\n1- Recherches\n2- Filtres\n3- Tris\n4- Ajout de retard\n5- Quitter\n=> ",1,5)
@@ -765,10 +769,10 @@ def test():
                 print(f"Tableau trié : {tab}")
             
             if choix == 2:
-                print(f"Indice de la valeur : {rechercheDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
+                print(f"Indice de la valeur : {rechercheDichotomie(tab, val)}\nNombre d'opérations : {cpt}")
             
             if choix == 3:
-                print(f"Indice de la valeur : {rechercheBalayage(tab, val)}, Nombre d'opérations : {cpt}")
+                print(f"Indice de la valeur : {rechercheBalayage(tab, val)}\nNombre d'opérations : {cpt}")
             
             cpt = 0
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1- Oui\n2- Non\n=> ", 1, 2)-1)*2
@@ -796,7 +800,7 @@ def test():
                 if tri == 2:
                     cpt = 0
                 print(f"Tableau trié : {tab}")
-                print(f"Indice de la valeur : {filtreParDichotomie(tab, val)}, Nombre d'opérations : {cpt}")
+                print(f"Indice de la valeur : {filtreParDichotomie(tab, val)}\nNombre d'opérations : {cpt}")
             
             cpt = 0
             conserver = (entreeUtilisateur("Souhaitez refaire des tests sur le même tableau ?\n1- Oui\n2- Non\n=> ", 1, 2)-1)*2
