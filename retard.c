@@ -68,18 +68,22 @@ int prochainVolsAnnules(int nbVols, int tabIndices[], struct Vol listeVols[],int
 
 int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indiceVolRetarde, int tpsRetard) {
 
-    if (etatVol(nbVols, tabIndices, listeVols, indiceVolRetarde) == -1) {
+    int retardInitial = etatVol(nbVols, tabIndices, listeVols, indiceVolRetarde);
+    if (retardInitial == -1) {
         printf("Un vol annule ne peut pas etre retarde") ;
         return -2 ;
     }
 
+    if (listeVols[tabIndices[indiceVolRetarde]].etatVol[2] == 't') {
+        retardInitial = 0 ;
+    }
     struct Heure heureMin , heureMax ;
     heureMin.heure = listeVols[tabIndices[indiceVolRetarde]].h_decollage.heure ;
     heureMin.minute = listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute ;
     heureMax.heure = listeVols[tabIndices[indiceVolRetarde]].h_decollage.heure ;
     heureMax.minute = listeVols[tabIndices[indiceVolRetarde]].h_decollage.minute ;
 
-    int place = 0, retardAccumule = tpsRetard , indiceVol = indiceVolRetarde, test, done = 0 ;
+    int place = 0, retardAccumule = tpsRetard + retardInitial, indiceVol = indiceVolRetarde, test, done = 0 ;
     struct Heure heurePrecedente, heureActuelle, heureSuivante ;
     int ecart, ecart1, ecart2, cpt = 0 ;
 
@@ -116,7 +120,7 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
     if (indiceVol - cpt > indiceVolRetarde) {
         cpt = 0 ;
         do {
-            test = etatVol(nbVols, tabIndices, listeVols, indiceVol+1) ;
+            test = etatVol(nbVols, tabIndices, listeVols, indiceVol) ;
             if (test != -1) {
                 heurePrecedente.heure = listeVols[tabIndices[indiceVol]].h_decollage.heure ;
                 heurePrecedente.minute = listeVols[tabIndices[indiceVol]].h_decollage.minute ;
@@ -156,7 +160,6 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
 
         if (indiceVol + 1 < nbVols) {
             ecart2 = ecartHeures(heureSuivante,heureActuelle) ;
-
             if (ecart2 >= 5 && test == 0) {
                 place = 1 ;
             }
@@ -231,7 +234,7 @@ int ajoutRetard(int nbVols, int tabIndices[], struct Vol listeVols[], int indice
     // Retarde le vol, modifie le tableau d'incides et la liste des vols
     else {
         retarderVol(tabIndices, listeVols, retardAccumule, indiceVolRetarde, heureActuelle) ;
-        decalerDeJusqua(nbVols, tabIndices, indiceVolRetarde, indiceVol) ;
+        decalerDeJusqua(nbVols, tabIndices, indiceVolRetarde, indiceVol - cpt) ;
     }
 
     return retardAccumule ;
