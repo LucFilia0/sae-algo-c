@@ -41,6 +41,8 @@ void fusion(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int 
             break ;
         case 5:
             comp = listeVols[tabIndices[i]].numComptoir - listeVols[tabIndices[j]].numComptoir ; break ;
+        case 6:
+            comp = listeVols[tabIndices[i]].numVol - listeVols[tabIndices[j]].numVol ; break ;
         }
 
         if (comp < 0) {
@@ -123,6 +125,16 @@ void triFusionNumComptoir(int tabIndices[], int temp[], struct Vol listeVols[], 
     }
 }
 
+void triFusionNumVol(int tabIndices[], int temp[], struct Vol listeVols[], int iDeb, int iFin)
+{
+    if (iDeb < iFin) {
+        int iMilieu = (iDeb + iFin)/2 ;
+        triFusionNumVol(tabIndices, temp, listeVols, iDeb, iMilieu) ;
+        triFusionNumVol(tabIndices, temp, listeVols, iMilieu + 1, iFin) ;
+        fusion(tabIndices, temp, listeVols, iDeb, iFin, 6) ;
+    }
+}
+
 void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[], int typeTri)
 {
     int iDeb = 0, iFin = nbVols - 1 ;
@@ -137,6 +149,8 @@ void triFusion(int nbVols, int tabIndices[], int temp[], struct Vol listeVols[],
             triFusionSalleEmbarquement(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
         case 5:
             triFusionNumComptoir(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
+        case 6:
+            triFusionNumVol(tabIndices, temp, listeVols, iDeb, iFin) ; break ;
         default:
             printf("\nTri invalide\n") ;
     }

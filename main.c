@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
         char compagnie[50], destination[50];
         int tabIndicesH_Decollage[NB_VOLS_MAX], tabIndicesDestination[NB_VOLS_MAX] ;
         int tabIndicesNomsCompagnie[NB_VOLS_MAX], tabIndicesSalleEmbarquement[NB_VOLS_MAX];
-        int tabIndicesComptoirsErg[NB_VOLS_MAX], temp[NB_VOLS_MAX];
+        int tabIndicesComptoirsErg[NB_VOLS_MAX], tabIndicesNumVol[NB_VOLS_MAX], temp[NB_VOLS_MAX];
 
         // TRI INDIRECTS
         indexFill(NB_VOLS_MAX, tabIndicesH_Decollage, nbVols) ;
@@ -75,12 +75,14 @@ int main(int argc, char *argv[])
         indexFill(NB_VOLS_MAX, tabIndicesNomsCompagnie, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesSalleEmbarquement, nbVols) ;
         indexFill(NB_VOLS_MAX, tabIndicesComptoirsErg, nbVols);
+        indexFill(NB_VOLS_MAX, tabIndicesNumVol, nbVols);
 
         triFusion(nbVols, tabIndicesH_Decollage, temp, listeVols, 1) ;
         triFusion(nbVols, tabIndicesDestination, temp, listeVols, 2) ;
         triFusion(nbVols, tabIndicesNomsCompagnie, temp, listeVols, 3) ;
         triFusion(nbVols, tabIndicesSalleEmbarquement, temp, listeVols, 4) ;
         triFusion(nbVols, tabIndicesComptoirsErg, temp, listeVols, 5);
+        triFusion(nbVols, tabIndicesNumVol, temp, listeVols, 6);
 
         // GESTION DE LA PISTE
         for (int i = 0 ; i < NB_VOLS_MAX ; i++) {
@@ -126,7 +128,7 @@ int main(int argc, char *argv[])
 
                     if(numVol>0) {
                         showTitle("VOIR UN VOL");
-                        int vol[1] = {numVol-1};
+                        int vol[1] = {tabIndicesNumVol[numVol-1]};
 
                         printf("\nVol %d :\n", numVol);
                         afficheTableauVols(listeVols, 1, vol);
@@ -228,13 +230,8 @@ int main(int argc, char *argv[])
                     }
                     else if(choix == 2) {
                         printf("\nTriee par numero de vol :\n");
-                        int indicesOrdreNumVol[NB_VOLS_MAX] = {0};
-                        for(int i=0; i<nbVols; ++i) {
-                            indicesOrdreNumVol[i] = i;
-                        }
-                        indicesOrdreNumVol[nbVols] = -1;
 
-                        afficheTableauVols(listeVols, nbVols, indicesOrdreNumVol);
+                        afficheTableauVols(listeVols, nbVols, tabIndicesNumVol);
                     }
 
                     int choixRetard = 0;

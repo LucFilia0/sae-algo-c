@@ -44,7 +44,7 @@ void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[], 
     trouve = rechercheDichotomieCompagnie(nbVols, listeVols, indicesTri, entryLowered);
 
     if(trouve != -1) {
-        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        indices[ind] = indicesTri[trouve];
         prec = trouve-1;
         suiv = trouve+1;
         ++ind;
@@ -53,13 +53,13 @@ void rechercheCompagnieD(const char *entry, int nbVols, struct Vol listeVols[], 
         copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
         copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
         while(strcmp(entryLowered, compagniePrec)==0 && prec>=0) {
-            indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+            indices[ind] = indicesTri[prec];
             --prec;
             ++ind;
             copyCharToLower(listeVols[indicesTri[prec]].compagnie, compagniePrec);
         }
         while(strcmp(compagnieSuiv, entryLowered)==0 && indicesTri[suiv]<nbVols) {
-            indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+            indices[ind] = indicesTri[suiv];
             ++suiv;
             ++ind;
             copyCharToLower(listeVols[indicesTri[suiv]].compagnie, compagnieSuiv);
@@ -99,7 +99,7 @@ void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[]
     trouve = rechercheDichotomieDestination(nbVols, listeVols, indicesTri, entryLowered);
 
     if(trouve != -1) {
-        indices[ind] = listeVols[indicesTri[trouve]].numVol - 1;
+        indices[ind] = indicesTri[trouve];
         prec = trouve-1;
         suiv = trouve+1;
         ++ind;
@@ -108,13 +108,13 @@ void rechercheDestinationD(const char *entry, int nbVols, struct Vol listeVols[]
         copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
         copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);
         while(strcmp(entryLowered, destinationPrec)==0 && prec>=0) {
-            indices[ind] = listeVols[indicesTri[prec]].numVol - 1;
+            indices[ind] = indicesTri[prec];
             --prec;
             ++ind;
             copyCharToLower(listeVols[indicesTri[prec]].destination, destinationPrec);
         }
         while(strcmp(destinationSuiv, entryLowered)==0 && suiv<nbVols) {
-            indices[ind] = listeVols[indicesTri[suiv]].numVol - 1;
+            indices[ind] = indicesTri[suiv];
             ++suiv;
             ++ind;
             copyCharToLower(listeVols[indicesTri[suiv]].destination, destinationSuiv);

@@ -61,11 +61,19 @@ void setHeure(const char *chaine, struct Heure *heure) {
     int heureInt = 0;
     int minuteInt = 0;
 
-    heureChar[0] = chaine[0];
-    heureChar[1] = chaine[1];
+    if(strlen(chaine)==4) {
+        heureChar[0] = chaine[0];
+        heureChar[1] = chaine[1];
 
-    minuteChar[0] = chaine[2];
-    minuteChar[1] = chaine[3];
+        minuteChar[0] = chaine[2];
+        minuteChar[1] = chaine[3];
+    }else {
+
+        heureChar[0] = chaine[0];
+
+        minuteChar[0] = chaine[1];
+        minuteChar[1] = chaine[2];
+    }
 
     heureInt = atoi(heureChar);
     minuteInt = atoi(minuteChar);

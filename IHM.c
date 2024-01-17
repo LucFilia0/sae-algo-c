@@ -259,6 +259,7 @@ void afficheTableauVols(struct Vol *listeVols, int nbVols, int indices[nbVols]) 
         afficheLigneVide(nbColumns, widthColumns);
         ++i;
     }
+    printf("\n");
 }
 
 void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPassagers]) {
@@ -296,6 +297,7 @@ void afficheTableauPassagers(struct Vol vol, int nbPassagers, int indices[nbPass
             afficheLigneVide(nbColumns, widthColumns);
         }
     }
+    printf("\n");
 }
 
 /** ##---- AFFICHER LES SALLES D'EMBARQUEMENT ----## */
